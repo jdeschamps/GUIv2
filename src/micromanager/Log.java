@@ -8,7 +8,7 @@ public class Log {
 	txtWriter w;
 	 
 	Log(){
-		path = Configuration.logpath;
+		path = MConfiguration.logpath;
 		w = new txtWriter(new File(path));
 	}
 

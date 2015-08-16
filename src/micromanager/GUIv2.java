@@ -3,13 +3,8 @@ package micromanager;
 import mmcorej.CMMCore;
 
 import org.micromanager.api.ScriptInterface;
-//import org.micromanager.MainFrame;
-
-
-
-
 import device.MSystem;
-import swing.FrameGUI;
+import swing.MainFrame;
 import test.PluginTest;
 
 

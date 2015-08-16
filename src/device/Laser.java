@@ -1,6 +1,6 @@
 package device;
 
-import micromanager.Configuration;
+import micromanager.MConfiguration;
 import micromanager.Log;
 import mmcorej.CMMCore;
 
@@ -19,10 +19,10 @@ public class Laser extends Device{
 	}
 	
 	private void createProperties() {
-		operation_ = new DeviceProperty(label_, Configuration.luxxproplabel[0], 0, 0, 1,core_,log_);
-		powerPerc_ = new DeviceProperty(label_, Configuration.luxxproplabel[1], 0, 0, 100,core_,log_);
-		behaviour_ = new DeviceProperty(arduinoLabel_, Configuration.ardproplabel[0], 2, 0, 4,core_,log_);
-		pulse_ = new DeviceProperty(arduinoLabel_, Configuration.ardproplabel[1], 0, 0, Configuration.ardlasermaxpulse,core_,log_);
+		operation_ = new DeviceProperty(label_, MConfiguration.luxxproplabel[0], 0, 0, 1,core_,log_);
+		powerPerc_ = new DeviceProperty(label_, MConfiguration.luxxproplabel[1], 0, 0, 100,core_,log_);
+		behaviour_ = new DeviceProperty(arduinoLabel_, MConfiguration.ardproplabel[0], 2, 0, 4,core_,log_);
+		pulse_ = new DeviceProperty(arduinoLabel_, MConfiguration.ardproplabel[1], 0, 0, MConfiguration.ardlasermaxpulse,core_,log_);
 
 		add(operation_);
 		add(powerPerc_);

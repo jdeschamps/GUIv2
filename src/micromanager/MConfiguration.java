@@ -1,6 +1,6 @@
     package micromanager;
 
-public class Configuration {
+public class MConfiguration {
 
 
 	//////////////////////////////////////////////

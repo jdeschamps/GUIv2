@@ -9,7 +9,7 @@ import device.QPD;
 import device.SSLaser;
 import device.Servo;
 import device.Stage;
-import micromanager.Configuration;
+import micromanager.MConfiguration;
 import micromanager.Log;
 import mmcorej.CMMCore;
 
@@ -101,7 +101,7 @@ public class PluginTest implements Runnable {
 		log_.writeToLog("-- Lasers --");
 
 		for(int i=0;i<3;i++){
-			luxx[i] = (Laser) sys_.getLaser(Configuration.laserkeys[i]);
+			luxx[i] = (Laser) sys_.getLaser(MConfiguration.laserkeys[i]);
 			log_.writeToLog("- "+luxx[i].getLabel()+" -");
 			
 			// Operation
@@ -125,7 +125,7 @@ public class PluginTest implements Runnable {
 			log_.writeToLog("Pulse :"+luxx[i].getPulseLength());
 		}
 		
-		cobolt = (SSLaser) sys_.getLaser(Configuration.laserkeys[3]);
+		cobolt = (SSLaser) sys_.getLaser(MConfiguration.laserkeys[3]);
 		log_.writeToLog("- "+cobolt.getLabel()+" -");
 		// Operation
 		log_.writeToLog("Operation :"+cobolt.getOperation());

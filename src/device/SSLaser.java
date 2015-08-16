@@ -1,6 +1,6 @@
 package device;
 
-import micromanager.Configuration;
+import micromanager.MConfiguration;
 import micromanager.Log;
 import mmcorej.CMMCore;
 
@@ -22,11 +22,11 @@ public class SSLaser extends Device{
 	}
 	
 	private void createProperties() {
-		operation_ = new DeviceProperty(label_, Configuration.coboltproplabel[0], 0, 0, 1,core_,log_);
-		powerPerc_ = new DeviceProperty(arduinoLabel2_, Configuration.ard2proplabel, 0, 0, 100,core_,log_);
-		powerMax_ = new DeviceProperty(label_, Configuration.coboltproplabel[0], 300, 0, 300,core_,log_);
-		behaviour_ = new DeviceProperty(arduinoLabel1_, Configuration.ardproplabel[0], 2, 0, 4,core_,log_);
-		pulse_ = new DeviceProperty(arduinoLabel1_, Configuration.ardproplabel[1], 0, 0, Configuration.ardlasermaxpulse,core_,log_);
+		operation_ = new DeviceProperty(label_, MConfiguration.coboltproplabel[0], 0, 0, 1,core_,log_);
+		powerPerc_ = new DeviceProperty(arduinoLabel2_, MConfiguration.ard2proplabel, 0, 0, 100,core_,log_);
+		powerMax_ = new DeviceProperty(label_, MConfiguration.coboltproplabel[0], 300, 0, 300,core_,log_);
+		behaviour_ = new DeviceProperty(arduinoLabel1_, MConfiguration.ardproplabel[0], 2, 0, 4,core_,log_);
+		pulse_ = new DeviceProperty(arduinoLabel1_, MConfiguration.ardproplabel[1], 0, 0, MConfiguration.ardlasermaxpulse,core_,log_);
 
 		properties_.add(operation_);
 		properties_.add(powerPerc_);

@@ -1,6 +1,6 @@
 package device;
 
-import micromanager.Configuration;
+import micromanager.MConfiguration;
 import micromanager.Log;
 import mmcorej.CMMCore;
 
@@ -15,8 +15,8 @@ public class Stage extends Device{
 	}
 
 	private void createProperties() {
-		sensorState_ = new DeviceProperty(label_, Configuration.piproplabel[0], 0, 0, 1,core_,log_);
-		position_ = new DeviceProperty(label_, Configuration.piproplabel[1], 0, 0, 100,core_,log_);					/// to check
+		sensorState_ = new DeviceProperty(label_, MConfiguration.piproplabel[0], 0, 0, 1,core_,log_);
+		position_ = new DeviceProperty(label_, MConfiguration.piproplabel[1], 0, 0, 100,core_,log_);					/// to check
 		
 		add(sensorState_);
 		add(position_);
@@ -26,9 +26,9 @@ public class Stage extends Device{
 		if(val==1){
 			setProperty(sensorState_.getPropertyName(),val);
 			try {
-				core_.setFocusDevice(Configuration.smaractlabel);
+				core_.setFocusDevice(MConfiguration.smaractlabel);
 			} catch (Exception e) {
-				log_.writeToLog(label_+" : error setting focus device "+Configuration.smaractlabel);
+				log_.writeToLog(label_+" : error setting focus device "+MConfiguration.smaractlabel);
 			}
 		} else if(val==0){
 			setProperty(sensorState_.getPropertyName(),val);							/// maybe modify directly the object

@@ -1,6 +1,6 @@
 package device;
 
-import micromanager.Configuration;
+import micromanager.MConfiguration;
 import micromanager.Log;
 import mmcorej.CMMCore;
 
@@ -16,9 +16,9 @@ public class QPD extends Device{
 	}
 
 	private void createProperties() {
-		signalX_ = new InputDeviceProperty(label_, Configuration.qpdproplabel[0],core_,log_);
-		signalY_ = new InputDeviceProperty(label_, Configuration.qpdproplabel[1],core_,log_);
-		signalS_ = new InputDeviceProperty(label_, Configuration.qpdproplabel[2],core_,log_);
+		signalX_ = new InputDeviceProperty(label_, MConfiguration.qpdproplabel[0],core_,log_);
+		signalY_ = new InputDeviceProperty(label_, MConfiguration.qpdproplabel[1],core_,log_);
+		signalS_ = new InputDeviceProperty(label_, MConfiguration.qpdproplabel[2],core_,log_);
 
 		add(signalX_);
 		add(signalY_);
