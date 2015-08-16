@@ -4,6 +4,7 @@ package activation;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import micromanager.Log;
 import ij.ImagePlus;
 import ij.gui.ImageWindow;
 import ij.process.ImageProcessor;
@@ -16,16 +17,16 @@ public class NMS {
 	int n_,max_num;
 	double cutoff_;
 	boolean display_;
-	boolean win = false;
+	Log log_;
 	
-	PrintWriter writer;
+	
 	ArrayList<Peak> peaks;
 	
-	public NMS(){
+	public NMS(Log log){
+		log_ = log;
 		peaks = new ArrayList<Peak>();
 		imtemp_ = new ImagePlus();
 		imtemp_.setTitle("NMS");
-		iw = new ImageWindow("NMS");
 	}
 	
 	public void run(ImagePlus im, int n, int max, double cutoff, boolean display){
@@ -93,7 +94,7 @@ public class NMS {
 		}	
 		
 		// Display NMS result on an image
-		if(display_   ){																										//display_
+		if(display_   ){												//display_
 
 			//im_.show();
 			imtemp_.hide();
