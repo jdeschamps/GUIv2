@@ -1,4 +1,4 @@
-    package micromanager;
+package micromanager;
 
 public class Configuration {
 

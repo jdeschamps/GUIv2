@@ -1,6 +1,6 @@
 package swing;
 
-import micromanager.MConfiguration;
+import micromanager.Configuration;
 
 /**
  *
@@ -24,10 +24,10 @@ public class LaserPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        laserControl1 = new LaserControlPanel(MConfiguration.laserkeys[0]);
-        laserControl2 = new LaserControlPanel(MConfiguration.laserkeys[1]);
-        laserControl3 = new LaserControlPanel(MConfiguration.laserkeys[3]);
-        laserControl4 = new LaserControlPanel(MConfiguration.laserkeys[2]);
+        laserControl1 = new LaserControlPanel(Configuration.laserkeys[0]);
+        laserControl2 = new LaserControlPanel(Configuration.laserkeys[1]);
+        laserControl3 = new LaserControlPanel(Configuration.laserkeys[3]);
+        laserControl4 = new LaserControlPanel(Configuration.laserkeys[2]);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
