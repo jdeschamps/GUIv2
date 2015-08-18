@@ -4,6 +4,8 @@
  */
 package swing;
 
+import java.awt.GridLayout;
+
 /**
  *
  * @author Ries
@@ -36,10 +38,10 @@ public class ActivationPanel extends javax.swing.JPanel {
         jTextField_N = new javax.swing.JTextField();
         jPanel_graph = new javax.swing.JPanel();
         jPanel_bottom = new javax.swing.JPanel();
-        jLabel_threshold = new javax.swing.JLabel();
-        jTextField_threshold = new javax.swing.JTextField();
-        jButton_getthreshold = new javax.swing.JButton();
-        jToggleButton_autothreshold = new javax.swing.JToggleButton();
+        jLabel_cutoff = new javax.swing.JLabel();
+        jTextField_cutoff = new javax.swing.JTextField();
+        jButton_getcutoff = new javax.swing.JButton();
+        jToggleButton_autocutoff = new javax.swing.JToggleButton();
 
         setPreferredSize(new java.awt.Dimension(390, 212));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -111,7 +113,7 @@ public class ActivationPanel extends javax.swing.JPanel {
 
         add(jPanel_left, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 210));
 
-        javax.swing.GroupLayout jPanel_graphLayout = new javax.swing.GroupLayout(jPanel_graph);
+      /*  javax.swing.GroupLayout jPanel_graphLayout = new javax.swing.GroupLayout(jPanel_graph);
         jPanel_graph.setLayout(jPanel_graphLayout);
         jPanel_graphLayout.setHorizontalGroup(
             jPanel_graphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,25 +123,27 @@ public class ActivationPanel extends javax.swing.JPanel {
             jPanel_graphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 160, Short.MAX_VALUE)
         );
-
+*/	
+        jPanel_graph.setLayout(new GridLayout(1, 1));
+        jPanel_graph.add(new Graph(260,120,"N","time",false,false,true));
         add(jPanel_graph, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 320, 160));
 
-        jLabel_threshold.setText("Threshold:");
+        jLabel_cutoff.setText("Cutoff:");
 
-        jTextField_threshold.setText("0");
+        jTextField_cutoff.setText("0");
 
-        jButton_getthreshold.setText("Get threshold");
-        jButton_getthreshold.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jButton_getthreshold.addActionListener(new java.awt.event.ActionListener() {
+        jButton_getcutoff.setText("Get cutoff");
+        jButton_getcutoff.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jButton_getcutoff.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_getthresholdActionPerformed(evt);
+                jButton_getcutoffActionPerformed(evt);
             }
         });
 
-        jToggleButton_autothreshold.setText("Auto");
-        jToggleButton_autothreshold.addActionListener(new java.awt.event.ActionListener() {
+        jToggleButton_autocutoff.setText("Auto");
+        jToggleButton_autocutoff.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton_autothresholdActionPerformed(evt);
+                jToggleButton_autocutoffActionPerformed(evt);
             }
         });
 
@@ -150,23 +154,23 @@ public class ActivationPanel extends javax.swing.JPanel {
             .addGroup(jPanel_bottomLayout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addGroup(jPanel_bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField_threshold, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel_threshold))
+                    .addComponent(jTextField_cutoff, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_cutoff))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton_getthreshold)
+                .addComponent(jButton_getcutoff)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton_autothreshold)
+                .addComponent(jToggleButton_autocutoff)
                 .addContainerGap(80, Short.MAX_VALUE))
         );
         jPanel_bottomLayout.setVerticalGroup(
             jPanel_bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_bottomLayout.createSequentialGroup()
-                .addComponent(jLabel_threshold)
+                .addComponent(jLabel_cutoff)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField_threshold, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_getthreshold)
-                    .addComponent(jToggleButton_autothreshold))
+                    .addComponent(jTextField_cutoff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_getcutoff)
+                    .addComponent(jToggleButton_autocutoff))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -181,28 +185,28 @@ public class ActivationPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_GetNActionPerformed
 
-    private void jButton_getthresholdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_getthresholdActionPerformed
+    private void jButton_getcutoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_getcutoffActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton_getthresholdActionPerformed
+    }//GEN-LAST:event_jButton_getcutoffActionPerformed
 
-    private void jToggleButton_autothresholdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_autothresholdActionPerformed
+    private void jToggleButton_autocutoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_autocutoffActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton_autothresholdActionPerformed
+    }//GEN-LAST:event_jToggleButton_autocutoffActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_GetN;
-    private javax.swing.JButton jButton_getthreshold;
+    private javax.swing.JButton jButton_getcutoff;
     private javax.swing.JLabel jLabel_param1;
     private javax.swing.JLabel jLabel_param2;
-    private javax.swing.JLabel jLabel_threshold;
+    private javax.swing.JLabel jLabel_cutoff;
     private javax.swing.JPanel jPanel_bottom;
     private javax.swing.JPanel jPanel_graph;
     private javax.swing.JPanel jPanel_left;
     private javax.swing.JTextField jTextField_N;
     private javax.swing.JTextField jTextField_param1;
     private javax.swing.JTextField jTextField_param2;
-    private javax.swing.JTextField jTextField_threshold;
+    private javax.swing.JTextField jTextField_cutoff;
     private javax.swing.JToggleButton jToggleButton_activate;
-    private javax.swing.JToggleButton jToggleButton_autothreshold;
+    private javax.swing.JToggleButton jToggleButton_autocutoff;
     // End of variables declaration//GEN-END:variables
 }

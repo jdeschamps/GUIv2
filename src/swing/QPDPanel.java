@@ -4,6 +4,8 @@
  */
 package swing;
 
+import java.awt.GridLayout;
+
 /**
  *
  * @author Ries
@@ -26,7 +28,6 @@ public class QPDPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
         jPanel_left = new javax.swing.JPanel();
         jPanel_lefthigh = new javax.swing.JPanel();
         jPanel_leftlow = new javax.swing.JPanel();
@@ -34,62 +35,32 @@ public class QPDPanel extends javax.swing.JPanel {
         jPanel_2Dgraph = new javax.swing.JPanel();
         jToggleButton_monitor = new javax.swing.JToggleButton();
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
+        ////////////////////////////////////////////////////////////////////////////////////
+        //// Left
         setPreferredSize(new java.awt.Dimension(390, 212));
         setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel_left.setLayout(new java.awt.GridLayout(2, 1));
 
-        javax.swing.GroupLayout jPanel_lefthighLayout = new javax.swing.GroupLayout(jPanel_lefthigh);
-        jPanel_lefthigh.setLayout(jPanel_lefthighLayout);
-        jPanel_lefthighLayout.setHorizontalGroup(
-            jPanel_lefthighLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 199, Short.MAX_VALUE)
-        );
-        jPanel_lefthighLayout.setVerticalGroup(
-            jPanel_lefthighLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 107, Short.MAX_VALUE)
-        );
+        // high
+        jPanel_lefthigh.setLayout(new GridLayout(1, 1));
+        jPanel_lefthigh.add(new Graph(120,60,"X","time",false,false,false));
 
         jPanel_left.add(jPanel_lefthigh);
 
-        javax.swing.GroupLayout jPanel_leftlowLayout = new javax.swing.GroupLayout(jPanel_leftlow);
-        jPanel_leftlow.setLayout(jPanel_leftlowLayout);
-        jPanel_leftlowLayout.setHorizontalGroup(
-            jPanel_leftlowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 199, Short.MAX_VALUE)
-        );
-        jPanel_leftlowLayout.setVerticalGroup(
-            jPanel_leftlowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 107, Short.MAX_VALUE)
-        );
-
+        // low
+        jPanel_leftlow.setLayout(new GridLayout(1, 1));
+        jPanel_leftlow.add(new Graph(120,60,"S","time",false,false,false));
         jPanel_left.add(jPanel_leftlow);
 
         add(jPanel_left);
-
+        
+        ////////////////////////////////////////////////////////////////////////////////////
+        //// Right
         jPanel_2Dgraph.setPreferredSize(new java.awt.Dimension(390, 212));
 
-        javax.swing.GroupLayout jPanel_2DgraphLayout = new javax.swing.GroupLayout(jPanel_2Dgraph);
-        jPanel_2Dgraph.setLayout(jPanel_2DgraphLayout);
-        jPanel_2DgraphLayout.setHorizontalGroup(
-            jPanel_2DgraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 199, Short.MAX_VALUE)
-        );
-        jPanel_2DgraphLayout.setVerticalGroup(
-            jPanel_2DgraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 175, Short.MAX_VALUE)
-        );
+        jPanel_2Dgraph.setLayout(new GridLayout(1, 1));
+        jPanel_2Dgraph.add(new Graph(150,150,"Y","X",false,false,false));
 
         jToggleButton_monitor.setText("Monitor");
         jToggleButton_monitor.addActionListener(new java.awt.event.ActionListener() {

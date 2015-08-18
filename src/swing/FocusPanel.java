@@ -4,6 +4,9 @@
  */
 package swing;
 
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
 /**
  *
  * @author Ries
@@ -89,8 +92,12 @@ public class FocusPanel extends javax.swing.JPanel {
         );
 
         add(jPanel_controls);
-
-        javax.swing.GroupLayout jPanel_graphLayout = new javax.swing.GroupLayout(jPanel_graph);
+        
+        jPanel_graph.setPreferredSize(new Dimension(378,158));
+        jPanel_graph.setLayout(new GridLayout(1, 1));
+        jPanel_graph.add(new Graph(300,100,"Pos","time",false,false,true));
+        
+    /*    javax.swing.GroupLayout jPanel_graphLayout = new javax.swing.GroupLayout(jPanel_graph);
         jPanel_graph.setLayout(jPanel_graphLayout);
         jPanel_graphLayout.setHorizontalGroup(
             jPanel_graphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,7 +107,7 @@ public class FocusPanel extends javax.swing.JPanel {
             jPanel_graphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 158, Short.MAX_VALUE)
         );
-
+*/
         add(jPanel_graph);
     }// </editor-fold>//GEN-END:initComponents
 

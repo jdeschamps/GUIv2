@@ -26,7 +26,7 @@ public class Graph extends Component{
 		height_ = height;
 		width_ = width;
 		woffset = 30;
-		hoffset = 10;
+		hoffset = 20;
 		yname = s1;
 		xname = s2;
 		decimal_=decimal;
