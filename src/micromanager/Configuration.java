@@ -1,5 +1,7 @@
 package micromanager;
 
+import java.awt.Color;
+
 public class Configuration {
 
 
@@ -40,5 +42,24 @@ public class Configuration {
 	public static final String[] proplabel = {"Position","BFP state","3DA state"};
 	public static final int[] numposservo = {5,4,2};
 	public static final String[] servokeys = {"FW","BFP","3DA"};
+	
+
+	//////////////////////////////////////////////
+	//// GUI
+	
+	// Colors
+	public static final Color red = new Color(255, 0, 51);
+	public static final Color green = new Color(0,204,51);
+	public static final Color uv = new Color(102,102,255);
+	public static final Color blue = new Color(0,102,204);
+	public static final Color neutral = new Color(204,204,204);
+	public static final Color black = new Color(0,0,0);
+	
+	// Filters panel
+	public static final String[] filters = {"525/50","600/60","700/100","Sp","Empty","Empty"};
+	
+	// Laser parameters tab
+	public static final String[] laserbehaviourlabel = {"Camera","Rising","Falling","On","Off"};
+	
 	
 }
