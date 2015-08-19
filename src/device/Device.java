@@ -27,15 +27,13 @@ public abstract class Device {
 		properties_.add(d);
 	}
 	
-	public void addProperty(String label, String property, int val, int min, int max){
-		properties_.add(new DeviceProperty(label,property,val,min,max,core_,log_));
+	public void addProperty(String label, String property, int min, int max){
+		properties_.add(new DeviceProperty(label,property,min,max,core_,log_));
 	}
 
 	public void initialize(){
 		for(InputDeviceProperty p:properties_){
-			if(p.isEditable()){
-				((DeviceProperty) p).initialize();		///// better way to do that??
-			}
+			p.initialize();	
 		}
 	}
 	
@@ -48,26 +46,26 @@ public abstract class Device {
 		return false;
 	}
 	
-	public void setProperty(String property, int val){
+	public boolean setProperty(String property, int val){
 		for(InputDeviceProperty p:properties_){
 			if(p.getPropertyName().equals(property)){
 				if(p.isEditable()){
-					boolean b = ((DeviceProperty) p).setValue(val);	
-																		//// check if worked
+					return ((DeviceProperty) p).setValue(val);	
 				}
 			}
 		}
+		return false;
 	}	
 	
-	public void setProperty(String property, double val){
+	public boolean setProperty(String property, double val){
 		for(InputDeviceProperty p:properties_){
 			if(p.getPropertyName().equals(property)){
 				if(p.isEditable()){
-					boolean b = ((DeviceProperty) p).setValue(val);	
-																		//// check if worked
+					return ((DeviceProperty) p).setValue(val);	
 				}
 			}
 		}
+		return false;
 	}
 	
 	public double getProperty(String property){
@@ -88,14 +86,13 @@ public abstract class Device {
 		return properties_.size();
 	}
 
-	public boolean isLoaded(){
+	public boolean isLoaded(){					
 			////////// test here
 		return false;
 	}
 
-	public boolean isAvailable(){
-		////////// test here
-	return false;
+	public boolean isBusy() throws Exception{
+		return core_.deviceBusy(getLabel());
 	}
 	
 }

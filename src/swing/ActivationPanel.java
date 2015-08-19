@@ -6,16 +6,18 @@ package swing;
 
 import java.awt.GridLayout;
 
+import device.MSystem;
+
 /**
  *
  * @author Ries
  */
 public class ActivationPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ActivationPanel
-     */
-    public ActivationPanel() {
+	MSystem sys_;
+
+    public ActivationPanel(MSystem sys) {
+    	sys_ = sys;
         initComponents();
     }
 

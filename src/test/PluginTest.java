@@ -37,6 +37,7 @@ public class PluginTest implements Runnable {
 	public void run() {
 		testDevices();
 		testUpdaters();
+		testGUI();
 	}
 
 	private void testDevices(){
@@ -181,6 +182,11 @@ public class PluginTest implements Runnable {
 		}
 		
 		log_.writeToLog("---- Done ----");
+	}
+	
+	private void testGUI(){
+		
+		// fill in
 	}
 	
 	private boolean pause(int sec){

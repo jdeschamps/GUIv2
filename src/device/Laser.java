@@ -11,18 +11,26 @@ public class Laser extends Device{
 	DeviceProperty operation_;
 	DeviceProperty behaviour_;
 	DeviceProperty pulse_;
+	double lowering_factor;
 	
 	Laser(String label, String sublabel, CMMCore core, Log log){
 		super(label,core,log);
 		arduinoLabel_ = sublabel;
+		
+		if(label_.equals(Configuration.laserkeys[2])){
+			lowering_factor = Configuration.loweringfactor;
+		} else {
+			lowering_factor = 1;
+		}
+		
 		createProperties();
 	}
 	
 	private void createProperties() {
-		operation_ = new DeviceProperty(label_, Configuration.luxxproplabel[0], 0, 0, 1,core_,log_);
-		powerPerc_ = new DeviceProperty(label_, Configuration.luxxproplabel[1], 0, 0, 100,core_,log_);
-		behaviour_ = new DeviceProperty(arduinoLabel_, Configuration.ardproplabel[0], 2, 0, 4,core_,log_);
-		pulse_ = new DeviceProperty(arduinoLabel_, Configuration.ardproplabel[1], 0, 0, Configuration.ardlasermaxpulse,core_,log_);
+		operation_ = new DeviceProperty(label_, Configuration.luxxproplabel[0], 0, 1,core_,log_);
+		powerPerc_ = new DeviceProperty(label_, Configuration.luxxproplabel[1], 0, 100,core_,log_);
+		behaviour_ = new DeviceProperty(arduinoLabel_, Configuration.ardproplabel[0], 0, 4,core_,log_);
+		pulse_ = new DeviceProperty(arduinoLabel_, Configuration.ardproplabel[1], 0, Configuration.ardlasermaxpulse,core_,log_);
 
 		add(operation_);
 		add(powerPerc_);
@@ -44,7 +52,7 @@ public class Laser extends Device{
 	
 	public void setPowerPercentage(int val){		
 		if(val>=powerPerc_.getMinValue() && val<=powerPerc_.getMaxValue()){
-			setProperty(powerPerc_.getPropertyName(),val);
+			setProperty(powerPerc_.getPropertyName(),(int) (lowering_factor*val));
 		} else {
 			log_.writeToLog(label_+" : Invalid power percentage requested ("+val+")");
 		}

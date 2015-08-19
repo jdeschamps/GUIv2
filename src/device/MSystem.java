@@ -1,8 +1,11 @@
 package device;
 
+import java.util.ArrayList;
+
 import micromanager.Configuration;
 import micromanager.Log;
 import mmcorej.CMMCore;
+import mmcorej.StrVector;
 
 public class MSystem {
 
@@ -13,6 +16,11 @@ public class MSystem {
 	SSLaser l561_;
 	Servo fw_, bfp_, astig_; 
 	Log log_;
+	ArrayList<Device> deviceList_;
+	
+	public MSystem(){
+		// empty to test
+	}
 	
 	public MSystem(CMMCore core, Log log){
 		core_ = core;
@@ -32,10 +40,41 @@ public class MSystem {
 		fw_ = new Servo(Configuration.servolabel[0], Configuration.proplabel[0], Configuration.numposservo[0],core_,log_);
 		bfp_ = new Servo(Configuration.servolabel[1], Configuration.proplabel[1], Configuration.numposservo[1],core_,log_);
 		astig_ = new Servo(Configuration.servolabel[2], Configuration.proplabel[2], Configuration.numposservo[2],core_,log_);
+
+		deviceList_.add(qpd_);
+		deviceList_.add(pi_);
+		deviceList_.add(l405_);
+		deviceList_.add(l488_);
+		deviceList_.add(l638_);
+		deviceList_.add(l561_);
+		deviceList_.add(fw_);
+		deviceList_.add(bfp_);
+		deviceList_.add(astig_);
+
+		if(areDevicesAvailable()){
+			for(Device d:deviceList_){
+				d.initialize();
+			}
+		}
 	}
 
-	private void areDevicesAvailable() {
-																		/////// check if devices are available
+	private boolean areDevicesAvailable() {
+		boolean b;
+		String[] dev = (core_.getLoadedDevices()).toArray();
+		for(Device d:deviceList_){
+			b = false;
+			for(int i=0;i<dev.length;i++){
+				if(dev[i].equals(d.getLabel())){
+					b = true;
+					break;
+				}
+			}
+			if(!b){
+				log_.writeToLog("Error checking availability: "+d.getLabel()+" not available.");
+				return false;
+			}
+		}
+		return true;
 	}						
 
 	private void readConfiguration(){

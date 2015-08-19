@@ -5,9 +5,16 @@
 package swing;
 
 import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+
+import micromanager.Configuration;
+import device.MSystem;
 
 /**
  *
@@ -17,10 +24,13 @@ public class SingleLaserControl extends javax.swing.JPanel {
 
 	String label_;
 	Color color_;
+	MSystem sys_;
 	
-    public SingleLaserControl(String label, Color color) {
+    public SingleLaserControl(MSystem sys, String label, Color color) {
+    	sys_ = sys;
     	color_ = color;
     	label_ = label;
+    	
         initComponents();
     }
 
@@ -50,44 +60,74 @@ public class SingleLaserControl extends javax.swing.JPanel {
         jToggleButton_laserOperation.setSelectedIcon(new ImageIcon("C:/Users/Ries/Desktop/MM/Micro-Manager-1.4.21/on.png"));
         jToggleButton_laserOperation.setDisabledIcon(new ImageIcon("C:/Users/Ries/Desktop/MM/Micro-Manager-1.4.21/off.png"));
         
-        jToggleButton_laserOperation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton_laserOperationActionPerformed(evt);
-            }
+        jToggleButton_laserOperation.addItemListener(new ItemListener(){
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange()==ItemEvent.SELECTED){
+					sys_.setLaserOperation(label_, 1);
+				} else if(e.getStateChange()==ItemEvent.DESELECTED){
+					sys_.setLaserOperation(label_, 0);
+				}
+			}
         });
 
         jTextField_userInput.setText("50");
-
+        jTextField_userInput.addKeyListener(new KeyAdapter(){
+        	@Override
+        	public void keyReleased(KeyEvent ke) {
+        	    String typed = jTextField_userInput.getText();
+        	    if(!typed.matches("\\d+") || typed.length() > 3) {
+        	        return;
+        	    }
+        	    jToggleButton_user.setText(typed+"%");
+        	    if(jToggleButton_user.isSelected()){
+        	    	sys_.setLaserPowerPerc(label_, Integer.parseInt(typed));
+        	    }
+        	}
+        	});     
+        
         jToggleButton_user.setText("50%");
         jToggleButton_user.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_user.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton_userActionPerformed(evt);
-            }
+        jToggleButton_user.addItemListener(new ItemListener(){
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange()==ItemEvent.SELECTED){
+        	    	sys_.setLaserPowerPerc(label_, Integer.parseInt(jTextField_userInput.getText()));
+				}
+			}
         });
 
         jToggleButton_100perc.setText("100%");
         jToggleButton_100perc.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_100perc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton_100percActionPerformed(evt);
-            }
+        jToggleButton_100perc.addItemListener(new ItemListener(){
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange()==ItemEvent.SELECTED){
+    				sys_.setLaserPowerPerc(label_,100);
+    			}
+			}
         });
 
         jToggleButton_20perc.setText("20%");
         jToggleButton_20perc.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_20perc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton_20percActionPerformed(evt);
-            }
+        jToggleButton_20perc.addItemListener(new ItemListener(){
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange()==ItemEvent.SELECTED){
+    				sys_.setLaserPowerPerc(label_,20);
+    			}
+			}
         });
 
         jToggleButton_1perc.setText("1%");
         jToggleButton_1perc.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_1perc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton_1percActionPerformed(evt);
-            }
+        jToggleButton_1perc.addItemListener(new ItemListener(){
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange()==ItemEvent.SELECTED){
+    				sys_.setLaserPowerPerc(label_,1);
+    			}
+			}
         });
 
         ButtonGroup group=new ButtonGroup();
@@ -142,27 +182,6 @@ public class SingleLaserControl extends javax.swing.JPanel {
         );
         
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jToggleButton_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_userActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton_userActionPerformed
-
-    private void jToggleButton_100percActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_100percActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton_100percActionPerformed
-
-    private void jToggleButton_20percActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_20percActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton_20percActionPerformed
-
-    private void jToggleButton_1percActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_1percActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton_1percActionPerformed
-
-    private void jToggleButton_laserOperationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_laserOperationActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton_laserOperationActionPerformed
-
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField jTextField_userInput;

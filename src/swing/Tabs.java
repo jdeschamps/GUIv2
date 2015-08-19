@@ -4,16 +4,18 @@
  */
 package swing;
 
+import device.MSystem;
+
 /**
  *
  * @author Ries
  */
 public class Tabs extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Tabs
-     */
-    public Tabs() {
+	MSystem sys_;
+
+    public Tabs(MSystem sys) {
+    	sys_ = sys;
         initComponents();
     }
 
@@ -27,20 +29,20 @@ public class Tabs extends javax.swing.JPanel {
     private void initComponents() {
 
         jTabbedPane_QPD = new javax.swing.JTabbedPane();
-        qPDPanel2 = new QPDPanel();
-        activationPanel1 = new ActivationPanel();
-        laserParamTab1 = new LaserParamTab();
-        contolPanel2 = new ContolPanel();
+        qPDPanel = new QPDPanel(sys_);
+        activationPanel = new ActivationPanel(sys_);
+        laserParamTab = new LaserParamTab(sys_);
+        controlPanel = new ControlPanel(sys_);
 
         setMaximumSize(new java.awt.Dimension(462, 240));
         setMinimumSize(new java.awt.Dimension(440, 240));
         setPreferredSize(new java.awt.Dimension(462, 240));
 
-        jTabbedPane_QPD.addTab("QPD", qPDPanel2);
-        jTabbedPane_QPD.addTab("Activation", activationPanel1);
-        jTabbedPane_QPD.addTab("Lasers", laserParamTab1);
+        jTabbedPane_QPD.addTab("QPD", qPDPanel);
+        jTabbedPane_QPD.addTab("Activation", activationPanel);
+        jTabbedPane_QPD.addTab("Lasers", laserParamTab);
 
-        contolPanel2.setBorder(null);
+        controlPanel.setBorder(null);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -49,22 +51,22 @@ public class Tabs extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jTabbedPane_QPD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(contolPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTabbedPane_QPD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(contolPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private ActivationPanel activationPanel1;
-    private ContolPanel contolPanel2;
+    private ActivationPanel activationPanel;
+    private ControlPanel controlPanel;
     private javax.swing.JTabbedPane jTabbedPane_QPD;
-    private LaserParamTab laserParamTab1;
-    private QPDPanel qPDPanel2;
+    private LaserParamTab laserParamTab;
+    private QPDPanel qPDPanel;
     // End of variables declaration//GEN-END:variables
 }

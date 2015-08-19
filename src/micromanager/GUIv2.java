@@ -9,7 +9,7 @@ import org.micromanager.api.ScriptInterface;
 
 
 import device.MSystem;
-import swing.FrameGUI;
+import swing.GUIFrame;
 import test.PluginTest;
 
 

@@ -4,17 +4,24 @@
  */
 package swing;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import micromanager.Configuration;
+import device.MSystem;
+
 
 /**
  *
  * @author Ries
  */
-public class ContolPanel extends javax.swing.JPanel {
+public class ControlPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ContolPanel
-     */
-    public ContolPanel() {
+	MSystem sys_;
+	String bpflabel_ = Configuration.servokeys[1];
+	String astiglabel_ = Configuration.servokeys[2];
+	
+	public ControlPanel(MSystem sys) {
+    	sys_ = sys;
         initComponents();
     }
 
@@ -32,12 +39,30 @@ public class ContolPanel extends javax.swing.JPanel {
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Control"));
 
-        jToggleButton_bfp.setText("BFP");
+        jToggleButton_bfp.setText(bpflabel_);
         jToggleButton_bfp.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jToggleButton_bfp.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e){
+				if(e.getStateChange()==ItemEvent.SELECTED){
+					sys_.setServoState(bpflabel_, Configuration.bfpPosition);						//// maybe here have a different tab for this
+				}else if(e.getStateChange()==ItemEvent.DESELECTED){
+					sys_.setServoState(bpflabel_, 0);
+				}
+            }
+        });
 
-        jToggleButton_3DA.setText("3DA");
+        jToggleButton_3DA.setText(astiglabel_);
         jToggleButton_3DA.setMargin(new java.awt.Insets(2, 2, 2, 2));
-
+        jToggleButton_3DA.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e){
+				if(e.getStateChange()==ItemEvent.SELECTED){
+					sys_.setServoState(astiglabel_, 1);		
+				}else if(e.getStateChange()==ItemEvent.DESELECTED){
+					sys_.setServoState(astiglabel_, 0);		
+				}
+            }
+        });
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -55,7 +80,8 @@ public class ContolPanel extends javax.swing.JPanel {
                 .addGap(0, 136, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    
+	// Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton jToggleButton_3DA;
     private javax.swing.JToggleButton jToggleButton_bfp;
     // End of variables declaration//GEN-END:variables

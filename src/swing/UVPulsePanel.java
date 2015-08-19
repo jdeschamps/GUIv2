@@ -16,16 +16,18 @@ import java.awt.event.FocusListener;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
+import device.MSystem;
+
 /**
  *
  * @author Ries
  */
 public class UVPulsePanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form UVPulsePanel
-     */
-    public UVPulsePanel() {
+	MSystem sys_;
+
+    public UVPulsePanel(MSystem sys) {
+    	sys_ = sys;
         initComponents();
     }
 
@@ -41,45 +43,6 @@ public class UVPulsePanel extends javax.swing.JPanel {
     	this.setPreferredSize(new Dimension(93, 279));
         setBorder(javax.swing.BorderFactory.createTitledBorder("UV pulse"));
         
-
-    /*    
-        this.setLayout(new GridBagLayout());
-    	GridBagConstraints c = new GridBagConstraints();
-    	c.fill = GridBagConstraints.BOTH;
-
-    	c.insets = new Insets(5,5,0,5);
-
-    	jTextField_pulse = new JTextField("0",5);
-		
-    	jTextField_pulse.setSize(90,20);
-    	jTextField_pulse.setFont(new Font("Arial", Font.BOLD, 16));
-
-    	c.weighty = 0.1;
-
-		c.weightx = 1.0;
-		c.fill = GridBagConstraints.BOTH;
-		c.gridx = 0;
-		c.gridy = 0;
-		
-	
-	
-		this.add(jTextField_pulse,c);
-		
-		logarithmicJSlider1= new LogarithmicJSlider(JSlider.VERTICAL,1, 10000, 10);
-		logarithmicJSlider1.setPaintTicks(true);
-		logarithmicJSlider1.setPaintTrack(true);
-		logarithmicJSlider1.setPaintLabels(true);
-		logarithmicJSlider1.setMajorTickSpacing(10);
-		logarithmicJSlider1.setMinorTickSpacing(10);
-		c.fill = GridBagConstraints.BOTH;
-		c.weighty = 0.7;
-		c.weightx = 1.0;
-		c.gridx = 0;
-		c.gridy = 2;
-		
-		this.add(logarithmicJSlider1,c);
-		c.insets = new Insets(0,5,10,5);
-        */
         jTextField_pulse = new javax.swing.JTextField();
         logarithmicJSlider1 = new LogarithmicJSlider(JSlider.VERTICAL,1, 10000, 10);
 		logarithmicJSlider1.setPaintTicks(true);

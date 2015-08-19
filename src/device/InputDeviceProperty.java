@@ -7,6 +7,7 @@ public class InputDeviceProperty {
 
 	protected String device_;
 	protected String property_;
+	protected double initialvalue_;
 	protected double currentvalue_;
 	protected CMMCore core_;
 	protected Log log_;
@@ -33,6 +34,7 @@ public class InputDeviceProperty {
 		try {
 			val = core_.getProperty(device_, property_);
 			if(isNum(val)){
+				currentvalue_ = Integer.parseInt(val);
 				return Integer.parseInt(val);
 			}
 		} catch (Exception e) {
@@ -40,6 +42,23 @@ public class InputDeviceProperty {
 		}
 
 		return 0;
+	}
+	
+	public double getInitialValue(){
+		return initialvalue_;
+	}
+
+	public double getCurrentValue(){
+		return currentvalue_;
+	}
+	
+	public boolean initialize(){
+		/// check if device loaded
+		
+		initialvalue_ = getValue();
+		/// try catch, if didn't work return false
+
+		return true;
 	}
 	
 	public boolean isEditable(){

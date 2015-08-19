@@ -6,16 +6,18 @@ package swing;
 
 import java.awt.GridLayout;
 
+import device.MSystem;
+
 /**
  *
  * @author Ries
  */
 public class QPDPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form QPDPanel
-     */
-    public QPDPanel() {
+	MSystem sys_;
+
+    public QPDPanel(MSystem sys) {
+    	sys_ = sys;
         initComponents();
     }
 

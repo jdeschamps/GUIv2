@@ -15,8 +15,8 @@ public class Stage extends Device{
 	}
 
 	private void createProperties() {
-		sensorState_ = new DeviceProperty(label_, Configuration.piproplabel[0], 0, 0, 1,core_,log_);
-		position_ = new DeviceProperty(label_, Configuration.piproplabel[1], 0, 0, 100,core_,log_);					/// to check
+		sensorState_ = new DeviceProperty(label_, Configuration.piproplabel[0], 0, 1,core_,log_);
+		position_ = new DeviceProperty(label_, Configuration.piproplabel[1], 0, 100,core_,log_);					/// to check
 		
 		add(sensorState_);
 		add(position_);

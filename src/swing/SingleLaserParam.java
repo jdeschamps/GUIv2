@@ -5,7 +5,16 @@
 package swing;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
+import javax.swing.JComboBox;
+
+import device.MSystem;
 import micromanager.Configuration;
 
 /**
@@ -18,8 +27,10 @@ public class SingleLaserParam extends javax.swing.JPanel {
 	int maxpower_,currentmaxpower_;
 	boolean ispowermodif_;
 	Color color_;
+	MSystem sys_;
 
-    public SingleLaserParam(String label, int maxpower, boolean ispowermodif, Color color) {
+    public SingleLaserParam(MSystem sys, String label, int maxpower, boolean ispowermodif, Color color) {
+    	sys_ = sys;
     	label_ = label;
     	maxpower_ = maxpower;
     	currentmaxpower_ = maxpower;
@@ -49,15 +60,27 @@ public class SingleLaserParam extends javax.swing.JPanel {
         jLabel_behaviour.setText("Behaviour :");
 
         jComboBox_behaviour.setModel(new javax.swing.DefaultComboBoxModel(Configuration.laserbehaviourlabel));
-        jComboBox_behaviour.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_behaviourActionPerformed(evt);
-            }
+        jComboBox_behaviour.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e){
+	    		int val=((JComboBox) e.getSource()).getSelectedIndex();
+	    		sys_.setLaserBehaviour(label_, val);
+	    	}
         });
+        
 
         jLabel_pulse.setText("Pulse length :");
 
         jTextField_pulse.setText("0");
+        jTextField_pulse.addKeyListener(new KeyAdapter(){
+        	@Override
+        	public void keyReleased(KeyEvent ke) {
+        	    String typed = ((javax.swing.JTextField) ke.getSource()).getText();
+        	    if(!typed.matches("\\d+")) {
+        	        return;
+        	    }
+        	    sys_.setLaserPulseLength(label_, Integer.parseInt(typed));
+        	}
+        });    
 
         jLabel_maxpower.setText("Max power (mW) :");
 

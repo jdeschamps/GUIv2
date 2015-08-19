@@ -28,6 +28,8 @@ public class Configuration {
 	
 	public static final String[] laserkeys = {"405","488","638","561"}; 
 	
+	public static final double loweringfactor = 0.9;
+	
 	// QPD
 	public static final String qpdlabel = "Arduino-Input";
 	public static final String[] qpdproplabel = {"AnalogInput10","AnalogInput9","AnalogInput8"}; 
@@ -42,7 +44,7 @@ public class Configuration {
 	public static final String[] proplabel = {"Position","BFP state","3DA state"};
 	public static final int[] numposservo = {5,4,2};
 	public static final String[] servokeys = {"FW","BFP","3DA"};
-	
+	public static final int bfpPosition = 3;															/// here matters
 
 	//////////////////////////////////////////////
 	//// GUI

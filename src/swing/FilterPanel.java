@@ -6,6 +6,7 @@ package swing;
 
 import javax.swing.ButtonGroup;
 
+import device.MSystem;
 import micromanager.Configuration;
 
 /**
@@ -14,10 +15,10 @@ import micromanager.Configuration;
  */
 public class FilterPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form FilterPanel
-     */
-    public FilterPanel() {
+	MSystem sys_;
+
+    public FilterPanel(MSystem sys) {
+    	sys_ = sys;
         initComponents();
     }
 
@@ -115,27 +116,27 @@ public class FilterPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton_filter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter1ActionPerformed
-        // TODO add your handling code here:
+    	sys_.setServoState(Configuration.servokeys[0], 0);
     }//GEN-LAST:event_jToggleButton_filter1ActionPerformed
 
     private void jToggleButton_filter2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter2ActionPerformed
-        // TODO add your handling code here:
+    	sys_.setServoState(Configuration.servokeys[0], 1);
     }//GEN-LAST:event_jToggleButton_filter2ActionPerformed
 
     private void jToggleButton_filter3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter3ActionPerformed
-        // TODO add your handling code here:
+    	sys_.setServoState(Configuration.servokeys[0], 2);
     }//GEN-LAST:event_jToggleButton_filter3ActionPerformed
 
     private void jToggleButton_filter4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter4ActionPerformed
-        // TODO add your handling code here:
+    	sys_.setServoState(Configuration.servokeys[0], 3);
     }//GEN-LAST:event_jToggleButton_filter4ActionPerformed
 
     private void jToggleButton_filter5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter5ActionPerformed
-        // TODO add your handling code here:
+    	sys_.setServoState(Configuration.servokeys[0], 4);
     }//GEN-LAST:event_jToggleButton_filter5ActionPerformed
 
     private void jToggleButton_filter6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter6ActionPerformed
-        // TODO add your handling code here:
+    	sys_.setServoState(Configuration.servokeys[0], 5);
     }//GEN-LAST:event_jToggleButton_filter6ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

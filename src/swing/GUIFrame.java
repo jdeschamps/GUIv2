@@ -4,16 +4,18 @@
  */
 package swing;
 
+import device.MSystem;
+
 /**
  *
  * @author Ries
  */
 public class GUIFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GUIFrame
-     */
-    public GUIFrame() {
+	MSystem sys_;
+
+    public GUIFrame(MSystem sys) {
+    	sys_ = sys;
         initComponents();
     }
 
@@ -26,29 +28,16 @@ public class GUIFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        focusPanel1 = new FocusPanel();
-        opticsPanel2 = new OpticsPanel();
-        focusPanel3 = new FocusPanel();
-        tabs2 = new Tabs();
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        opticsPanel = new OpticsPanel(sys_);
+        focusPanel = new FocusPanel(sys_);
+        tabs = new Tabs(sys_);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(opticsPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 290));
-        getContentPane().add(focusPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, -1, -1));
-        getContentPane().add(tabs2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 460, 250));
+        getContentPane().add(opticsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 290));
+        getContentPane().add(focusPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, -1, -1));
+        getContentPane().add(tabs, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 460, 250));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -83,15 +72,13 @@ public class GUIFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUIFrame().setVisible(true);
+                new GUIFrame(new MSystem()).setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private FocusPanel focusPanel1;
-    private FocusPanel focusPanel3;
-    private javax.swing.JPanel jPanel1;
-    private OpticsPanel opticsPanel2;
-    private Tabs tabs2;
+    private FocusPanel focusPanel;
+    private OpticsPanel opticsPanel;
+    private Tabs tabs;
     // End of variables declaration//GEN-END:variables
 }

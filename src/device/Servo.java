@@ -17,7 +17,7 @@ public class Servo extends Device{
 	}
 	
 	private void createProperties() {
-		position_ = new DeviceProperty(label_, prop_, 0, 0, nPos_,core_,log_);
+		position_ = new DeviceProperty(label_, prop_, 0, nPos_,core_,log_);
 
 		add(position_);
 	}

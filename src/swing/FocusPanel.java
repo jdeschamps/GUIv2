@@ -6,6 +6,11 @@ package swing;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import micromanager.Configuration;
+import device.MSystem;
 
 /**
  *
@@ -13,10 +18,10 @@ import java.awt.GridLayout;
  */
 public class FocusPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form FocusPanel
-     */
-    public FocusPanel() {
+	MSystem sys_;
+
+    public FocusPanel(	MSystem sys) {
+    	sys_ = sys;
         initComponents();
     }
 
@@ -32,7 +37,7 @@ public class FocusPanel extends javax.swing.JPanel {
         jPanel_controls = new javax.swing.JPanel();
         jTextField_position = new javax.swing.JTextField();
         jToggleButton_lock = new javax.swing.JToggleButton();
-        jToggleButton3 = new javax.swing.JToggleButton();
+        jToggleButton_monitor = new javax.swing.JToggleButton();
         jLabel_position = new javax.swing.JLabel();
         jPanel_graph = new javax.swing.JPanel();
 
@@ -42,23 +47,30 @@ public class FocusPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(462, 168));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
-        jTextField_position.setText("0");
+        jTextField_position.setText(String.valueOf(sys_.getPIPosition()));
 
         jToggleButton_lock.setText("Lock");
         jToggleButton_lock.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_lock.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton_lockActionPerformed(evt);
+        jToggleButton_lock.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e){
+				if(e.getStateChange()==ItemEvent.SELECTED){
+					sys_.setStageSensor(1);
+				}else if(e.getStateChange()==ItemEvent.DESELECTED){
+					sys_.setStageSensor(0);
+				}
             }
         });
 
-        jToggleButton3.setText("Monitor");
-        jToggleButton3.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton3ActionPerformed(evt);
-            }
+
+        jToggleButton_monitor.setText("Monitor");
+        jToggleButton_monitor.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jToggleButton_monitor.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e){
+	
+					// implement
+			}
         });
+
 
         jLabel_position.setText("Position:");
 
@@ -69,7 +81,7 @@ public class FocusPanel extends javax.swing.JPanel {
             .addGroup(jPanel_controlsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_controlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addComponent(jToggleButton_monitor, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                     .addComponent(jToggleButton_lock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel_controlsLayout.createSequentialGroup()
                         .addComponent(jLabel_position)
@@ -85,7 +97,7 @@ public class FocusPanel extends javax.swing.JPanel {
                 .addGap(3, 3, 3)
                 .addComponent(jTextField_position, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jToggleButton_monitor, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jToggleButton_lock, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -111,20 +123,12 @@ public class FocusPanel extends javax.swing.JPanel {
         add(jPanel_graph);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton_lockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_lockActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton_lockActionPerformed
-
-    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton3ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel_position;
     private javax.swing.JPanel jPanel_controls;
     private javax.swing.JPanel jPanel_graph;
     private javax.swing.JTextField jTextField_position;
-    private javax.swing.JToggleButton jToggleButton3;
+    private javax.swing.JToggleButton jToggleButton_monitor;
     private javax.swing.JToggleButton jToggleButton_lock;
     // End of variables declaration//GEN-END:variables
 }

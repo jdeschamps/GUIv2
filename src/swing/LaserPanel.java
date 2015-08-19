@@ -4,6 +4,7 @@
  */
 package swing;
 
+import device.MSystem;
 import micromanager.Configuration;
 
 /**
@@ -12,10 +13,10 @@ import micromanager.Configuration;
  */
 public class LaserPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form LaserPanel
-     */
-    public LaserPanel() {
+	MSystem sys_;
+
+    public LaserPanel(MSystem sys) {
+    	sys_ = sys;
         initComponents();
     }
 
@@ -27,10 +28,10 @@ public class LaserPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        laserControl1 = new SingleLaserControl(Configuration.laserkeys[0],Configuration.uv);
-        laserControl2 = new SingleLaserControl(Configuration.laserkeys[1],Configuration.blue);
-        laserControl3 = new SingleLaserControl(Configuration.laserkeys[3],Configuration.green);
-        laserControl4 = new SingleLaserControl(Configuration.laserkeys[2],Configuration.red);
+        laserControl1 = new SingleLaserControl(sys_,Configuration.laserkeys[0],Configuration.uv);
+        laserControl2 = new SingleLaserControl(sys_,Configuration.laserkeys[1],Configuration.blue);
+        laserControl3 = new SingleLaserControl(sys_,Configuration.laserkeys[3],Configuration.green);
+        laserControl4 = new SingleLaserControl(sys_,Configuration.laserkeys[2],Configuration.red);
 
         setLayout(new java.awt.GridBagLayout());
         add(laserControl1, new java.awt.GridBagConstraints());
