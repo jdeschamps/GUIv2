@@ -156,7 +156,7 @@ public class LogarithmicJSlider extends JSlider {
                     (int) Math.log(minValue) + valueFromTrackTop;
             }
             
-        	System.out.println(yPos+" "+value);
+        	//System.out.println(yPos+" "+value);
 
             return value;
 

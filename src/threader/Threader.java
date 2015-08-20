@@ -93,26 +93,24 @@ public class Threader {
 		
 		public UIupdater(){
 			result = new Double[2];
-			pig = frame_.getFocusGraph();
-			qpdg1 = frame_.getQPDGraph1();
-			qpdg2 = frame_.getQPDGraph2();
-			qpdg3 = frame_.getQPDGraph3();
-			uvg = frame_.getNGraph();
-			uvlgs = frame_.getUVSlider();
-			uvjtf = frame_.getUVtext();
 		}
 
 		@Override
 		protected Integer doInBackground() throws Exception {
+			int counter = 0;
 			while(running_ && !isCancelled()){
+				System.out.println("Round "+counter);
 				if(pim_.isRunning()){
+					System.out.println("update pi");
 					result[0] = (double) 0;
 					pim_.refresh();
 					result[1] = pim_.getOutput(0);
-					publish();
+					System.out.println(result[0]+" "+result[1]);
+					publish(result);
 				}
 
 				if(qpdm_.isRunning()){
+					System.out.println("update qpd");
 					for(int i=0;i<qpdm_.getNOutput();i++){
 						result[0] = (double) i+1;
 						qpdm_.refresh();
@@ -122,6 +120,7 @@ public class Threader {
 				}
 
 				if(uva_.isRunning()){
+					System.out.println("update uv");
 					uva_.refresh();
 					result[0] = (double) 4;
 					result[1] = uva_.getOutput(0);
@@ -130,16 +129,27 @@ public class Threader {
 					result[1] = uva_.getOutput(1);
 					publish(result);
 				}
-				Thread.sleep(400);
+				counter++;
+				Thread.sleep(1000);
 			}
-			return null;
+			return 1;
 		}
 		
 		  @Override
 		  protected void process(List<Double[]> chunks) {
+			  pig = frame_.getFocusGraph();
+			  qpdg1 = frame_.getQPDGraph1();
+			  qpdg2 = frame_.getQPDGraph2();
+			  qpdg3 = frame_.getQPDGraph3();
+			  uvg = frame_.getNGraph();
+			  uvlgs = frame_.getUVSlider();
+			  uvjtf = frame_.getUVtext();
+
+			  System.out.println(chunks.size());
 			  for(Double[] result : chunks){
 				  switch(result[0].intValue()){
 				  case 0:	// PI pos
+					  System.out.println("In evt: "+result[0]+" "+result[1]);
 					  pig.addPoint((int) (100*result[1]));
 					  pig.repaint();
 					  break;

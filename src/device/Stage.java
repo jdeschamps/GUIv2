@@ -9,14 +9,14 @@ public class Stage extends Device{
 	DeviceProperty sensorState_;
 	DeviceProperty position_;
 
-	Stage(String label, CMMCore core, Log log) {
+	public Stage(String label, CMMCore core, Log log) {
 		super(label, core, log);
 		createProperties();
 	}
 
 	private void createProperties() {
-		sensorState_ = new DeviceProperty(label_, Configuration.piproplabel[0], 0, 1,core_,log_);
-		position_ = new DeviceProperty(label_, Configuration.piproplabel[1], 0, 100,core_,log_);					/// to check
+		sensorState_ = new DeviceProperty(label_, Configuration.piproplabel[0], 0, 1,core_,log_,false);
+		position_ = new DeviceProperty(label_, Configuration.piproplabel[1], 0, 100,core_,log_,false);					/// to check
 		
 		add(sensorState_);
 		add(position_);
@@ -31,7 +31,13 @@ public class Stage extends Device{
 				log_.writeToLog(label_+" : error setting focus device "+Configuration.smaractlabel);
 			}
 		} else if(val==0){
-			setProperty(sensorState_.getPropertyName(),val);							/// maybe modify directly the object
+			//setProperty(sensorState_.getPropertyName(),val);							/// maybe modify directly the object
+			try {
+				core_.setProperty("PIZStage", "External sensor", 0);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			try {
 				core_.setFocusDevice("PIZStage");
 			} catch (Exception e) {
@@ -44,7 +50,13 @@ public class Stage extends Device{
 	
 	public void setPosition(double val){
 		if(val>=position_.getMinValue() && val<=position_.getMaxValue() ){
-			setProperty(position_.getPropertyName(),val);
+			//setProperty(position_.getPropertyName(),val);
+			try {
+				core_.setProperty("PIZStage", "Position", val);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
 			log_.writeToLog(label_+" : Invalid position requested ("+val+")");
 		}

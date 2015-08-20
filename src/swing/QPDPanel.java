@@ -5,7 +5,10 @@
 package swing;
 
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
+import threader.Threader;
 import device.MSystem;
 
 /**
@@ -15,9 +18,11 @@ import device.MSystem;
 public class QPDPanel extends javax.swing.JPanel {
 
 	MSystem sys_;
-
-    public QPDPanel(MSystem sys) {
+	Threader th_;
+	
+    public QPDPanel(MSystem sys, Threader th) {
     	sys_ = sys;
+    	th_ = th;
         initComponents();
     }
 
@@ -69,9 +74,13 @@ public class QPDPanel extends javax.swing.JPanel {
         jPanel_2Dgraph.add(graph3);
 
         jToggleButton_monitor.setText("Monitor");
-        jToggleButton_monitor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton_monitorActionPerformed(evt);
+        jToggleButton_monitor.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e){
+				if(e.getStateChange()==ItemEvent.SELECTED){
+					th_.startUpdater("QPD");
+				}else if(e.getStateChange()==ItemEvent.DESELECTED){
+					th_.stopUpdater("QPD");
+				}
             }
         });
 
@@ -97,9 +106,6 @@ public class QPDPanel extends javax.swing.JPanel {
         add(jPanel_right);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton_monitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_monitorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton_monitorActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public Graph graph1, graph2, graph3;

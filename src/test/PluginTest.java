@@ -28,6 +28,8 @@ public class PluginTest implements Runnable {
 	QPDmonitor qpdm;
 	UVautomator uva;
 	
+	CMMCore cm;
+	
 	public PluginTest(Log log, MSystem sys){
 		log_ = log;
 		sys_ = sys;
@@ -35,9 +37,43 @@ public class PluginTest implements Runnable {
 	
 	@Override
 	public void run() {
-		testDevices();
-		testUpdaters();
-		testGUI();
+		//testDevices();
+		//testUpdaters();
+		//testGUI();
+		
+		cm = sys_.getCore();
+		//testFunctions();
+	}
+	
+	public void testFunctions(){
+		
+		System.out.println("---------------------");
+		try {
+
+			QPD qpd_ = new QPD(Configuration.qpdlabel,cm,log_);
+			Stage pi_ = new Stage(Configuration.pilabel,cm,log_);
+			Laser l405_ = new Laser(Configuration.laserlabel[0], Configuration.ardlaserlabel[0],cm,log_);
+			SSLaser l561_ = new SSLaser(Configuration.sslaserlabel, Configuration.ardlaserlabel[3], Configuration.ard2laserlabel,cm,log_);
+			Servo fw_ = new Servo(Configuration.servolabel[0], Configuration.proplabel[0], Configuration.numposservo[0],cm,log_);
+			Servo bfp_ = new Servo(Configuration.servolabel[1], Configuration.proplabel[1], Configuration.numposservo[1],cm,log_);
+			Servo astig_ = new Servo(Configuration.servolabel[2], Configuration.proplabel[2], Configuration.numposservo[2],cm,log_);
+			
+			System.out.println("----Start-------");
+			fw_.setState(1);
+			pause(3);
+			fw_.setState(3);
+			pause(3);
+			cm.setProperty("MaestroServo", "Position", 1740);
+			pause(3);
+			cm.setProperty("MaestroServo", "Position", 1250);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
 	}
 
 	private void testDevices(){

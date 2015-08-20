@@ -136,7 +136,7 @@ public class FilterPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jToggleButton_filter5ActionPerformed
 
     private void jToggleButton_filter6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter6ActionPerformed
-    	sys_.setServoState(Configuration.servokeys[0], 5);
+    	sys_.setServoState(Configuration.servokeys[0], 4);
     }//GEN-LAST:event_jToggleButton_filter6ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

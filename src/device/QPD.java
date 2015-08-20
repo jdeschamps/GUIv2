@@ -10,7 +10,7 @@ public class QPD extends Device{
 	InputDeviceProperty signalY_;
 	InputDeviceProperty signalS_;
 	
-	QPD(String label, CMMCore core, Log log) {
+	public QPD(String label, CMMCore core, Log log) {
 		super(label,core,log);
 		createProperties();
 	}

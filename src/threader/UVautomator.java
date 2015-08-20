@@ -27,7 +27,7 @@ public class UVautomator extends Updater{
 	@Override
 	public void update() {
 		// update uv pulse
-		((Laser) device_).setPulseLength(this.getOutput(0));
+		((Laser) device_).setPulseLength(this.getOutput(1));
 	}
 
 }

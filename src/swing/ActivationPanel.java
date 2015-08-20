@@ -5,7 +5,10 @@
 package swing;
 
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
+import threader.Threader;
 import device.MSystem;
 
 /**
@@ -15,9 +18,11 @@ import device.MSystem;
 public class ActivationPanel extends javax.swing.JPanel {
 
 	MSystem sys_;
-
-    public ActivationPanel(MSystem sys) {
+	Threader th_;
+	
+    public ActivationPanel(MSystem sys, Threader th) {
     	sys_ = sys;
+    	th_ = th;
         initComponents();
     }
 
@@ -50,9 +55,13 @@ public class ActivationPanel extends javax.swing.JPanel {
 
         jToggleButton_activate.setText("Activate");
         jToggleButton_activate.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_activate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton_activateActionPerformed(evt);
+        jToggleButton_activate.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e){
+				if(e.getStateChange()==ItemEvent.SELECTED){
+					th_.startUpdater("UV");
+				}else if(e.getStateChange()==ItemEvent.DESELECTED){
+					th_.stopUpdater("UV");
+				}
             }
         });
 
@@ -179,10 +188,6 @@ public class ActivationPanel extends javax.swing.JPanel {
 
         add(jPanel_bottom, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 320, 50));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jToggleButton_activateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_activateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton_activateActionPerformed
 
     private void jButton_GetNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GetNActionPerformed
         // TODO add your handling code here:

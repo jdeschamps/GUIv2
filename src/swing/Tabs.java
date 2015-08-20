@@ -4,6 +4,7 @@
  */
 package swing;
 
+import threader.Threader;
 import device.MSystem;
 
 /**
@@ -13,9 +14,11 @@ import device.MSystem;
 public class Tabs extends javax.swing.JPanel {
 
 	MSystem sys_;
-
-    public Tabs(MSystem sys) {
+	Threader th_;
+	
+    public Tabs(MSystem sys, Threader th) {
     	sys_ = sys;
+    	th_ = th;
         initComponents();
     }
 
@@ -29,8 +32,8 @@ public class Tabs extends javax.swing.JPanel {
     private void initComponents() {
 
         jTabbedPane_QPD = new javax.swing.JTabbedPane();
-        qPDPanel = new QPDPanel(sys_);
-        activationPanel = new ActivationPanel(sys_);
+        qPDPanel = new QPDPanel(sys_,th_);
+        activationPanel = new ActivationPanel(sys_,th_);
         laserParamTab = new LaserParamTab(sys_);
         controlPanel = new ControlPanel(sys_);
 

@@ -59,9 +59,9 @@ public class SingleLaserControl extends javax.swing.JPanel {
         jToggleButton_laserOperation.setBorder(null);
         jToggleButton_laserOperation.setFocusable(false);
         jToggleButton_laserOperation.setContentAreaFilled(false);
-        jToggleButton_laserOperation.setIcon(new ImageIcon("C:/Users/Ries/Desktop/MM/Micro-Manager-1.4.21/off.png"));
-        jToggleButton_laserOperation.setSelectedIcon(new ImageIcon("C:/Users/Ries/Desktop/MM/Micro-Manager-1.4.21/on.png"));
-        jToggleButton_laserOperation.setDisabledIcon(new ImageIcon("C:/Users/Ries/Desktop/MM/Micro-Manager-1.4.21/off.png"));
+        jToggleButton_laserOperation.setIcon(new ImageIcon("off.png"));
+        jToggleButton_laserOperation.setSelectedIcon(new ImageIcon("on.png"));
+        jToggleButton_laserOperation.setDisabledIcon(new ImageIcon("off.png"));
         
         jToggleButton_laserOperation.addItemListener(new ItemListener(){
 			@Override

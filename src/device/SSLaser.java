@@ -14,7 +14,7 @@ public class SSLaser extends Device{
 	DeviceProperty powerMax_;
 	
 	
-	SSLaser(String label, String arduinolabel1, String arduinolabel2, CMMCore core, Log log){
+	public SSLaser(String label, String arduinolabel1, String arduinolabel2, CMMCore core, Log log){
 		super(label,core,log);
 		arduinoLabel1_ = arduinolabel1;
 		arduinoLabel2_ = arduinolabel2;
@@ -22,11 +22,11 @@ public class SSLaser extends Device{
 	}
 	
 	private void createProperties() {
-		operation_ = new DeviceProperty(label_, Configuration.coboltproplabel[0], 0, 1,core_,log_);
-		powerPerc_ = new DeviceProperty(arduinoLabel2_, Configuration.ard2proplabel, 0, 100,core_,log_);
-		powerMax_ = new DeviceProperty(label_, Configuration.coboltproplabel[0], 300, 300,core_,log_);
-		behaviour_ = new DeviceProperty(arduinoLabel1_, Configuration.ardproplabel[0], 0, 4,core_,log_);
-		pulse_ = new DeviceProperty(arduinoLabel1_, Configuration.ardproplabel[1], 0, Configuration.ardlasermaxpulse,core_,log_);
+		operation_ = new DeviceProperty(label_, Configuration.coboltproplabel[0], 0, 1,core_,log_,true);
+		powerPerc_ = new DeviceProperty(arduinoLabel2_, Configuration.ard2proplabel, 0, 100,core_,log_,false);
+		powerMax_ = new DeviceProperty(label_, Configuration.coboltproplabel[0], 0, 300,core_,log_,false);
+		behaviour_ = new DeviceProperty(arduinoLabel1_, Configuration.ardproplabel[0], 0, 4,core_,log_,false);
+		pulse_ = new DeviceProperty(arduinoLabel1_, Configuration.ardproplabel[1], 0, Configuration.ardlasermaxpulse,core_,log_,false);
 
 		properties_.add(operation_);
 		properties_.add(powerPerc_);
@@ -44,9 +44,11 @@ public class SSLaser extends Device{
 	}
 
 	public void setOperation(int val){	
-		if(val>=operation_.getMinValue() && val<=operation_.getMaxValue()){
-			setProperty(operation_.getPropertyName(),val);										/// maybe modify directly the object
-		} else {
+		if(val==1){
+			setProperty(operation_.getPropertyName(),"On");										/// maybe modify directly the object
+		} else if(val==0){
+			setProperty(operation_.getPropertyName(),"Off");	
+		}else {
 			log_.writeToLog(label_+" : Invalid operation requested ("+val+")");
 		}
 	}

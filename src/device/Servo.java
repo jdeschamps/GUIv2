@@ -1,5 +1,6 @@
 package device;
 
+import micromanager.Configuration;
 import micromanager.Log;
 import mmcorej.CMMCore;
 
@@ -9,7 +10,7 @@ public class Servo extends Device{
 	String prop_;							////// to be uniformized!!!! (same state name in the device adapters)
 	DeviceProperty position_;
 	
-	Servo(String label, String prop, int nPos, CMMCore core, Log log) {
+	public Servo(String label, String prop, int nPos, CMMCore core, Log log) {
 		super(label,core,log);
 		prop_ = prop;
 		nPos_ = nPos;
@@ -17,8 +18,11 @@ public class Servo extends Device{
 	}
 	
 	private void createProperties() {
-		position_ = new DeviceProperty(label_, prop_, 0, nPos_,core_,log_);
-
+		if(!label_.equals(Configuration.servolabel[0])){
+			position_ = new DeviceProperty(label_, prop_, 0, nPos_,core_,log_,false);
+		} else {
+			position_ = new DeviceProperty(label_, prop_, 0, 2000,core_,log_,false);
+		}
 		add(position_);
 	}
 
@@ -31,10 +35,33 @@ public class Servo extends Device{
 	}
 
 	public void setState(int val){
-		if(val>=0 && val<nPos_){
+		if(!label_.equals(Configuration.servolabel[0])){
+			if(val>=0 && val<nPos_){
+				setProperty(position_.getPropertyName(), val);	
+				return;
+			} else {
+				log_.writeToLog(label_+" : Invalid position requested ("+val+")");
+			}
+		} else {			// maestro
+			switch(val){
+			case 0:
+				val = Configuration.maestropos[0];
+				break;
+			case 1:
+				val = Configuration.maestropos[1];
+				break;
+			case 2:
+				val = Configuration.maestropos[2];
+				break;
+			case 3:
+				val = Configuration.maestropos[3];
+				break;
+			default:
+				val = Configuration.maestropos[4];
+				break;
+			}
 			setProperty(position_.getPropertyName(), val);									
-		} else {
-			log_.writeToLog(label_+" : Invalid position requested ("+val+")");
+			return;
 		}
 	}
 	

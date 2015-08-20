@@ -41,10 +41,8 @@ public class MSystem {
 		fw_ = new Servo(Configuration.servolabel[0], Configuration.proplabel[0], Configuration.numposservo[0],core_,log_);
 		bfp_ = new Servo(Configuration.servolabel[1], Configuration.proplabel[1], Configuration.numposservo[1],core_,log_);
 		astig_ = new Servo(Configuration.servolabel[2], Configuration.proplabel[2], Configuration.numposservo[2],core_,log_);
-
-		System.out.println("Try interacting with qpd \n");
-		System.out.println("Try interacting with qpd: "+qpd_.getXSignal()+" \n");
 		
+		deviceList_ = new ArrayList<Device>(9);
 		deviceList_.add(qpd_);
 		deviceList_.add(pi_);
 		deviceList_.add(l405_);
@@ -97,6 +95,10 @@ public class MSystem {
 		}
 		
 		return val;
+	}
+	
+	public CMMCore getCore(){
+		return core_;
 	}
 	
 	//////////////////////////////////////////////////////

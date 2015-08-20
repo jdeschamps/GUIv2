@@ -86,6 +86,16 @@ public class SingleLaserParam extends javax.swing.JPanel {
 
         jTextField_maxpower.setText(Integer.toString(maxpower_));
         jTextField_maxpower.setEditable(ispowermodif_);
+        jTextField_maxpower.addKeyListener(new KeyAdapter(){
+        	@Override
+        	public void keyReleased(KeyEvent ke) {
+        	    String typed = ((javax.swing.JTextField) ke.getSource()).getText();
+        	    if(!typed.matches("\\d+")) {
+        	        return;
+        	    }
+        	    sys_.setLaserMaxPower(Integer.parseInt(typed));
+        	}
+        });    
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

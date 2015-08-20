@@ -1,9 +1,12 @@
 package micromanager;
 
+import javax.swing.SwingUtilities;
+
 import mmcorej.CMMCore;
 
 import org.micromanager.api.ScriptInterface;
 //import org.micromanager.MainFrame;
+
 
 
 
@@ -21,6 +24,7 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
    private Log log_;
    private MSystem sys_;
    private PluginTest pt_;
+   private GUIFrame frame;
    
    public void dispose() {
       /*
@@ -39,25 +43,25 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
       log_.writeToLog("-------------  New session  ----------------");
       sys_ = new MSystem(core_,log_);
       
+      
       pt_ = new PluginTest(log_,sys_);
    }
 
 
    public void show() {
 	   
-      /* SwingUtilities.invokeLater(new Runnable()								/// this is the right way to do it
+      SwingUtilities.invokeLater(new Runnable()								/// this is the right way to do it
        {
            @Override
            public void run()
            {
-               new Main();
+        	   frame = new GUIFrame(sys_, log_);
+        	   frame.setVisible(true);
            }
-       }); */
+       }); 
 	   
-      //frame = new FrameGUI(gui_);
-      //frame.setVisible(true);
 	   pt_.run();
-	   dispose();
+	   //dispose();
    }
 
 

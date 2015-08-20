@@ -27,8 +27,8 @@ public abstract class Device {
 		properties_.add(d);
 	}
 	
-	public void addProperty(String label, String property, int min, int max){
-		properties_.add(new DeviceProperty(label,property,min,max,core_,log_));
+	public void addProperty(String label, String property, int min, int max, boolean isstring){
+		properties_.add(new DeviceProperty(label,property,min,max,core_,log_,isstring));
 	}
 
 	public void initialize(){
@@ -56,8 +56,19 @@ public abstract class Device {
 		}
 		return false;
 	}	
-	
+
 	public boolean setProperty(String property, double val){
+		for(InputDeviceProperty p:properties_){
+			if(p.getPropertyName().equals(property)){
+				if(p.isEditable()){
+					return ((DeviceProperty) p).setValue(val);	
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean setProperty(String property, String val){
 		for(InputDeviceProperty p:properties_){
 			if(p.getPropertyName().equals(property)){
 				if(p.isEditable()){

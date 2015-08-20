@@ -213,7 +213,7 @@ public class Graph extends JComponent{
             
             if(rightdisp_){
             	ga.setFont(new Font("Arial", Font.BOLD, 13));
-            	ga.drawString(String.valueOf(getLastY()), 2*woffset+width_,hoffset+height_/2);
+            	ga.drawString(String.valueOf(getLastY()/100), woffset+width_,hoffset+height_/2);
             	ga.setFont(new Font("Arial", Font.PLAIN, 12));
             }
             

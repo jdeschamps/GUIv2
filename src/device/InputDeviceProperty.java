@@ -29,15 +29,18 @@ public class InputDeviceProperty {
 	}
 	
 	public double getValue(){
-																/// check if device loaded
+														/// check if device loaded
 		String val;
-		System.out.print("Try getting property: "+device_+" "+property_+"\n");
 		try {
 			val = core_.getProperty(device_, property_);
-			if(isNum(val)){
-				currentvalue_ = Integer.parseInt(val);
-				return Integer.parseInt(val);
-			}
+			if(isDouble(val)){
+				currentvalue_ = Double.parseDouble(val);
+				return currentvalue_;
+			} else if(val.equals("On")){
+				return 1;
+			} else if(val.equals("Off")){
+				return 0;
+			} 
 		} catch (Exception e) {
 			log_.writeToLog(device_+" : error getting "+property_);
 		}
@@ -66,15 +69,50 @@ public class InputDeviceProperty {
 		return false;
 	}
 	
-	public static boolean isNum(String strNum) {
-	    boolean ret = true;
-	    try {
-
-	        Double.parseDouble(strNum);
-
-	    }catch (NumberFormatException e) {
-	        ret = false;
+	public boolean isDouble(String value)
+	{        
+	    boolean seenDot = false;
+	    boolean seenExp = false;
+	    boolean justSeenExp = false;
+	    boolean seenDigit = false;
+	    for (int i=0; i < value.length(); i++)
+	    {
+	        char c = value.charAt(i);
+	        if (c >= '0' && c <= '9')
+	        {
+	            seenDigit = true;
+	            continue;
+	        }
+	        if ((c == '-' || c=='+') && (i == 0 || justSeenExp))
+	        {
+	            continue;
+	        }
+	        if (c == '.' && !seenDot)
+	        {
+	            seenDot = true;
+	            continue;
+	        }
+	        justSeenExp = false;
+	        if ((c == 'e' || c == 'E') && !seenExp)
+	        {
+	            seenExp = true;
+	            justSeenExp = true;
+	            continue;
+	        }
+	        return false;
 	    }
-	    return ret;
+	    if (!seenDigit)
+	    {
+	        return false;
+	    }
+	    try
+	    {
+	        Double.parseDouble(value);
+	        return true;
+	    }
+	    catch (NumberFormatException e)
+	    {
+	        return false;
+	    }
 	}
 }

@@ -8,7 +8,10 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
+import threader.Threader;
 import micromanager.Configuration;
 import device.MSystem;
 
@@ -19,9 +22,11 @@ import device.MSystem;
 public class FocusPanel extends javax.swing.JPanel {
 
 	MSystem sys_;
-
-    public FocusPanel(	MSystem sys) {
+	Threader th_;
+	
+    public FocusPanel(MSystem sys, Threader th) {
     	sys_ = sys;
+    	th_ = th;
         initComponents();
     }
 
@@ -48,8 +53,17 @@ public class FocusPanel extends javax.swing.JPanel {
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
         
         
-        //jTextField_position.setText(String.valueOf(sys_.getPIPosition()));
-
+        jTextField_position.setText(String.valueOf(sys_.getPIPosition()));
+        jTextField_position.addKeyListener(new KeyAdapter(){
+        	@Override
+        	public void keyReleased(KeyEvent ke) {
+        	    String typed = jTextField_position.getText();
+        	    if(!typed.matches("\\d+") || typed.length() > 3) {
+        	        return;
+        	    }
+        	    sys_.setStagePosition(Integer.parseInt(typed));
+        	}
+        });   
         	
         jToggleButton_lock.setText("Lock");
         jToggleButton_lock.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -68,8 +82,11 @@ public class FocusPanel extends javax.swing.JPanel {
         jToggleButton_monitor.setMargin(new java.awt.Insets(2, 2, 2, 2));
         jToggleButton_monitor.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e){
-	
-					// implement
+				if(e.getStateChange()==ItemEvent.SELECTED){
+					th_.startUpdater("PI");
+				}else if(e.getStateChange()==ItemEvent.DESELECTED){
+					th_.stopUpdater("PI");
+				}
 			}
         });
 
@@ -109,7 +126,7 @@ public class FocusPanel extends javax.swing.JPanel {
         
         jPanel_graph.setPreferredSize(new Dimension(378,158));
         jPanel_graph.setLayout(new GridLayout(1, 1));
-        focusGraph = new Graph(300,100,"Pos","time",false,false,true);
+        focusGraph = new Graph(300,100,"Pos","time",true,false,true);
         jPanel_graph.add(focusGraph);
         
     /*    javax.swing.GroupLayout jPanel_graphLayout = new javax.swing.GroupLayout(jPanel_graph);
