@@ -44,6 +44,16 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
 
 
    public void show() {
+	   
+      /* SwingUtilities.invokeLater(new Runnable()								/// this is the right way to do it
+       {
+           @Override
+           public void run()
+           {
+               new Main();
+           }
+       }); */
+	   
       //frame = new FrameGUI(gui_);
       //frame.setVisible(true);
 	   pt_.run();

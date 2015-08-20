@@ -126,8 +126,9 @@ public class ActivationPanel extends javax.swing.JPanel {
             .addGap(0, 160, Short.MAX_VALUE)
         );
 */	
+        graph = new Graph(260,120,"N","time",false,false,true);
         jPanel_graph.setLayout(new GridLayout(1, 1));
-        jPanel_graph.add(new Graph(260,120,"N","time",false,false,true));
+        jPanel_graph.add(graph);
         add(jPanel_graph, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 320, 160));
 
         jLabel_cutoff.setText("Cutoff:");
@@ -196,6 +197,7 @@ public class ActivationPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jToggleButton_autocutoffActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public Graph graph;
     private javax.swing.JButton jButton_GetN;
     private javax.swing.JButton jButton_getcutoff;
     private javax.swing.JLabel jLabel_param1;

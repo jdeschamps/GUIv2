@@ -7,7 +7,7 @@ public class Log {
 	String path;
 	txtWriter w;
 	 
-	Log(){
+	public Log(){
 		path = Configuration.logpath;
 		w = new txtWriter(new File(path));
 	}

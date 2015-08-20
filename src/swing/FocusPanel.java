@@ -46,9 +46,11 @@ public class FocusPanel extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(462, 168));
         setPreferredSize(new java.awt.Dimension(462, 168));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
+        
+        
+        //jTextField_position.setText(String.valueOf(sys_.getPIPosition()));
 
-        jTextField_position.setText(String.valueOf(sys_.getPIPosition()));
-
+        	
         jToggleButton_lock.setText("Lock");
         jToggleButton_lock.setMargin(new java.awt.Insets(2, 2, 2, 2));
         jToggleButton_lock.addItemListener(new ItemListener(){
@@ -107,7 +109,8 @@ public class FocusPanel extends javax.swing.JPanel {
         
         jPanel_graph.setPreferredSize(new Dimension(378,158));
         jPanel_graph.setLayout(new GridLayout(1, 1));
-        jPanel_graph.add(new Graph(300,100,"Pos","time",false,false,true));
+        focusGraph = new Graph(300,100,"Pos","time",false,false,true);
+        jPanel_graph.add(focusGraph);
         
     /*    javax.swing.GroupLayout jPanel_graphLayout = new javax.swing.GroupLayout(jPanel_graph);
         jPanel_graph.setLayout(jPanel_graphLayout);
@@ -124,6 +127,7 @@ public class FocusPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public Graph focusGraph;
     private javax.swing.JLabel jLabel_position;
     private javax.swing.JPanel jPanel_controls;
     private javax.swing.JPanel jPanel_graph;

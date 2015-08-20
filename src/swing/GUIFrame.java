@@ -4,6 +4,11 @@
  */
 package swing;
 
+import javax.swing.JComponent;
+import javax.swing.JTextField;
+
+import micromanager.Log;
+import mmcorej.CMMCore;
 import device.MSystem;
 
 /**
@@ -12,6 +17,7 @@ import device.MSystem;
  */
 public class GUIFrame extends javax.swing.JFrame {
 
+	
 	MSystem sys_;
 
     public GUIFrame(MSystem sys) {
@@ -42,15 +48,44 @@ public class GUIFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    public Graph getFocusGraph(){
+    	return focusPanel.focusGraph;
+    }
+    
+    public Graph getQPDGraph1(){
+    	return tabs.qPDPanel.graph1;
+    }    
+    
+    public Graph getQPDGraph2(){
+    	return tabs.qPDPanel.graph2;
+    }
+    
+    public Graph getQPDGraph3(){
+    	return tabs.qPDPanel.graph3;
+    }
+    
+    public Graph getNGraph(){
+    	return tabs.activationPanel.graph;
+    }
+    
+    public LogarithmicJSlider getUVSlider(){
+    	return opticsPanel.uVPulsePanel.logarithmicJSlider;
+    }
+    
+    public JTextField getUVtext(){
+    	return opticsPanel.uVPulsePanel.jTextField_pulse;
+    }
+    
+    public boolean isUVTextSelected(){
+    	return opticsPanel.uVPulsePanel.isTextSelected();
+    }
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+ /*   public static void main(String args[]) {
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
@@ -67,18 +102,17 @@ public class GUIFrame extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GUIFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new GUIFrame(new MSystem()).setVisible(true);
             }
         });
     }
+*/
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private FocusPanel focusPanel;
-    private OpticsPanel opticsPanel;
-    private Tabs tabs;
+    public FocusPanel focusPanel;
+    public OpticsPanel opticsPanel;
+    public Tabs tabs;
     // End of variables declaration//GEN-END:variables
 }

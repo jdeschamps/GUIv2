@@ -25,5 +25,4 @@ public class QPDmonitor extends Updater{
 	public void update() {
 		// Leave blank
 	}
-
 }

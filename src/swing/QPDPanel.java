@@ -30,6 +30,10 @@ public class QPDPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+    	graph1 = new Graph(120,60,"X","time",false,false,false);
+    	graph2 = new Graph(120,60,"S","time",false,false,false); 
+    	graph3 = new Graph(150,150,"Y","X",false,false,false);
+    	
         jPanel_left = new javax.swing.JPanel();
         jPanel_lefthigh = new javax.swing.JPanel();
         jPanel_leftlow = new javax.swing.JPanel();
@@ -46,13 +50,13 @@ public class QPDPanel extends javax.swing.JPanel {
 
         // high
         jPanel_lefthigh.setLayout(new GridLayout(1, 1));
-        jPanel_lefthigh.add(new Graph(120,60,"X","time",false,false,false));
+        jPanel_lefthigh.add(graph1);
 
         jPanel_left.add(jPanel_lefthigh);
 
         // low
         jPanel_leftlow.setLayout(new GridLayout(1, 1));
-        jPanel_leftlow.add(new Graph(120,60,"S","time",false,false,false));
+        jPanel_leftlow.add(graph2);
         jPanel_left.add(jPanel_leftlow);
 
         add(jPanel_left);
@@ -62,7 +66,7 @@ public class QPDPanel extends javax.swing.JPanel {
         jPanel_2Dgraph.setPreferredSize(new java.awt.Dimension(390, 212));
 
         jPanel_2Dgraph.setLayout(new GridLayout(1, 1));
-        jPanel_2Dgraph.add(new Graph(150,150,"Y","X",false,false,false));
+        jPanel_2Dgraph.add(graph3);
 
         jToggleButton_monitor.setText("Monitor");
         jToggleButton_monitor.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +102,7 @@ public class QPDPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jToggleButton_monitorActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel2;
+    public Graph graph1, graph2, graph3;
     private javax.swing.JPanel jPanel_2Dgraph;
     private javax.swing.JPanel jPanel_left;
     private javax.swing.JPanel jPanel_lefthigh;

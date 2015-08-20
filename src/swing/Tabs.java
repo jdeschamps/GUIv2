@@ -63,10 +63,10 @@ public class Tabs extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private ActivationPanel activationPanel;
+    public ActivationPanel activationPanel;
     private ControlPanel controlPanel;
     private javax.swing.JTabbedPane jTabbedPane_QPD;
     private LaserParamTab laserParamTab;
-    private QPDPanel qPDPanel;
+    public QPDPanel qPDPanel;
     // End of variables declaration//GEN-END:variables
 }

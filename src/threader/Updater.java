@@ -39,6 +39,10 @@ public abstract class Updater {
 		return 0;
 	}
 	
+	public int getNOutput(){
+		return nOut_;
+	}
+	
 	public abstract void refresh();
 	
 	public abstract void update();

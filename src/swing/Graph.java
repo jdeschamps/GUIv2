@@ -1,6 +1,7 @@
 package swing;
 
 import ij.ImagePlus;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -9,8 +10,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import javax.swing.JComponent;
+
 @SuppressWarnings("serial")
-public class Graph extends Component{
+public class Graph extends JComponent{
 	ImagePlus test;	
 	int height_, width_;
 	int xpos, ypos, ymin, ymax, xnew, ynew;
@@ -21,6 +24,7 @@ public class Graph extends Component{
 	BufferedImage img = null;
 	boolean decimal_, display_, rightdisp_;
 	int dec;
+	int counter = 0;
 	
 	public Graph(int width, int height, String s1, String s2,boolean decimal, boolean display, boolean rightdisplay) {
 		height_ = height;
@@ -84,15 +88,16 @@ public class Graph extends Component{
 		
 	}
 	
-	public void addPoint(int x, int y){
+	public void addPoint(int x, int y){									//// not proper here....
 		if(evolution_){
+			counter++;
 			if(X.size() <= width_){
-				X.add(x);
+				X.add(counter);
 				Y.add(y);
 			}else{
 				X.remove(0);
 				Y.remove(0);
-				X.add(x);
+				X.add(counter);
 				Y.add(y);
 			}
 		}else if(!isOutofBoundary(x,y)){
@@ -100,6 +105,19 @@ public class Graph extends Component{
 			ypos = y;
 		}
 		
+	}
+	
+	public void addPoint(int y){		
+		counter++;
+		if(X.size() <= width_){
+			X.add(counter);
+			Y.add(y);
+		}else{
+			X.remove(0);
+			Y.remove(0);
+			X.add(counter);
+			Y.add(y);
+		}
 	}
 	
 	public void getBoundaries(){

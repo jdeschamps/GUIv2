@@ -9,7 +9,7 @@ public class UVautomator extends Updater{
 	double pulse;
 	
 	public UVautomator(Device d) {
-		super(d, 1);
+		super(d, 2);
 		if(!d.getLabel().equals("Luxx405")){
 			// exception!
 		}
@@ -19,7 +19,9 @@ public class UVautomator extends Updater{
 	public void refresh() {
 		// dummy
 		pulse = ((Laser) device_).getPulseLength()+10;
-		output_[0] = pulse;
+		output_[1] = pulse;
+		output_[0] = N;
+		update();
 	}
 
 	@Override

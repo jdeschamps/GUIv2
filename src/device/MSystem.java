@@ -3,6 +3,7 @@ package device;
 import java.util.ArrayList;
 
 import micromanager.Configuration;
+import micromanager.ErrorMessages;
 import micromanager.Log;
 import mmcorej.CMMCore;
 import mmcorej.StrVector;
@@ -26,6 +27,7 @@ public class MSystem {
 		core_ = core;
 		log_ = log;
 		readConfiguration();
+
 		initializeDevices();
 		areDevicesAvailable();
 	}
@@ -82,21 +84,53 @@ public class MSystem {
 	}
 
 	//////////////////////////////////////////////////////
+	////// Special functions
+	public double getExposureTime(){
+		double val = 0;
+		
+		try {
+			val=core_.getExposure();
+		} catch (Exception e) {
+			log_.writeToLog("Error: unable to get exposure time.");
+		}
+		
+		return val;
+	}
+	
+	//////////////////////////////////////////////////////
 	////// QPD
 	public QPD getQPD(){
 		return qpd_;
 	}
 	
 	public double getQPDX(){
-		return qpd_.getXSignal();
+		double val = 0;
+	    try{
+	    	val = qpd_.getXSignal();
+	    } catch(NullPointerException e){
+	    	log_.writeToLog("Error: "+ErrorMessages.NPEerrQPDx);
+	    }
+		return val;
 	}
 	
 	public double getQPDY(){
-		return qpd_.getYSignal();
+		double val = 0;
+	    try{
+	    	val = qpd_.getYSignal();
+	    } catch(NullPointerException e){
+	    	log_.writeToLog("Error: "+ErrorMessages.NPEerrQPDy);
+	    }
+		return val;
 	}
 	
 	public double getQPDS(){
-		return qpd_.getSSignal();
+		double val = 0;
+	    try{
+	    	val = qpd_.getSSignal();
+	    } catch(NullPointerException e){
+	    	log_.writeToLog("Error: "+ErrorMessages.NPEerrQPDs);
+	    }
+		return val;
 	}
 
 	//////////////////////////////////////////////////////
@@ -106,7 +140,23 @@ public class MSystem {
 	}
 
 	public double getPIPosition(){
-		return pi_.getPosition();
+		double val = 0;
+	    try{
+	    	val = pi_.getPosition();
+	    } catch(NullPointerException e){
+	    	log_.writeToLog("Error: "+ErrorMessages.NPEerrPIpos);
+	    }
+		return val;
+	}
+
+	public double getPISensorState(){
+		double val = 0;
+	    try{
+	    	val = pi_.getSensorState();
+	    } catch(NullPointerException e){
+	    	log_.writeToLog("Error: "+ErrorMessages.NPEerrPIsens);
+	    }
+		return val;
 	}
 	
 	public void setStageSensor(int val){
@@ -155,6 +205,10 @@ public class MSystem {
 			d = l638_;
 		} 
 		return d;
+	}
+	
+	public double getUVPulse(){
+		return l405_.getPulseLength();
 	}
 	
 	public void setLaserOperation(String name, int val){
@@ -209,4 +263,8 @@ public class MSystem {
 		l561_.setMaxPower(val);
 	}
 	
+	///////////////////////////////////////
+	public void writeToLog(String s){
+		log_.writeToLog(s);
+	}
 }

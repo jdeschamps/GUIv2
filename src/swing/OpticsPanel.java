@@ -56,6 +56,6 @@ public class OpticsPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private FilterPanel filterPanel;
     private LaserPanel laserPanel;
-    private UVPulsePanel uVPulsePanel;
+    public UVPulsePanel uVPulsePanel;
     // End of variables declaration//GEN-END:variables
 }
