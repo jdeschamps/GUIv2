@@ -3,7 +3,6 @@ package device;
 import java.util.ArrayList;
 
 import micromanager.Configuration;
-import micromanager.ErrorMessages;
 import micromanager.Log;
 import mmcorej.CMMCore;
 import mmcorej.StrVector;
@@ -34,7 +33,7 @@ public class MSystem {
 	
 	private void initializeDevices() {
 		qpd_ = new QPD(Configuration.qpdlabel,core_,log_);
-		pi_ = new Stage(Configuration.qpdlabel,core_,log_);
+		pi_ = new Stage(Configuration.pilabel,core_,log_);
 		l405_ = new Laser(Configuration.laserlabel[0], Configuration.ardlaserlabel[0],core_,log_);
 		l488_ = new Laser(Configuration.laserlabel[1], Configuration.ardlaserlabel[1],core_,log_);
 		l638_ = new Laser(Configuration.laserlabel[2], Configuration.ardlaserlabel[2],core_,log_);
@@ -43,6 +42,9 @@ public class MSystem {
 		bfp_ = new Servo(Configuration.servolabel[1], Configuration.proplabel[1], Configuration.numposservo[1],core_,log_);
 		astig_ = new Servo(Configuration.servolabel[2], Configuration.proplabel[2], Configuration.numposservo[2],core_,log_);
 
+		System.out.println("Try interacting with qpd \n");
+		System.out.println("Try interacting with qpd: "+qpd_.getXSignal()+" \n");
+		
 		deviceList_.add(qpd_);
 		deviceList_.add(pi_);
 		deviceList_.add(l405_);
@@ -108,7 +110,7 @@ public class MSystem {
 	    try{
 	    	val = qpd_.getXSignal();
 	    } catch(NullPointerException e){
-	    	log_.writeToLog("Error: "+ErrorMessages.NPEerrQPDx);
+	    	log_.writeToLog("Error: ");
 	    }
 		return val;
 	}
@@ -118,7 +120,7 @@ public class MSystem {
 	    try{
 	    	val = qpd_.getYSignal();
 	    } catch(NullPointerException e){
-	    	log_.writeToLog("Error: "+ErrorMessages.NPEerrQPDy);
+	    	log_.writeToLog("Error: ");
 	    }
 		return val;
 	}
@@ -128,7 +130,7 @@ public class MSystem {
 	    try{
 	    	val = qpd_.getSSignal();
 	    } catch(NullPointerException e){
-	    	log_.writeToLog("Error: "+ErrorMessages.NPEerrQPDs);
+	    	log_.writeToLog("Error: ");
 	    }
 		return val;
 	}
@@ -144,7 +146,7 @@ public class MSystem {
 	    try{
 	    	val = pi_.getPosition();
 	    } catch(NullPointerException e){
-	    	log_.writeToLog("Error: "+ErrorMessages.NPEerrPIpos);
+	    	log_.writeToLog("Error: ");
 	    }
 		return val;
 	}
@@ -154,7 +156,7 @@ public class MSystem {
 	    try{
 	    	val = pi_.getSensorState();
 	    } catch(NullPointerException e){
-	    	log_.writeToLog("Error: "+ErrorMessages.NPEerrPIsens);
+	    	log_.writeToLog("Error: ");
 	    }
 		return val;
 	}

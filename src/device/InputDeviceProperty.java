@@ -31,6 +31,7 @@ public class InputDeviceProperty {
 	public double getValue(){
 																/// check if device loaded
 		String val;
+		System.out.print("Try getting property: "+device_+" "+property_+"\n");
 		try {
 			val = core_.getProperty(device_, property_);
 			if(isNum(val)){

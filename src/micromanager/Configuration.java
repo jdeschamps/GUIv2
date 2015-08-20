@@ -15,7 +15,7 @@ public class Configuration {
 	
 	// Lasers
 	public static final String[] laserlabel = {"Luxx405","Luxx488","Luxx638"};  
-	public static final String[] ardproplabel = {"L1 trigger","L1 period"}; 
+	public static final String[] ardproplabel = {"Behavior","Pulse length (us)"}; 
 	public static final String[] luxxproplabel = {"Laser Operation Select","Laser Power Set-point Select [%]"};
 	
 	public static final String[] ardlaserlabel = {"A405","A488","A638","A561"};  
@@ -41,7 +41,7 @@ public class Configuration {
 	
 	//Servos
 	public static final String[] servolabel = {"MaestroServo","Arduino-Servo","Arduino-Servo"};
-	public static final String[] proplabel = {"Position","BFP state","3DA state"};
+	public static final String[] proplabel = {"Position","BFP State","3DA state"};
 	public static final int[] numposservo = {5,4,2};
 	public static final String[] servokeys = {"FW","BFP","3DA"};
 	public static final int bfpPosition = 3;															/// here matters
