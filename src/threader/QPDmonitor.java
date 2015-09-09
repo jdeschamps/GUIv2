@@ -9,6 +9,10 @@ public class QPDmonitor extends Updater{
 	
 	public QPDmonitor(Device d) {
 		super(d, 3);
+		
+		X=0;
+		Y=700;
+		S=0;
 	}
 
 	@Override
@@ -16,9 +20,10 @@ public class QPDmonitor extends Updater{
 		X = ((QPD) device_).getXSignal();
 		output_[0] = X;
 		Y = ((QPD) device_).getYSignal();
-		output_[0] = Y;
+		output_[1] = Y;
 		S = ((QPD) device_).getSSignal();
-		output_[0] = S;
+		output_[2] = S;
+		System.out.println(X+" "+Y+" "+S);
 	}
 
 	@Override

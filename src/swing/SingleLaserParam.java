@@ -15,7 +15,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JComboBox;
 
 import device.MSystem;
-import micromanager.Configuration;
+import micromanager.MConfiguration;
 
 /**
  *
@@ -59,7 +59,7 @@ public class SingleLaserParam extends javax.swing.JPanel {
 
         jLabel_behaviour.setText("Behaviour :");
 
-        jComboBox_behaviour.setModel(new javax.swing.DefaultComboBoxModel(Configuration.laserbehaviourlabel));
+        jComboBox_behaviour.setModel(new javax.swing.DefaultComboBoxModel(MConfiguration.laserbehaviourlabel));
         jComboBox_behaviour.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
 	    		int val=((JComboBox) e.getSource()).getSelectedIndex();

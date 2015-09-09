@@ -1,6 +1,6 @@
 package device;
 
-import micromanager.Configuration;
+import micromanager.MConfiguration;
 import micromanager.Log;
 import mmcorej.CMMCore;
 
@@ -18,7 +18,7 @@ public class Servo extends Device{
 	}
 	
 	private void createProperties() {
-		if(!label_.equals(Configuration.servolabel[0])){
+		if(!label_.equals(MConfiguration.servolabel[0])){
 			position_ = new DeviceProperty(label_, prop_, 0, nPos_,core_,log_,false);
 		} else {
 			position_ = new DeviceProperty(label_, prop_, 0, 2000,core_,log_,false);
@@ -35,7 +35,7 @@ public class Servo extends Device{
 	}
 
 	public void setState(int val){
-		if(!label_.equals(Configuration.servolabel[0])){
+		if(!label_.equals(MConfiguration.servolabel[0])){
 			if(val>=0 && val<nPos_){
 				setProperty(position_.getPropertyName(), val);	
 				return;
@@ -45,19 +45,19 @@ public class Servo extends Device{
 		} else {			// maestro
 			switch(val){
 			case 0:
-				val = Configuration.maestropos[0];
+				val = MConfiguration.maestropos[0];
 				break;
 			case 1:
-				val = Configuration.maestropos[1];
+				val = MConfiguration.maestropos[1];
 				break;
 			case 2:
-				val = Configuration.maestropos[2];
+				val = MConfiguration.maestropos[2];
 				break;
 			case 3:
-				val = Configuration.maestropos[3];
+				val = MConfiguration.maestropos[3];
 				break;
 			default:
-				val = Configuration.maestropos[4];
+				val = MConfiguration.maestropos[4];
 				break;
 			}
 			setProperty(position_.getPropertyName(), val);									

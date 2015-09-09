@@ -4,6 +4,9 @@
  */
 package swing;
 
+import graph.Chart;
+import graph.TimeChart;
+
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -38,6 +41,11 @@ public class QPDPanel extends javax.swing.JPanel {
     	graph1 = new Graph(120,60,"X","time",false,false,false);
     	graph2 = new Graph(120,60,"S","time",false,false,false); 
     	graph3 = new Graph(150,150,"Y","X",false,false,false);
+        gr1 = new TimeChart("X","t","X",100,200,100);
+        gr2 = new TimeChart("S","t","S",100,200,100);
+        gr3 = new Chart("tot","X","Y",1,300,300);
+
+    	
     	
         jPanel_left = new javax.swing.JPanel();
         jPanel_lefthigh = new javax.swing.JPanel();
@@ -55,13 +63,13 @@ public class QPDPanel extends javax.swing.JPanel {
 
         // high
         jPanel_lefthigh.setLayout(new GridLayout(1, 1));
-        jPanel_lefthigh.add(graph1);
+        jPanel_lefthigh.add(gr1.getChart());
 
         jPanel_left.add(jPanel_lefthigh);
 
         // low
         jPanel_leftlow.setLayout(new GridLayout(1, 1));
-        jPanel_leftlow.add(graph2);
+        jPanel_leftlow.add(gr2.getChart());
         jPanel_left.add(jPanel_leftlow);
 
         add(jPanel_left);
@@ -71,7 +79,7 @@ public class QPDPanel extends javax.swing.JPanel {
         jPanel_2Dgraph.setPreferredSize(new java.awt.Dimension(390, 212));
 
         jPanel_2Dgraph.setLayout(new GridLayout(1, 1));
-        jPanel_2Dgraph.add(graph3);
+        jPanel_2Dgraph.add(gr3.getChart());
 
         jToggleButton_monitor.setText("Monitor");
         jToggleButton_monitor.addItemListener(new ItemListener(){
@@ -109,6 +117,8 @@ public class QPDPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public Graph graph1, graph2, graph3;
+    public TimeChart gr1, gr2;
+    public Chart gr3;
     private javax.swing.JPanel jPanel_2Dgraph;
     private javax.swing.JPanel jPanel_left;
     private javax.swing.JPanel jPanel_lefthigh;

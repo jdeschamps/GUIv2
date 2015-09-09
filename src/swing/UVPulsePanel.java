@@ -18,7 +18,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
-import micromanager.Configuration;
+import micromanager.MConfiguration;
 import device.MSystem;
 
 /**
@@ -59,7 +59,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
 					if(logarithmicJSlider.getValue()<1000*sys_.getExposureTime()){
 						try{
 							jTextField_pulse.setText(String.valueOf(logarithmicJSlider.getValue()));
-							sys_.setLaserPulseLength(Configuration.laserkeys[0], logarithmicJSlider.getValue());
+							sys_.setLaserPulseLength(MConfiguration.laserkeys[0], logarithmicJSlider.getValue());
 						} catch(Exception ex){
 				    		 sys_.writeToLog("Error setting UV pulse from slider to "+logarithmicJSlider.getValue());
 						}
@@ -84,7 +84,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
 		    		 try {
 						if(val<1000*sys_.getExposureTime()){
 							 logarithmicJSlider.setValue(val); 
-							 sys_.setLaserPulseLength(Configuration.laserkeys[0], val);
+							 sys_.setLaserPulseLength(MConfiguration.laserkeys[0], val);
 						 }
 					} catch (Exception e) {
 						sys_.writeToLog("Ëxception when setting UV pulse to "+val);
@@ -92,7 +92,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
 		    	 }else{
 		    		try {
 		    			logarithmicJSlider.setValue(1);
-		    			sys_.setLaserPulseLength(Configuration.laserkeys[0], 0);
+		    			sys_.setLaserPulseLength(MConfiguration.laserkeys[0], 0);
 					} catch (Exception e) {
 						sys_.writeToLog("Ëxception when setting UV pulse to 0");
 					}

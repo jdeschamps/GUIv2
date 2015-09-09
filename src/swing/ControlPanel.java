@@ -6,7 +6,7 @@ package swing;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import micromanager.Configuration;
+import micromanager.MConfiguration;
 import device.MSystem;
 
 
@@ -17,8 +17,8 @@ import device.MSystem;
 public class ControlPanel extends javax.swing.JPanel {
 
 	MSystem sys_;
-	String bpflabel_ = Configuration.servokeys[1];
-	String astiglabel_ = Configuration.servokeys[2];
+	String bpflabel_ = MConfiguration.servokeys[1];
+	String astiglabel_ = MConfiguration.servokeys[2];
 	
 	public ControlPanel(MSystem sys) {
     	sys_ = sys;
@@ -44,7 +44,7 @@ public class ControlPanel extends javax.swing.JPanel {
         jToggleButton_bfp.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e){
 				if(e.getStateChange()==ItemEvent.SELECTED){
-					sys_.setServoState(bpflabel_, Configuration.bfpPosition);						//// maybe here have a different tab for this
+					sys_.setServoState(bpflabel_, MConfiguration.bfpPosition);						//// maybe here have a different tab for this
 				}else if(e.getStateChange()==ItemEvent.DESELECTED){
 					sys_.setServoState(bpflabel_, 0);
 				}

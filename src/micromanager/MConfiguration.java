@@ -2,7 +2,7 @@ package micromanager;
 
 import java.awt.Color;
 
-public class Configuration {
+public class MConfiguration {
 
 
 	//////////////////////////////////////////////

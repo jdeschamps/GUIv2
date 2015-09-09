@@ -8,6 +8,7 @@ public class PImonitor extends Updater {
 	
 	public PImonitor(Stage pi) {
 		super(pi, 1);
+		pos=0;
 	}
 
 	@Override

@@ -4,6 +4,9 @@
  */
 package swing;
 
+import graph.Chart;
+import graph.TimeChart;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -30,7 +33,7 @@ public class GUIFrame extends javax.swing.JFrame {
     	sys_ = sys;
     	log_ = log;
         th_ = new Threader(sys_, log_, this);
-
+    	//th_ = new Threader(this);
     	initComponents();
     	
         th_.start();
@@ -84,20 +87,29 @@ public class GUIFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    public Graph getFocusGraph(){
-    	return focusPanel.focusGraph;
+    public static void main(String args[]) {
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new GUIFrame(new MSystem(), new Log()).setVisible(true);
+            }
+        });
     }
     
-    public Graph getQPDGraph1(){
-    	return tabs.qPDPanel.graph1;
+    public TimeChart getFocusGraph(){
+    	return focusPanel.gr;
+    }
+    
+    public TimeChart getQPDGraph1(){
+    	return tabs.qPDPanel.gr1;
     }    
     
-    public Graph getQPDGraph2(){
-    	return tabs.qPDPanel.graph2;
+    public TimeChart getQPDGraph2(){
+    	return tabs.qPDPanel.gr2;
     }
     
-    public Graph getQPDGraph3(){
-    	return tabs.qPDPanel.graph3;
+    public Chart getQPDGraph3(){
+    	return tabs.qPDPanel.gr3;
     }
     
     public Graph getNGraph(){

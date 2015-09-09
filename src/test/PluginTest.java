@@ -9,7 +9,7 @@ import device.QPD;
 import device.SSLaser;
 import device.Servo;
 import device.Stage;
-import micromanager.Configuration;
+import micromanager.MConfiguration;
 import micromanager.Log;
 import mmcorej.CMMCore;
 
@@ -50,13 +50,13 @@ public class PluginTest implements Runnable {
 		System.out.println("---------------------");
 		try {
 
-			QPD qpd_ = new QPD(Configuration.qpdlabel,cm,log_);
-			Stage pi_ = new Stage(Configuration.pilabel,cm,log_);
-			Laser l405_ = new Laser(Configuration.laserlabel[0], Configuration.ardlaserlabel[0],cm,log_);
-			SSLaser l561_ = new SSLaser(Configuration.sslaserlabel, Configuration.ardlaserlabel[3], Configuration.ard2laserlabel,cm,log_);
-			Servo fw_ = new Servo(Configuration.servolabel[0], Configuration.proplabel[0], Configuration.numposservo[0],cm,log_);
-			Servo bfp_ = new Servo(Configuration.servolabel[1], Configuration.proplabel[1], Configuration.numposservo[1],cm,log_);
-			Servo astig_ = new Servo(Configuration.servolabel[2], Configuration.proplabel[2], Configuration.numposservo[2],cm,log_);
+			QPD qpd_ = new QPD(MConfiguration.qpdlabel,cm,log_);
+			Stage pi_ = new Stage(MConfiguration.pilabel,cm,log_);
+			Laser l405_ = new Laser(MConfiguration.laserlabel[0], MConfiguration.ardlaserlabel[0],cm,log_);
+			SSLaser l561_ = new SSLaser(MConfiguration.sslaserlabel, MConfiguration.ardlaserlabel[3], MConfiguration.ard2laserlabel,cm,log_);
+			Servo fw_ = new Servo(MConfiguration.servolabel[0], MConfiguration.proplabel[0], MConfiguration.numposservo[0],cm,log_);
+			Servo bfp_ = new Servo(MConfiguration.servolabel[1], MConfiguration.proplabel[1], MConfiguration.numposservo[1],cm,log_);
+			Servo astig_ = new Servo(MConfiguration.servolabel[2], MConfiguration.proplabel[2], MConfiguration.numposservo[2],cm,log_);
 			
 			System.out.println("----Start-------");
 			fw_.setState(1);
@@ -138,7 +138,7 @@ public class PluginTest implements Runnable {
 		log_.writeToLog("-- Lasers --");
 
 		for(int i=0;i<3;i++){
-			luxx[i] = (Laser) sys_.getLaser(Configuration.laserkeys[i]);
+			luxx[i] = (Laser) sys_.getLaser(MConfiguration.laserkeys[i]);
 			log_.writeToLog("- "+luxx[i].getLabel()+" -");
 			
 			// Operation
@@ -162,7 +162,7 @@ public class PluginTest implements Runnable {
 			log_.writeToLog("Pulse :"+luxx[i].getPulseLength());
 		}
 		
-		cobolt = (SSLaser) sys_.getLaser(Configuration.laserkeys[3]);
+		cobolt = (SSLaser) sys_.getLaser(MConfiguration.laserkeys[3]);
 		log_.writeToLog("- "+cobolt.getLabel()+" -");
 		// Operation
 		log_.writeToLog("Operation :"+cobolt.getOperation());

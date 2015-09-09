@@ -4,6 +4,9 @@
  */
 package swing;
 
+import graph.Chart;
+import graph.TimeChart;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
@@ -11,8 +14,15 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 import threader.Threader;
-import micromanager.Configuration;
+import micromanager.MConfiguration;
 import device.MSystem;
 
 /**
@@ -124,12 +134,25 @@ public class FocusPanel extends javax.swing.JPanel {
 
         add(jPanel_controls);
         
-        jPanel_graph.setPreferredSize(new Dimension(378,158));
-        jPanel_graph.setLayout(new GridLayout(1, 1));
-        focusGraph = new Graph(300,100,"Pos","time",true,false,true);
-        jPanel_graph.add(focusGraph);
+  //      jPanel_graph.setPreferredSize(new Dimension(378,158));
+   //     jPanel_graph.setLayout(new GridLayout(1, 1));
+    //    focusGraph = new Graph(300,100,"Pos","time",true,false,true);
+        gr = new TimeChart("position","time","position",100,370,220);
         
-    /*    javax.swing.GroupLayout jPanel_graphLayout = new javax.swing.GroupLayout(jPanel_graph);
+        
+   /*     XYSeries series = new XYSeries("Data");
+        for (int i = 0; i < 100; i++) {
+            series.add(i, i);
+        }
+        XYSeriesCollection dataset = new XYSeriesCollection(series);
+      
+        JFreeChart chart = ChartFactory.createXYLineChart(null, "Domain",
+            "Range", dataset, PlotOrientation.VERTICAL, false, false, false);
+        
+        
+        jPanel_graph.add(new ChartPanel(chart));
+     */   
+   /*     javax.swing.GroupLayout jPanel_graphLayout = new javax.swing.GroupLayout(jPanel_graph);
         jPanel_graph.setLayout(jPanel_graphLayout);
         jPanel_graphLayout.setHorizontalGroup(
             jPanel_graphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,13 +161,14 @@ public class FocusPanel extends javax.swing.JPanel {
         jPanel_graphLayout.setVerticalGroup(
             jPanel_graphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 158, Short.MAX_VALUE)
-        );
-*/
-        add(jPanel_graph);
+        );*/
+
+        add(gr.getChart());
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public Graph focusGraph;
+    public TimeChart gr;
     private javax.swing.JLabel jLabel_position;
     private javax.swing.JPanel jPanel_controls;
     private javax.swing.JPanel jPanel_graph;

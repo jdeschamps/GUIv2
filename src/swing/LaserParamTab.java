@@ -5,7 +5,7 @@
 package swing;
 
 import device.MSystem;
-import micromanager.Configuration;
+import micromanager.MConfiguration;
 
 /**
  *
@@ -29,10 +29,10 @@ public class LaserParamTab extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        singleLaserParamPanel3 = new SingleLaserParam(sys_,Configuration.laserkeys[3],300, true,Configuration.green);
-        singleLaserParamPanel2 = new SingleLaserParam(sys_,Configuration.laserkeys[1],100, false,Configuration.blue);
-        singleLaserParamPanel4 = new SingleLaserParam(sys_,Configuration.laserkeys[2],100, false,Configuration.red);
-        singleLaserParamPanel1 = new SingleLaserParam(sys_,Configuration.laserkeys[0],100, false,Configuration.uv);
+        singleLaserParamPanel3 = new SingleLaserParam(sys_,MConfiguration.laserkeys[3],300, true,MConfiguration.green);
+        singleLaserParamPanel2 = new SingleLaserParam(sys_,MConfiguration.laserkeys[1],100, false,MConfiguration.blue);
+        singleLaserParamPanel4 = new SingleLaserParam(sys_,MConfiguration.laserkeys[2],100, false,MConfiguration.red);
+        singleLaserParamPanel1 = new SingleLaserParam(sys_,MConfiguration.laserkeys[0],100, false,MConfiguration.uv);
 
         setLayout(new java.awt.GridLayout(2, 2));
         add(singleLaserParamPanel1);

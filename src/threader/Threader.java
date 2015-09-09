@@ -1,8 +1,10 @@
 package threader;
 
+import graph.Chart;
+import graph.TimeChart;
+
 import java.util.List;
 
-import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
@@ -10,7 +12,7 @@ import swing.GUIFrame;
 import swing.Graph;
 import swing.LogarithmicJSlider;
 import device.MSystem;
-import micromanager.Configuration;
+import micromanager.MConfiguration;
 import micromanager.Log;
 
 public class Threader {
@@ -26,6 +28,12 @@ public class Threader {
 	UIupdater task;
 	boolean running_ = false;
 	
+	public Threader(GUIFrame frame){
+		pim_ = new PImonitor(null);
+		qpdm_ = new QPDmonitor(null);
+		frame_ = frame;
+	}
+	
 	public Threader(MSystem sys, Log log, GUIFrame frame){
 
 		sys_ = sys;
@@ -38,7 +46,7 @@ public class Threader {
 	private void initializeUpdaters() {
 		pim_ = new PImonitor(sys_.getPIStage());
 		qpdm_ = new QPDmonitor(sys_.getQPD());
-		uva_ = new UVautomator(sys_.getLaser(Configuration.laserkeys[0]));
+		uva_ = new UVautomator(sys_.getLaser(MConfiguration.laserkeys[0]));
 	}
 	
 	public boolean isRunning(){
@@ -83,54 +91,71 @@ public class Threader {
 	}
 
 
-	////// does not use propertychange which should be much better, investigate
+	////// it does not use propertychange which should be much better, investigate
 	public class UIupdater extends SwingWorker<Integer,Double[]>{
 		
-		Double[] result;
-		Graph pig, qpdg1, qpdg2, qpdg3, uvg;
+		Double[] resultPI, resultQPD, resultUV;
+		Graph uvg;
+		Chart qpdg3;
+		TimeChart pig, qpdg1, qpdg2;
 		LogarithmicJSlider uvlgs;
 		JTextField uvjtf;
+		int counter;
 		
 		public UIupdater(){
-			result = new Double[2];
+			resultPI = new Double[2];
+			resultQPD = new Double[4];
+			resultUV = new Double[3];
 		}
 
 		@Override
 		protected Integer doInBackground() throws Exception {
 			int counter = 0;
 			while(running_ && !isCancelled()){
-				System.out.println("Round "+counter);
-				if(pim_.isRunning()){
-					System.out.println("update pi");
-					result[0] = (double) 0;
-					pim_.refresh();
-					result[1] = pim_.getOutput(0);
-					System.out.println(result[0]+" "+result[1]);
-					publish(result);
-				}
-
-				if(qpdm_.isRunning()){
-					System.out.println("update qpd");
-					for(int i=0;i<qpdm_.getNOutput();i++){
-						result[0] = (double) i+1;
-						qpdm_.refresh();
-						result[1] = qpdm_.getOutput(i);
-						publish(result);
+				//System.out.println("Round "+counter);
+				
+				switch(counter%3){
+				case 0:
+					if(pim_.isRunning()){
+						System.out.println("update pi");
+						resultPI[0] = (double) 0;
+						pim_.refresh();
+						resultPI[1] = pim_.getOutput(0);
+						System.out.println(resultPI[0]+" "+resultPI[1]);
+						publish(resultPI);
 					}
+					break;
+	
+				case 1:
+					if(qpdm_.isRunning()){
+						System.out.println("update qpd: "+qpdm_.getNOutput());
+						qpdm_.refresh();
+						resultQPD[0] = 1.;
+						for(int i=0;i<qpdm_.getNOutput();i++){
+							resultQPD[i+1] = qpdm_.getOutput(i);
+						}
+						publish(resultQPD);
+					}
+					break;
+	
+				case 2:
+					if(uva_.isRunning()){
+						System.out.println("update uv");
+						uva_.refresh();
+						resultUV[0] = 2.;
+						resultUV[1] = uva_.getOutput(0);
+						resultUV[2] = uva_.getOutput(1);
+						publish(resultUV);
+					}
+					break;
 				}
-
-				if(uva_.isRunning()){
-					System.out.println("update uv");
-					uva_.refresh();
-					result[0] = (double) 4;
-					result[1] = uva_.getOutput(0);
-					publish(result);
-					result[0] = (double) 5;
-					result[1] = uva_.getOutput(1);
-					publish(result);
+				counter++;			
+				
+				if(counter==10000){
+					counter =0;
 				}
-				counter++;
-				Thread.sleep(1000);
+				
+				Thread.sleep(20);
 			}
 			return 1;
 		}
@@ -145,27 +170,25 @@ public class Threader {
 			  uvlgs = frame_.getUVSlider();
 			  uvjtf = frame_.getUVtext();
 
-			  System.out.println(chunks.size());
+			  System.out.println("Chunk size: "+chunks.size());
 			  for(Double[] result : chunks){
+				  System.out.println("In evt: "+result[0]+" "+result[1]);
 				  switch(result[0].intValue()){
 				  case 0:	// PI pos
-					  System.out.println("In evt: "+result[0]+" "+result[1]);
-					  pig.addPoint((int) (100*result[1]));
-					  pig.repaint();
+					  if(result.length == 2){
+						  pig.addPoint((int) (100*result[1]));
+					  }
 					  break;
-				  case 1:	// QPD x
-					  qpdg1.addPoint(result[1].intValue());
+				  case 1:	// QPD 
+					  if(result.length == 4){
+						  qpdg1.addPoint(result[1]);
+						  qpdg2.addPoint(result[3]);
+						  qpdg3.addPoint(result[1],result[2]);
+					  }
 					  break;
-				  case 2:	// QPD y
-					  qpdg2.addPoint(result[1].intValue());
-					  break;
-				  case 3:	// QPD s
-					  qpdg3.addPoint((int) qpdm_.getOutput(0),(int) qpdm_.getOutput(2));
-					  break;
-				  case 4:	// UV N
+				  case 2:	// UV 
 					  uvg.addPoint(result[1].intValue());
-					  break;
-				  case 5:	// UV pulse
+
 					  if(result[1] != 0){
 						  uvlgs.setValue(result[1].intValue());
 					  }
