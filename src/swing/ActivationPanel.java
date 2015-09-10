@@ -4,6 +4,9 @@
  */
 package swing;
 
+import graph.Chart;
+import graph.TimeChart;
+
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -59,17 +62,19 @@ public class ActivationPanel extends javax.swing.JPanel {
 			public void itemStateChanged(ItemEvent e){
 				if(e.getStateChange()==ItemEvent.SELECTED){
 					th_.startUpdater("UV");
+					activate = true;
 				}else if(e.getStateChange()==ItemEvent.DESELECTED){
 					th_.stopUpdater("UV");
+					activate = false;
 				}
             }
         });
 
-        jLabel_param1.setText("Param 1:");
+        jLabel_param1.setText("Threshold:");
 
-        jLabel_param2.setText("Param 2:");
+        jLabel_param2.setText("Feedback:");
 
-        jTextField_param1.setText("0.5");
+        jTextField_param1.setText("0.5");																			////// set Config values
 
         jTextField_param2.setText("0.5");
 
@@ -135,11 +140,17 @@ public class ActivationPanel extends javax.swing.JPanel {
             .addGap(0, 160, Short.MAX_VALUE)
         );
 */	
-        graph = new Graph(260,120,"N","time",false,false,true);
+        
+        gr = new TimeChart("N","N","time",100,300,300);
+
+      /*  graph = new Graph(260,120,"N","time",false,false,true);
         jPanel_graph.setLayout(new GridLayout(1, 1));
         jPanel_graph.add(graph);
         add(jPanel_graph, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 320, 160));
-
+		*/
+        
+        add(gr.getChart(), new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 320, 160));
+        
         jLabel_cutoff.setText("Cutoff:");
 
         jTextField_cutoff.setText("0");
@@ -190,18 +201,64 @@ public class ActivationPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_GetNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GetNActionPerformed
-        // TODO add your handling code here:
+    	jTextField_N.setText(String.valueOf(gr.getLastPoint()));
     }//GEN-LAST:event_jButton_GetNActionPerformed
 
     private void jButton_getcutoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_getcutoffActionPerformed
-        // TODO add your handling code here:
+    	getcutoff = true;
     }//GEN-LAST:event_jButton_getcutoffActionPerformed
 
     private void jToggleButton_autocutoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_autocutoffActionPerformed
-        // TODO add your handling code here:
+    	if(jToggleButton_autocutoff.isSelected()){
+    		autocutoff = true;
+    	} else {
+    		autocutoff = false;
+    	}
     }//GEN-LAST:event_jToggleButton_autocutoffActionPerformed
 
+    public boolean isActivateOn(){
+    	return jToggleButton_activate.isSelected();
+    }
+
+    public boolean isAutoCutoffOn(){
+    	return jToggleButton_autocutoff.isSelected();
+    }
+
+    public double getCutoff(){
+    	return Double.parseDouble(jTextField_cutoff.getText());
+    }
+    
+    public void setCutoff(double val){
+    	jTextField_cutoff.setText(String.valueOf(val));
+    }
+
+    public double getThreshold(){
+    	return Double.parseDouble(jTextField_param1.getText());
+    }
+
+    public double getFeedback(){
+    	return Double.parseDouble(jTextField_param2.getText());
+    }
+
+    public int getN(){
+    	return Integer.parseInt(jTextField_N.getText());
+    }
+    
+    public boolean isCutoffNeeded(){
+    	if(getcutoff){
+    		getcutoff = false;
+        	return !getcutoff;
+    	}
+    	return getcutoff;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public double cutoff;																/// from config file
+    public boolean getcutoff=false;
+    public boolean autocutoff=false;
+    public boolean activate=false;
+    
+    public TimeChart gr;
     public Graph graph;
     private javax.swing.JButton jButton_GetN;
     private javax.swing.JButton jButton_getcutoff;
@@ -214,7 +271,7 @@ public class ActivationPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField_N;
     private javax.swing.JTextField jTextField_param1;
     private javax.swing.JTextField jTextField_param2;
-    private javax.swing.JTextField jTextField_cutoff;
+    public javax.swing.JTextField jTextField_cutoff;
     private javax.swing.JToggleButton jToggleButton_activate;
     private javax.swing.JToggleButton jToggleButton_autocutoff;
     // End of variables declaration//GEN-END:variables

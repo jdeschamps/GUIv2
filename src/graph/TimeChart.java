@@ -1,6 +1,7 @@
 package graph;
 
 import java.awt.Dimension;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -59,6 +60,10 @@ public class TimeChart {
 		} else {
 			series.add(time_counter, point);
 		}
+	}
+	
+	public double getLastPoint(){
+		return (Double) series.getY(series.getItemCount()-1);
 	}
 	
 }

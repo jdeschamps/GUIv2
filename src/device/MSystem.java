@@ -82,7 +82,7 @@ public class MSystem {
 	private void readMConfiguration(){
 
 	}
-
+	
 	//////////////////////////////////////////////////////
 	////// Special functions
 	public double getExposureTime(){
@@ -266,6 +266,10 @@ public class MSystem {
 		} else if(name.equals(MConfiguration.laserkeys[2])){
 			l638_.setPulseLength(val);
 		} 
+	}
+
+	public void setUVPulse(int val){
+		l405_.setPulseLength(val);
 	}
 	
 	public void setLaserMaxPower(int val){

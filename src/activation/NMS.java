@@ -17,13 +17,11 @@ public class NMS {
 	int n_,max_num;
 	double cutoff_;
 	boolean display_;
-	Log log_;
 	
 	
 	ArrayList<Peak> peaks;
 	
-	public NMS(Log log){
-		log_ = log;
+	public NMS(){
 		peaks = new ArrayList<Peak>();
 		imtemp_ = new ImagePlus();
 		imtemp_.setTitle("NMS");
@@ -92,6 +90,9 @@ public class NMS {
 				}
 			}			
 		}	
+		
+		
+		
 		
 		// Display NMS result on an image
 		if(display_   ){												//display_

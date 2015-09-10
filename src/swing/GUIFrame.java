@@ -96,6 +96,8 @@ public class GUIFrame extends javax.swing.JFrame {
         });
     }
     
+    
+    ////////////////////////////////////////////////// Interface with Threader
     public TimeChart getFocusGraph(){
     	return focusPanel.gr;
     }
@@ -112,8 +114,8 @@ public class GUIFrame extends javax.swing.JFrame {
     	return tabs.qPDPanel.gr3;
     }
     
-    public Graph getNGraph(){
-    	return tabs.activationPanel.graph;
+    public TimeChart getNGraph(){
+    	return tabs.activationPanel.gr;
     }
     
     public LogarithmicJSlider getUVSlider(){
@@ -124,10 +126,24 @@ public class GUIFrame extends javax.swing.JFrame {
     	return opticsPanel.uVPulsePanel.jTextField_pulse;
     }
     
+    public JTextField getUVCutoff(){
+    	return tabs.activationPanel.jTextField_cutoff;
+    }
+    
+    public boolean isNewCutOff(){
+    	if(tabs.activationPanel.isAutoCutoffOn() || tabs.activationPanel.isCutoffNeeded()){
+    		return true;
+    	}
+    	return false;
+    }
+    
     public boolean isUVTextSelected(){
     	return opticsPanel.uVPulsePanel.isTextSelected();
     }
 
+    public ActivationPanel getActivateTab(){
+    	return tabs.activationPanel;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public FocusPanel focusPanel;

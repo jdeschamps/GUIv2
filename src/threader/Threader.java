@@ -46,7 +46,7 @@ public class Threader {
 	private void initializeUpdaters() {
 		pim_ = new PImonitor(sys_.getPIStage());
 		qpdm_ = new QPDmonitor(sys_.getQPD());
-		uva_ = new UVautomator(sys_.getLaser(MConfiguration.laserkeys[0]));
+		uva_ = new UVautomator(sys_.getLaser(MConfiguration.laserkeys[0]), sys_, log_, frame_.getActivateTab());
 	}
 	
 	public boolean isRunning(){
@@ -95,17 +95,25 @@ public class Threader {
 	public class UIupdater extends SwingWorker<Integer,Double[]>{
 		
 		Double[] resultPI, resultQPD, resultUV;
-		Graph uvg;
 		Chart qpdg3;
-		TimeChart pig, qpdg1, qpdg2;
+		TimeChart pig, qpdg1, qpdg2, uvg;
 		LogarithmicJSlider uvlgs;
-		JTextField uvjtf;
+		JTextField uvjtf, uvcutoff;
 		int counter;
 		
 		public UIupdater(){
 			resultPI = new Double[2];
 			resultQPD = new Double[4];
 			resultUV = new Double[3];
+			
+			pig = frame_.getFocusGraph();
+			qpdg1 = frame_.getQPDGraph1();
+			qpdg2 = frame_.getQPDGraph2();
+			qpdg3 = frame_.getQPDGraph3();
+			uvg = frame_.getNGraph();
+			uvlgs = frame_.getUVSlider();
+			uvjtf = frame_.getUVtext();
+			uvcutoff = frame_.getUVCutoff();
 		}
 
 		@Override
@@ -143,8 +151,9 @@ public class Threader {
 						System.out.println("update uv");
 						uva_.refresh();
 						resultUV[0] = 2.;
-						resultUV[1] = uva_.getOutput(0);
-						resultUV[2] = uva_.getOutput(1);
+						resultUV[1] = uva_.getOutput(0);	// N
+						resultUV[2] = uva_.getOutput(1);	// pulse
+						resultUV[3] = uva_.getOutput(2);	// cutoff
 						publish(resultUV);
 					}
 					break;
@@ -162,14 +171,6 @@ public class Threader {
 		
 		  @Override
 		  protected void process(List<Double[]> chunks) {
-			  pig = frame_.getFocusGraph();
-			  qpdg1 = frame_.getQPDGraph1();
-			  qpdg2 = frame_.getQPDGraph2();
-			  qpdg3 = frame_.getQPDGraph3();
-			  uvg = frame_.getNGraph();
-			  uvlgs = frame_.getUVSlider();
-			  uvjtf = frame_.getUVtext();
-
 			  System.out.println("Chunk size: "+chunks.size());
 			  for(Double[] result : chunks){
 				  System.out.println("In evt: "+result[0]+" "+result[1]);
@@ -188,12 +189,17 @@ public class Threader {
 					  break;
 				  case 2:	// UV 
 					  uvg.addPoint(result[1].intValue());
-
-					  if(result[1] != 0){
-						  uvlgs.setValue(result[1].intValue());
+					  uvlgs.setMaximum((int) (1000*sys_.getExposureTime()));
+					  if(result[1] != 0){										/// what if >max
+						  uvlgs.setValue(result[2].intValue());
+					  } else {
+						  uvlgs.setValue(1);
 					  }
 					  if(!frame_.isUVTextSelected()){
-						  uvjtf.setText(result[1].toString());
+						  uvjtf.setText(result[2].toString());
+					  }
+					  if(frame_.isNewCutOff()){
+						  uvcutoff.setText(result[3].toString());
 					  }
 					  break;
 				  }
