@@ -23,7 +23,7 @@ public class QPDmonitor extends Updater{
 		output_[1] = Y;
 		S = ((QPD) device_).getSSignal();
 		output_[2] = S;
-		System.out.println(X+" "+Y+" "+S);
+		//System.out.println(X+" "+Y+" "+S);
 	}
 
 	@Override

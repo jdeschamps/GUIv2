@@ -54,7 +54,6 @@ public class FocusPanel extends javax.swing.JPanel {
         jToggleButton_lock = new javax.swing.JToggleButton();
         jToggleButton_monitor = new javax.swing.JToggleButton();
         jLabel_position = new javax.swing.JLabel();
-        jPanel_graph = new javax.swing.JPanel();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Focus"));
         setMaximumSize(new java.awt.Dimension(462, 168));
@@ -137,7 +136,7 @@ public class FocusPanel extends javax.swing.JPanel {
   //      jPanel_graph.setPreferredSize(new Dimension(378,158));
    //     jPanel_graph.setLayout(new GridLayout(1, 1));
     //    focusGraph = new Graph(300,100,"Pos","time",true,false,true);
-        gr = new TimeChart("position","time","position",100,370,220);
+        gr = new TimeChart("position","time","position",MConfiguration.maxNPI,370,220);
         
         
    /*     XYSeries series = new XYSeries("Data");
@@ -171,7 +170,6 @@ public class FocusPanel extends javax.swing.JPanel {
     public TimeChart gr;
     private javax.swing.JLabel jLabel_position;
     private javax.swing.JPanel jPanel_controls;
-    private javax.swing.JPanel jPanel_graph;
     private javax.swing.JTextField jTextField_position;
     private javax.swing.JToggleButton jToggleButton_monitor;
     private javax.swing.JToggleButton jToggleButton_lock;

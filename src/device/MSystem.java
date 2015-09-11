@@ -83,6 +83,14 @@ public class MSystem {
 
 	}
 	
+	public void shutDown(){
+		pi_.setSensorState(0);
+		l405_.setOperation(0);
+		l488_.setOperation(0);
+		l561_.setOperation(0);
+		l638_.setOperation(0);
+	}
+	
 	//////////////////////////////////////////////////////
 	////// Special functions
 	public double getExposureTime(){

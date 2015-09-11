@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import micromanager.MConfiguration;
 import threader.Threader;
 import device.MSystem;
 
@@ -38,12 +39,9 @@ public class QPDPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-    	graph1 = new Graph(120,60,"X","time",false,false,false);
-    	graph2 = new Graph(120,60,"S","time",false,false,false); 
-    	graph3 = new Graph(150,150,"Y","X",false,false,false);
-        gr1 = new TimeChart("X","t","X",100,200,100);
-        gr2 = new TimeChart("S","t","S",100,200,100);
-        gr3 = new Chart("tot","X","Y",1,300,300);
+        gr1 = new TimeChart("X","t","X",MConfiguration.maxNQPD[0],200,100);
+        gr2 = new TimeChart("S","t","S",MConfiguration.maxNQPD[1],200,100);
+        gr3 = new Chart("tot","X","Y",MConfiguration.maxNQPD[2],300,300);
 
     	
     	
@@ -116,7 +114,6 @@ public class QPDPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public Graph graph1, graph2, graph3;
     public TimeChart gr1, gr2;
     public Chart gr3;
     private javax.swing.JPanel jPanel_2Dgraph;

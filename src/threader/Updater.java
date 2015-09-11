@@ -33,7 +33,9 @@ public abstract class Updater {
 	
 	public double getOutput(int index){
 		if(index>=0 && index<nOut_){
-			refresh();
+			//refresh();
+			System.out.println("Output "+index+" "+output_[index]);
+
 			return output_[index];
 		}
 		return 0;

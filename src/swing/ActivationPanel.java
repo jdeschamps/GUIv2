@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import micromanager.MConfiguration;
 import threader.Threader;
 import device.MSystem;
 
@@ -141,7 +142,7 @@ public class ActivationPanel extends javax.swing.JPanel {
         );
 */	
         
-        gr = new TimeChart("N","N","time",100,300,300);
+        gr = new TimeChart("N","time","N",MConfiguration.maxNUV,300,300);
 
       /*  graph = new Graph(260,120,"N","time",false,false,true);
         jPanel_graph.setLayout(new GridLayout(1, 1));
@@ -259,7 +260,6 @@ public class ActivationPanel extends javax.swing.JPanel {
     public boolean activate=false;
     
     public TimeChart gr;
-    public Graph graph;
     private javax.swing.JButton jButton_GetN;
     private javax.swing.JButton jButton_getcutoff;
     private javax.swing.JLabel jLabel_param1;

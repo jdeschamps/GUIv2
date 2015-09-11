@@ -210,7 +210,7 @@ public class PluginTest implements Runnable {
 			pause(1);
 		}
 
-		uva = new UVautomator(luxx[0]);
+		uva = new UVautomator(luxx[0], sys_, log_, null);
 		log_.writeToLog("- UV automator -");
 		for(int i=0;i<4;i++){
 			log_.writeToLog("Pulse length :"+uva.getOutput(0));

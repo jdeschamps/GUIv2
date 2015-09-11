@@ -5,18 +5,36 @@ import java.awt.Dimension;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 public class TimeChart {
 
 	String name_, nameX_, nameY_;
-	int width_, height_, maxN_;
+	int width_, height_, maxN_, minY_=0, maxY_=100;
     private XYSeries series;
     int time_counter = 0;
     ChartPanel cp;
-	
+    boolean ranged_ = false;
+
+	public TimeChart(String name, String nameX, String nameY, int maxN, int minY, int maxY, int width, int height){
+		name_ = name;
+		nameX_ = nameX;
+		nameY_ = nameY;
+		width_ = width;
+		height_ = height;
+		maxN_ = maxN;
+		minY_ = minY;
+		maxY_ = maxY;
+		
+		ranged_ = true;
+		
+		initialize();
+	}
+
 	public TimeChart(String name, String nameX, String nameY, int maxN, int width, int height){
 		name_ = name;
 		nameX_ = nameX;
@@ -24,6 +42,8 @@ public class TimeChart {
 		width_ = width;
 		height_ = height;
 		maxN_ = maxN;
+
+		ranged_ = false;
 		
 		initialize();
 	}
@@ -40,6 +60,12 @@ public class TimeChart {
                 return new Dimension(width_, height_);
             }
         };
+        
+        if(ranged_){
+        	XYPlot plot = (XYPlot) chart.getPlot();
+        	ValueAxis yAxis = plot.getRangeAxis();
+        	yAxis.setRange(minY_,maxY_);
+        }
 	}
 	
 	public ChartPanel getChart(){
@@ -63,7 +89,10 @@ public class TimeChart {
 	}
 	
 	public double getLastPoint(){
-		return (Double) series.getY(series.getItemCount()-1);
+		if(series.getItemCount()>0){
+			return (Double) series.getY(series.getItemCount()-1);
+		}
+		return 0;
 	}
 	
 }

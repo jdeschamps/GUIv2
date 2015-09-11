@@ -32,11 +32,11 @@ public class GUIFrame extends javax.swing.JFrame {
     public GUIFrame(MSystem sys, Log log) {
     	sys_ = sys;
     	log_ = log;
-        th_ = new Threader(sys_, log_, this);
+
     	//th_ = new Threader(this);
+        th_ = new Threader(sys_, log_, this);
+
     	initComponents();
-    	
-        th_.start();
     }
 
     /**
@@ -50,11 +50,13 @@ public class GUIFrame extends javax.swing.JFrame {
     	this.addWindowListener(new WindowAdapter() {
     	    @Override
     	    public void windowClosing(WindowEvent e) {
+    	    	sys_.shutDown();
     	    	th_.stop();
     	    	log_.closeLog();
+    	    	dispose();
     	    }
     	});
-    	
+    	    	
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
@@ -86,7 +88,7 @@ public class GUIFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    /*
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -95,7 +97,7 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
     }
-    
+    */
     
     ////////////////////////////////////////////////// Interface with Threader
     public TimeChart getFocusGraph(){

@@ -26,6 +26,7 @@ public class Threader {
 	UVautomator uva_;
 	
 	UIupdater task;
+	boolean initialized_ = false;
 	boolean running_ = false;
 	
 	public Threader(GUIFrame frame){
@@ -35,22 +36,25 @@ public class Threader {
 	}
 	
 	public Threader(MSystem sys, Log log, GUIFrame frame){
-
 		sys_ = sys;
 		log_ = log;
 		frame_ = frame;
-		
-		initializeUpdaters();
 	}
 
-	private void initializeUpdaters() {
+	private void initialize() {
 		pim_ = new PImonitor(sys_.getPIStage());
 		qpdm_ = new QPDmonitor(sys_.getQPD());
 		uva_ = new UVautomator(sys_.getLaser(MConfiguration.laserkeys[0]), sys_, log_, frame_.getActivateTab());
+		initialized_ = true;
+		start();
 	}
-	
+
 	public boolean isRunning(){
 		return running_;
+	}
+
+	public boolean isInitialized(){
+		return initialized_;
 	}
 	
 	public void run(){
@@ -68,6 +72,9 @@ public class Threader {
 	}
 
 	public void startUpdater(String key){
+		if(!isInitialized()){
+			initialize();
+		}
 		if(key.equals("PI")){
 			pim_.start();
 		} else if(key.equals("QPD")){
@@ -104,7 +111,7 @@ public class Threader {
 		public UIupdater(){
 			resultPI = new Double[2];
 			resultQPD = new Double[4];
-			resultUV = new Double[3];
+			resultUV = new Double[4];
 			
 			pig = frame_.getFocusGraph();
 			qpdg1 = frame_.getQPDGraph1();
@@ -120,8 +127,7 @@ public class Threader {
 		protected Integer doInBackground() throws Exception {
 			int counter = 0;
 			while(running_ && !isCancelled()){
-				//System.out.println("Round "+counter);
-				
+				System.out.println("Round "+counter);
 				switch(counter%3){
 				case 0:
 					if(pim_.isRunning()){
@@ -129,14 +135,14 @@ public class Threader {
 						resultPI[0] = (double) 0;
 						pim_.refresh();
 						resultPI[1] = pim_.getOutput(0);
-						System.out.println(resultPI[0]+" "+resultPI[1]);
+						//System.out.println(resultPI[0]+" "+resultPI[1]);
 						publish(resultPI);
 					}
 					break;
 	
 				case 1:
 					if(qpdm_.isRunning()){
-						System.out.println("update qpd: "+qpdm_.getNOutput());
+						System.out.println("update qpd");
 						qpdm_.refresh();
 						resultQPD[0] = 1.;
 						for(int i=0;i<qpdm_.getNOutput();i++){
@@ -150,6 +156,7 @@ public class Threader {
 					if(uva_.isRunning()){
 						System.out.println("update uv");
 						uva_.refresh();
+
 						resultUV[0] = 2.;
 						resultUV[1] = uva_.getOutput(0);	// N
 						resultUV[2] = uva_.getOutput(1);	// pulse
@@ -161,23 +168,23 @@ public class Threader {
 				counter++;			
 				
 				if(counter==10000){
-					counter =0;
+					counter = 0;
 				}
 				
-				Thread.sleep(20);
+				Thread.sleep(100);
 			}
 			return 1;
 		}
 		
 		  @Override
 		  protected void process(List<Double[]> chunks) {
-			  System.out.println("Chunk size: "+chunks.size());
+			  //System.out.println("Chunk size: "+chunks.size());
 			  for(Double[] result : chunks){
-				  System.out.println("In evt: "+result[0]+" "+result[1]);
+				  //System.out.println("In evt: "+result[0]+" "+result[1]);
 				  switch(result[0].intValue()){
 				  case 0:	// PI pos
 					  if(result.length == 2){
-						  pig.addPoint((int) (100*result[1]));
+						  pig.addPoint(result[1]);
 					  }
 					  break;
 				  case 1:	// QPD 
