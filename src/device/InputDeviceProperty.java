@@ -7,16 +7,18 @@ public class InputDeviceProperty {
 
 	protected String device_;
 	protected String property_;
-	protected double initialvalue_;
-	protected double currentvalue_;
+	protected double initialvalue_ = 0;
+	protected double currentvalue_ = 0;
 	protected CMMCore core_;
 	protected Log log_;
+	protected boolean isEmpty_;
 	
-	InputDeviceProperty(String device, String property, CMMCore core, Log log){
+	InputDeviceProperty(String device, String property, CMMCore core, Log log, boolean emptyProperty){
 		device_ = device;
 		property_ = property;
 		core_ = core;
 		log_ = log;
+		isEmpty_ = emptyProperty;
 		currentvalue_ = getValue();
 	}
 	
@@ -29,22 +31,22 @@ public class InputDeviceProperty {
 	}
 	
 	public double getValue(){
-														/// check if device loaded
-		String val;
-		try {
-			val = core_.getProperty(device_, property_);
-			if(isDouble(val)){
-				currentvalue_ = Double.parseDouble(val);
-				return currentvalue_;
-			} else if(val.equals("On")){
-				return 1;
-			} else if(val.equals("Off")){
-				return 0;
-			} 
-		} catch (Exception e) {
-			log_.writeToLog(device_+" : error getting "+property_);
+		if(!isEmpty_){
+			String val;
+			try {
+				val = core_.getProperty(device_, property_);
+				if(isDouble(val)){
+					currentvalue_ = Double.parseDouble(val);
+					return currentvalue_;
+				} else if(val.equals("On")){
+					return 1;
+				} else if(val.equals("Off")){
+					return 0;
+				} 
+			} catch (Exception e) {
+				log_.writeToLog(device_+" : error getting "+property_);
+			}
 		}
-
 		return 0;
 	}
 	

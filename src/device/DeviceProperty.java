@@ -5,12 +5,12 @@ import mmcorej.CMMCore;
 
 public class DeviceProperty extends InputDeviceProperty{
 
-	private double min_, max_;
+	private double min_ = 0, max_ = 0;
 	private boolean str_;
 	String current_;
 	
-	DeviceProperty(String device, String property, double min, double max, CMMCore core, Log log, boolean str){
-		super(device, property, core, log);
+	DeviceProperty(String device, String property, double min, double max, CMMCore core, Log log, boolean str, boolean isLoaded){
+		super(device, property, core, log, isLoaded);
 		min_ = min;
 		max_ = max;
 		str_ = str;
@@ -37,32 +37,34 @@ public class DeviceProperty extends InputDeviceProperty{
 	}
 
 	public boolean setValue(double val){
-		/// check if device loaded
-		System.out.println(val);
-		if(val<= max_ && val>=min_){
-			try {
-				if(!isDeviceBusy()){
-					core_.setProperty(device_, property_, val);
-					currentvalue_ = val;
-					return true;
+		if(!isEmpty_){
+			System.out.println(val);
+			if(val<= max_ && val>=min_){
+				try {
+					if(!isDeviceBusy()){
+						core_.setProperty(device_, property_, val);
+						currentvalue_ = val;
+						return true;
+					}
+				} catch (Exception e) {
+					log_.writeToLog(device_+" : error setting "+property_+" to "+Double.toString(val));
 				}
-			} catch (Exception e) {
-				log_.writeToLog(device_+" : error setting "+property_+" to "+Double.toString(val));
 			}
 		}
-		
 		return false;
 	}
 
 	public boolean setValue(String val){
-		try {
-			if(!isDeviceBusy()){
-				core_.setProperty(device_, property_, val);
-				current_ = val;
-				return true;
+		if(!isEmpty_){
+			try {
+				if(!isDeviceBusy()){
+					core_.setProperty(device_, property_, val);
+					current_ = val;
+					return true;
+				}
+			} catch (Exception e) {
+				log_.writeToLog(device_+" : error setting "+property_+" to "+val);
 			}
-		} catch (Exception e) {
-			log_.writeToLog(device_+" : error setting "+property_+" to "+val);
 		}
 		return false;
 	}
@@ -72,6 +74,9 @@ public class DeviceProperty extends InputDeviceProperty{
 	}
 	
 	public boolean isDeviceBusy() throws Exception{
-		return core_.deviceBusy(getDevice());
+		if(!isEmpty_){
+			return core_.deviceBusy(getDevice());
+		} 
+		return false;
 	}
 }

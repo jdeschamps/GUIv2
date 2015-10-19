@@ -17,6 +17,8 @@ public class MSystem {
 	Servo fw_, bfp_, astig_; 
 	Log log_;
 	ArrayList<Device> deviceList_;
+	StrVector devices_;
+	int numDevices_ = 9;
 	
 	public MSystem(){
 		// empty to test
@@ -26,23 +28,37 @@ public class MSystem {
 		core_ = core;
 		log_ = log;
 		readMConfiguration();
-
+		
+		detectDevices();
 		initializeDevices();
 		areDevicesAvailable();
 	}
 	
+	private void detectDevices(){
+		devices_ = core_.getLoadedDevices();
+	}
+	
+	private boolean isLoaded(String s){
+		for(int i=1;i<=numDevices_;i++){
+			if(devices_.get(i).equals(s)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private void initializeDevices() {
-		qpd_ = new QPD(MConfiguration.qpdlabel,core_,log_);
-		pi_ = new Stage(MConfiguration.pilabel,core_,log_);
-		l405_ = new Laser(MConfiguration.laserlabel[0], MConfiguration.ardlaserlabel[0],core_,log_);
-		l488_ = new Laser(MConfiguration.laserlabel[1], MConfiguration.ardlaserlabel[1],core_,log_);
-		l638_ = new Laser(MConfiguration.laserlabel[2], MConfiguration.ardlaserlabel[2],core_,log_);
-		l561_ = new SSLaser(MConfiguration.sslaserlabel, MConfiguration.ardlaserlabel[3], MConfiguration.ard2laserlabel,core_,log_);
-		fw_ = new Servo(MConfiguration.servolabel[0], MConfiguration.proplabel[0], MConfiguration.numposservo[0],core_,log_);
-		bfp_ = new Servo(MConfiguration.servolabel[1], MConfiguration.proplabel[1], MConfiguration.numposservo[1],core_,log_);
-		astig_ = new Servo(MConfiguration.servolabel[2], MConfiguration.proplabel[2], MConfiguration.numposservo[2],core_,log_);
+		qpd_ = new QPD(MConfiguration.qpdlabel,core_,log_, isLoaded(MConfiguration.qpdlabel));
+		pi_ = new Stage(MConfiguration.pilabel,core_,log_, isLoaded(MConfiguration.pilabel), isLoaded(MConfiguration.smaractlabel));
+		l405_ = new Laser(MConfiguration.laserlabel[0], MConfiguration.ardlaserlabel[0],core_,log_, isLoaded(MConfiguration.laserlabel[0]));
+		l488_ = new Laser(MConfiguration.laserlabel[1], MConfiguration.ardlaserlabel[1],core_,log_, isLoaded(MConfiguration.laserlabel[1]));
+		l638_ = new Laser(MConfiguration.laserlabel[2], MConfiguration.ardlaserlabel[2],core_,log_, isLoaded(MConfiguration.laserlabel[2]));
+		l561_ = new SSLaser(MConfiguration.sslaserlabel, MConfiguration.ardlaserlabel[3], MConfiguration.ard2laserlabel,core_,log_, isLoaded(MConfiguration.sslaserlabel));
+		fw_ = new Servo(MConfiguration.servolabel[0], MConfiguration.proplabel[0], MConfiguration.numposservo[0],core_,log_, isLoaded(MConfiguration.servolabel[0]));
+		bfp_ = new Servo(MConfiguration.servolabel[1], MConfiguration.proplabel[1], MConfiguration.numposservo[1],core_,log_, isLoaded(MConfiguration.servolabel[1]));
+		astig_ = new Servo(MConfiguration.servolabel[2], MConfiguration.proplabel[2], MConfiguration.numposservo[2],core_,log_, isLoaded(MConfiguration.servolabel[2]));
 		
-		deviceList_ = new ArrayList<Device>(9);
+		deviceList_ = new ArrayList<Device>(numDevices_);
 		deviceList_.add(qpd_);
 		deviceList_.add(pi_);
 		deviceList_.add(l405_);

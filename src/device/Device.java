@@ -7,18 +7,19 @@ import mmcorej.CMMCore;
 
 public abstract class Device {
 
+	boolean detected_;
 	String label_;
 	ArrayList<InputDeviceProperty> properties_;
 	CMMCore core_;
 	Log log_;
 	
-	Device(String label, CMMCore core, Log log){
+	Device(String label, CMMCore core, Log log, boolean isLoaded){
 		label_ = label;
 		core_ = core;
 		properties_ = new ArrayList<InputDeviceProperty>();
 		log_ = log;
 		
-		boolean b=isLoaded();										///// use this as a test
+		detected_ = isLoaded;										
 	}
 
 	public abstract String getType();
@@ -27,8 +28,8 @@ public abstract class Device {
 		properties_.add(d);
 	}
 	
-	public void addProperty(String label, String property, int min, int max, boolean isstring){
-		properties_.add(new DeviceProperty(label,property,min,max,core_,log_,isstring));
+	public void addProperty(String label, String property, int min, int max, boolean isString){
+		properties_.add(new DeviceProperty(label,property,min,max,core_,log_,isString, detected_));
 	}
 
 	public void initialize(){
@@ -97,9 +98,8 @@ public abstract class Device {
 		return properties_.size();
 	}
 
-	public boolean isLoaded(){					
-			////////// test here
-		return false;
+	public boolean isDetected(){
+		return detected_;
 	}
 
 	public boolean isBusy() throws Exception{

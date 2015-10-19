@@ -10,8 +10,8 @@ public class Servo extends Device{
 	String prop_;							////// to be uniformized!!!! (same state name in the device adapters)
 	DeviceProperty position_;
 	
-	public Servo(String label, String prop, int nPos, CMMCore core, Log log) {
-		super(label,core,log);
+	public Servo(String label, String prop, int nPos, CMMCore core, Log log, boolean isLoaded) {
+		super(label,core,log, isLoaded);
 		prop_ = prop;
 		nPos_ = nPos;
 		createProperties();
@@ -19,9 +19,9 @@ public class Servo extends Device{
 	
 	private void createProperties() {
 		if(!label_.equals(MConfiguration.servolabel[0])){
-			position_ = new DeviceProperty(label_, prop_, 0, nPos_,core_,log_,false);
+			position_ = new DeviceProperty(label_, prop_, 0, nPos_,core_,log_,false, detected_);
 		} else {
-			position_ = new DeviceProperty(label_, prop_, 0, 2000,core_,log_,false);
+			position_ = new DeviceProperty(label_, prop_, 0, 2000,core_,log_,false, detected_);
 		}
 		add(position_);
 	}

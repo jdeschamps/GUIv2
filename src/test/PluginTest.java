@@ -49,7 +49,7 @@ public class PluginTest implements Runnable {
 		
 		System.out.println("---------------------");
 		try {
-
+/*
 			QPD qpd_ = new QPD(MConfiguration.qpdlabel,cm,log_);
 			Stage pi_ = new Stage(MConfiguration.pilabel,cm,log_);
 			Laser l405_ = new Laser(MConfiguration.laserlabel[0], MConfiguration.ardlaserlabel[0],cm,log_);
@@ -66,7 +66,7 @@ public class PluginTest implements Runnable {
 			cm.setProperty("MaestroServo", "Position", 1740);
 			pause(3);
 			cm.setProperty("MaestroServo", "Position", 1250);
-			
+*/			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

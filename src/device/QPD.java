@@ -10,15 +10,15 @@ public class QPD extends Device{
 	InputDeviceProperty signalY_;
 	InputDeviceProperty signalS_;
 	
-	public QPD(String label, CMMCore core, Log log) {
-		super(label,core,log);
+	public QPD(String label, CMMCore core, Log log, boolean isLoaded) {
+		super(label,core,log, isLoaded);
 		createProperties();
 	}
 
 	private void createProperties() {
-		signalX_ = new InputDeviceProperty(label_, MConfiguration.qpdproplabel[0],core_,log_);
-		signalY_ = new InputDeviceProperty(label_, MConfiguration.qpdproplabel[1],core_,log_);
-		signalS_ = new InputDeviceProperty(label_, MConfiguration.qpdproplabel[2],core_,log_);
+		signalX_ = new InputDeviceProperty(label_, MConfiguration.qpdproplabel[0],core_,log_, detected_);
+		signalY_ = new InputDeviceProperty(label_, MConfiguration.qpdproplabel[1],core_,log_, detected_);
+		signalS_ = new InputDeviceProperty(label_, MConfiguration.qpdproplabel[2],core_,log_, detected_);
 
 		add(signalX_);
 		add(signalY_);

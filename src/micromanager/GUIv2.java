@@ -43,8 +43,7 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
       log_.writeToLog("-------------  New session  ----------------");
       sys_ = new MSystem(core_,log_);
       
-      
-      pt_ = new PluginTest(log_,sys_);
+      //pt_ = new PluginTest(log_,sys_);
    }
 
 
@@ -60,7 +59,7 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
            }
        }); 
 	   
-	   pt_.run();
+	   //pt_.run();
 	   //dispose();
    }
 
