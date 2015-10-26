@@ -41,7 +41,6 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
       core_ = gui_.getMMCore();
       log_ = new Log();
       log_.writeToLog("-------------  New session  ----------------");
-      sys_ = new MSystem(core_,log_);
       
       //pt_ = new PluginTest(log_,sys_);
    }
@@ -54,6 +53,7 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
            @Override
            public void run()
            {
+        	   sys_ = new MSystem(core_,log_);
         	   frame = new GUIFrame(sys_, log_);
         	   frame.setVisible(true);
            }

@@ -39,7 +39,7 @@ public class MSystem {
 	}
 	
 	private boolean isLoaded(String s){
-		for(int i=1;i<=numDevices_;i++){
+		for(int i=0;i<devices_.size();i++){
 			if(devices_.get(i).equals(s)){
 				return true;
 			}
@@ -96,7 +96,7 @@ public class MSystem {
 	}						
 
 	private void readMConfiguration(){
-
+																					///////implement
 	}
 	
 	public void shutDown(){
