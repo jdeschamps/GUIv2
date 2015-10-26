@@ -22,6 +22,7 @@ public class UVautomator extends Updater{
 	Log log_;
 	ActivationPanel pane_;
 	double cutoffArray[];
+	int nArray[];
 	int count = 0;
 
 	double cutoff_;
@@ -36,10 +37,15 @@ public class UVautomator extends Updater{
 		log_ = log;
 		core_ = sys_.getCore();
 		pane_ = pane;
-		
+
 	    cutoffArray = new double[10];
 	    for(int i=0;i<10;i++){
 	    	cutoffArray[i]=0;
+	    }
+
+	    nArray = new int[10];
+	    for(int i=0;i<10;i++){
+	    	nArray[i]=0;
 	    }
 		
 		if(!d.getLabel().equals("Luxx405")){
@@ -64,6 +70,7 @@ public class UVautomator extends Updater{
 			int width, height;
 			long byteDepth;
 			double tempcutoff;
+			int tempn;
 			TaggedImage tagged1 = null, tagged2 = null;
 			ShortProcessor ip, ip2;
 			ImagePlus imp, imp2;
@@ -73,6 +80,10 @@ public class UVautomator extends Updater{
 			NMS NMSuppr = new NMS();
 	
 			count++;
+
+			if(count == 1000000){
+				count = 0;
+			}
 		   	 
 			width = (int) core_.getImageWidth();
 			height = (int) core_.getImageHeight();
@@ -119,16 +130,28 @@ public class UVautomator extends Updater{
 					}
 			           	      
 					NMSuppr.run(imp3,10,300,cutoff_,false);
+					nArray[count%10] = NMSuppr.getN();
+					
+					return meanArray(nArray);
 	 			}
 			}
-			return NMSuppr.getN();
 		}
 		return 0;
 	}
-	
+
 	public double meanArray(double[] a){
 		int s = a.length;
 		double n = 0;
+		for(int i=0;i<s;i++){
+			n = n+a[i];
+		}
+		n=n/s;
+		return n;
+	}
+	
+	public int meanArray(int[] a){
+		int s = a.length;
+		int n = 0;
 		for(int i=0;i<s;i++){
 			n = n+a[i];
 		}
