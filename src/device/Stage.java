@@ -17,8 +17,8 @@ public class Stage extends Device{
 	}
 
 	private void createProperties() {
-		sensorState_ = new DeviceProperty(label_, MConfiguration.piproplabel[0], 0, 1,core_,log_,false, detected_);
-		position_ = new DeviceProperty(label_, MConfiguration.piproplabel[1], 0, 100,core_,log_,false, detected_);					/// to check
+		sensorState_ = new DeviceProperty(label_, MConfiguration.piproplabel[0], 0, 1,core_,log_,false, !detected_);
+		position_ = new DeviceProperty(label_, MConfiguration.piproplabel[1], 0, 100,core_,log_,false, !detected_);					/// to check
 		
 		add(sensorState_);
 		add(position_);
@@ -35,15 +35,8 @@ public class Stage extends Device{
 				log_.writeToLog(label_+" : error setting focus device "+MConfiguration.smaractlabel);
 			}
 		} else if(val==0){
-			//setProperty(sensorState_.getPropertyName(),val);							/// maybe modify directly the object
-			try {
-				if(detected_){
-					setProperty(sensorState_.getPropertyName(),val);
-				}
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			setProperty(sensorState_.getPropertyName(),val);							/// maybe modify directly the object
+
 			try {
 				if(detected_){
 					core_.setFocusDevice("PIZStage");

@@ -41,16 +41,21 @@ public class MSystem {
 	
 	private void detectDevices(){
 		devices_ = core_.getLoadedDevices();
+		for(String s:devices_){
+			System.out.println("[GUI] Available device: "+s);
+		}
 	}
 	
 	private boolean isLoaded(String s){
 		for(int i=0;i<devices_.size();i++){
 			if(devices_.get(i).equals(s)){
+				System.out.println("[GUI] Device "+s+" loaded");
 				return true;
 			} else {
 				devicesAbsent_.add(s);
 			}
 		}
+		System.out.println("[GUI] Device "+s+" not loaded");
 		return false;
 	}
 	
@@ -198,6 +203,8 @@ public class MSystem {
 	}
 	
 	public void setStageSensor(int val){
+
+		System.out.println("[GUI] Stage sensor set to "+val);
 		pi_.setSensorState(val);
 	}
 	
@@ -253,6 +260,7 @@ public class MSystem {
 	}
 	
 	public void setLaserOperation(String name, int val){
+		System.out.println("[GUI] set laser operation "+name+" "+val);
 		if(name.equals(MConfiguration.laserkeys[0])){
 			l405_.setOperation(val);
 		} else if(name.equals(MConfiguration.laserkeys[1])){

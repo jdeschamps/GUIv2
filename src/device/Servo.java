@@ -19,9 +19,9 @@ public class Servo extends Device{
 	
 	private void createProperties() {
 		if(!label_.equals(MConfiguration.servolabel[0])){
-			position_ = new DeviceProperty(label_, prop_, 0, nPos_,core_,log_,false, detected_);
+			position_ = new DeviceProperty(label_, prop_, 0, nPos_,core_,log_,false, !detected_);
 		} else {
-			position_ = new DeviceProperty(label_, prop_, 0, 2000,core_,log_,false, detected_);
+			position_ = new DeviceProperty(label_, prop_, 0, 2000,core_,log_,false, !detected_);
 		}
 		add(position_);
 	}

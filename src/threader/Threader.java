@@ -95,6 +95,8 @@ public class Threader {
 		} else if(key.equals("UV")){
 			uva_.stop();
 		}
+		//if(!pim_.isRunning() && !qpdm_.isRunning() && !uva_.isRunning()){
+		//}
 	}
 
 
@@ -127,7 +129,6 @@ public class Threader {
 		protected Integer doInBackground() throws Exception {
 			int counter = 0;
 			while(running_ && !isCancelled()){
-				System.out.println("Round "+counter);
 				switch(counter%3){
 				case 0:
 					if(pim_.isRunning()){

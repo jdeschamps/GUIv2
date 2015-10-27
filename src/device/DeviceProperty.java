@@ -37,15 +37,21 @@ public class DeviceProperty extends InputDeviceProperty{
 	}
 
 	public boolean setValue(double val){
+		System.out.println("[GUI] set property value "+val);
 		if(!isEmpty_){
-			System.out.println(val);
+			System.out.println("[GUI] property not empty");
+
 			if(val<= max_ && val>=min_){
+				System.out.println("[GUI] value in bound");
 				try {
-					if(!isDeviceBusy()){
-						core_.setProperty(device_, property_, val);
-						currentvalue_ = val;
-						return true;
-					}
+					System.out.println("[GUI] device is not busy");
+
+					core_.setProperty(device_, property_, val);
+					currentvalue_ = val;
+					System.out.println("[GUI] value set to "+currentvalue_);
+
+					return true;
+					
 				} catch (Exception e) {
 					log_.writeToLog(device_+" : error setting "+property_+" to "+Double.toString(val));
 				}
@@ -55,13 +61,17 @@ public class DeviceProperty extends InputDeviceProperty{
 	}
 
 	public boolean setValue(String val){
+		System.out.println("[GUI] set property value "+val);
 		if(!isEmpty_){
+			System.out.println("[GUI] property not empty");
 			try {
-				if(!isDeviceBusy()){
-					core_.setProperty(device_, property_, val);
-					current_ = val;
-					return true;
-				}
+				System.out.println("[GUI] device not busy");
+
+				core_.setProperty(device_, property_, val);
+				current_ = val;
+				System.out.println("[GUI] current value "+val);
+				return true;
+				
 			} catch (Exception e) {
 				log_.writeToLog(device_+" : error setting "+property_+" to "+val);
 			}

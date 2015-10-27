@@ -27,10 +27,10 @@ public class Laser extends Device{
 	}
 	
 	private void createProperties() {
-		operation_ = new DeviceProperty(label_, MConfiguration.luxxproplabel[0], 0, 1,core_,log_,true, detected_);
-		powerPerc_ = new DeviceProperty(label_, MConfiguration.luxxproplabel[1], 0, 100,core_,log_,false, detected_);
-		behaviour_ = new DeviceProperty(arduinoLabel_, MConfiguration.ardproplabel[0], 0, 4,core_,log_,false, detected_);
-		pulse_ = new DeviceProperty(arduinoLabel_, MConfiguration.ardproplabel[1], 0, MConfiguration.ardlasermaxpulse,core_,log_,false, detected_);
+		operation_ = new DeviceProperty(label_, MConfiguration.luxxproplabel[0], 0, 1,core_,log_,true, !detected_);
+		powerPerc_ = new DeviceProperty(label_, MConfiguration.luxxproplabel[1], 0, 100,core_,log_,false, !detected_);
+		behaviour_ = new DeviceProperty(arduinoLabel_, MConfiguration.ardproplabel[0], 0, 4,core_,log_,false, !detected_);
+		pulse_ = new DeviceProperty(arduinoLabel_, MConfiguration.ardproplabel[1], 0, MConfiguration.ardlasermaxpulse,core_,log_,false, !detected_);
 
 		add(operation_);
 		add(powerPerc_);
@@ -44,8 +44,10 @@ public class Laser extends Device{
 
 	public void setOperation(int val){	
 		if(val==1){
+			System.out.println("[GUI] set laser operation on");
 			setProperty(operation_.getPropertyName(),"On");										/// maybe modify directly the object
 		} else if(val==0){
+			System.out.println("[GUI] set laser operation off");
 			setProperty(operation_.getPropertyName(),"Off");				
 		} else {
 			log_.writeToLog(label_+" : Invalid operation requested ("+val+")");
