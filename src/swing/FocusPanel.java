@@ -135,34 +135,7 @@ public class FocusPanel extends javax.swing.JPanel {
 
         add(jPanel_controls);
         
-  //      jPanel_graph.setPreferredSize(new Dimension(378,158));
-   //     jPanel_graph.setLayout(new GridLayout(1, 1));
-    //    focusGraph = new Graph(300,100,"Pos","time",true,false,true);
         gr = new TimeChart("position","time","position",MConfiguration.maxNPI,370,220);
-        
-        
-   /*     XYSeries series = new XYSeries("Data");
-        for (int i = 0; i < 100; i++) {
-            series.add(i, i);
-        }
-        XYSeriesCollection dataset = new XYSeriesCollection(series);
-      
-        JFreeChart chart = ChartFactory.createXYLineChart(null, "Domain",
-            "Range", dataset, PlotOrientation.VERTICAL, false, false, false);
-        
-        
-        jPanel_graph.add(new ChartPanel(chart));
-     */   
-   /*     javax.swing.GroupLayout jPanel_graphLayout = new javax.swing.GroupLayout(jPanel_graph);
-        jPanel_graph.setLayout(jPanel_graphLayout);
-        jPanel_graphLayout.setHorizontalGroup(
-            jPanel_graphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
-        );
-        jPanel_graphLayout.setVerticalGroup(
-            jPanel_graphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 158, Short.MAX_VALUE)
-        );*/
 
         add(gr.getChart());
     }// </editor-fold>//GEN-END:initComponents
