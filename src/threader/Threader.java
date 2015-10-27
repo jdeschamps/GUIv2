@@ -208,6 +208,9 @@ public class Threader {
 					  if(frame_.isNewCutOff()){
 						  uvcutoff.setText(result[3].toString());
 					  }
+					  if(frame_.isNMSChecked()){
+						  frame_.setNMSImageProcessor(uva_.getNMSresult());
+					  }
 					  break;
 				  }
 			  }

@@ -6,6 +6,7 @@ package swing;
 
 import graph.Chart;
 import graph.TimeChart;
+import ij.process.ImageProcessor;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -137,6 +138,14 @@ public class GUIFrame extends javax.swing.JFrame {
     		return true;
     	}
     	return false;
+    }
+
+    public boolean isNMSChecked(){
+    	return tabs.activationPanel.isNMSchecked();
+    }
+    
+    public void setNMSImageProcessor(ImageProcessor ipn){
+    	tabs.activationPanel.setImageProcessor(ipn);
     }
     
     public boolean isUVTextSelected(){

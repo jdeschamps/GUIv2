@@ -2,6 +2,8 @@ package device;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import micromanager.MConfiguration;
 import micromanager.Log;
 import mmcorej.CMMCore;
@@ -18,6 +20,7 @@ public class MSystem {
 	Log log_;
 	ArrayList<Device> deviceList_;
 	StrVector devices_;
+	StrVector devicesAbsent_;
 	int numDevices_ = 9;
 	
 	public MSystem(){
@@ -28,6 +31,8 @@ public class MSystem {
 		core_ = core;
 		log_ = log;
 		readMConfiguration();
+		
+		devicesAbsent_ = new StrVector();
 		
 		detectDevices();
 		initializeDevices();
@@ -42,6 +47,8 @@ public class MSystem {
 		for(int i=0;i<devices_.size();i++){
 			if(devices_.get(i).equals(s)){
 				return true;
+			} else {
+				devicesAbsent_.add(s);
 			}
 		}
 		return false;
@@ -95,6 +102,7 @@ public class MSystem {
 		return true;
 	}						
 
+	
 	private void readMConfiguration(){
 																					///////implement
 	}

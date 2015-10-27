@@ -4,6 +4,7 @@ import swing.ActivationPanel;
 import ij.ImagePlus;
 import ij.plugin.ImageCalculator;
 import ij.plugin.filter.GaussianBlur;
+import ij.process.ImageProcessor;
 import ij.process.ShortProcessor;
 import micromanager.Log;
 import mmcorej.CMMCore;
@@ -24,7 +25,8 @@ public class UVautomator extends Updater{
 	double cutoffArray[];
 	int nArray[];
 	int count = 0;
-
+	ImageProcessor ip_;
+	
 	double cutoff_;
 	
 	// Constants
@@ -129,7 +131,7 @@ public class UVautomator extends Updater{
 						cutoff_ = meanArray(cutoffArray);
 					}
 			           	      
-					NMSuppr.run(imp3,10,300,cutoff_,false);
+					ip_ = NMSuppr.run(imp3,10,300,cutoff_,false);
 					nArray[count%10] = NMSuppr.getN();
 					
 					return meanArray(nArray);
@@ -139,6 +141,10 @@ public class UVautomator extends Updater{
 		return 0;
 	}
 
+	public ImageProcessor getNMSresult(){
+		return ip_;
+	}
+	
 	public double meanArray(double[] a){
 		int s = a.length;
 		double n = 0;

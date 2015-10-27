@@ -6,6 +6,11 @@ package swing;
 
 import graph.Chart;
 import graph.TimeChart;
+import ij.ImagePlus;
+import ij.gui.ImageWindow;
+import ij.gui.Roi;
+import ij.process.ImageProcessor;
+import ij.process.ShortProcessor;
 
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
@@ -23,10 +28,14 @@ public class ActivationPanel extends javax.swing.JPanel {
 
 	MSystem sys_;
 	Threader th_;
-	
+	ImageProcessor ip_;
+	ImagePlus im_;
+	boolean checkedNMS = false;
+
     public ActivationPanel(MSystem sys, Threader th) {
     	sys_ = sys;
     	th_ = th;
+    	im_ = new ImagePlus("NMS result");
         initComponents();
     }
 
@@ -53,6 +62,7 @@ public class ActivationPanel extends javax.swing.JPanel {
         jTextField_cutoff = new javax.swing.JTextField();
         jButton_getcutoff = new javax.swing.JButton();
         jToggleButton_autocutoff = new javax.swing.JToggleButton();
+        jCheckBox_showNMS = new javax.swing.JCheckBox();
 
         setPreferredSize(new java.awt.Dimension(390, 212));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -170,6 +180,14 @@ public class ActivationPanel extends javax.swing.JPanel {
                 jToggleButton_autocutoffActionPerformed(evt);
             }
         });
+        
+        jCheckBox_showNMS.setText("NMS");
+        jCheckBox_showNMS.addItemListener(new java.awt.event.ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent evt) {
+                jCheckBox_showNMSActionPerformed(evt);				
+			}
+        });
 
         javax.swing.GroupLayout jPanel_bottomLayout = new javax.swing.GroupLayout(jPanel_bottom);
         jPanel_bottom.setLayout(jPanel_bottomLayout);
@@ -184,6 +202,8 @@ public class ActivationPanel extends javax.swing.JPanel {
                 .addComponent(jButton_getcutoff)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToggleButton_autocutoff)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jCheckBox_showNMS)
                 .addContainerGap(80, Short.MAX_VALUE))
         );
         jPanel_bottomLayout.setVerticalGroup(
@@ -194,7 +214,8 @@ public class ActivationPanel extends javax.swing.JPanel {
                 .addGroup(jPanel_bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField_cutoff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_getcutoff)
-                    .addComponent(jToggleButton_autocutoff))
+                    .addComponent(jToggleButton_autocutoff)
+                    .addComponent(jCheckBox_showNMS))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -216,6 +237,26 @@ public class ActivationPanel extends javax.swing.JPanel {
     		autocutoff = false;
     	}
     }//GEN-LAST:event_jToggleButton_autocutoffActionPerformed
+
+    
+    private void jCheckBox_showNMSActionPerformed(java.awt.event.ItemEvent evt) {                                                  
+        if(evt.getStateChange() == ItemEvent.SELECTED){
+        	checkedNMS = true;
+        	im_.show();
+        } else {
+        	checkedNMS = false;
+        	im_.close();
+        }
+    }             
+    
+    public void setImageProcessor(ImageProcessor ipn){
+    	im_.setProcessor(ipn);
+    	im_.updateAndRepaintWindow();
+    }
+    
+    public boolean isNMSchecked(){
+    	return checkedNMS;
+    }
 
     public boolean isActivateOn(){
     	return jToggleButton_activate.isSelected();
@@ -274,5 +315,6 @@ public class ActivationPanel extends javax.swing.JPanel {
     public javax.swing.JTextField jTextField_cutoff;
     private javax.swing.JToggleButton jToggleButton_activate;
     private javax.swing.JToggleButton jToggleButton_autocutoff;
+    private javax.swing.JCheckBox jCheckBox_showNMS;
     // End of variables declaration//GEN-END:variables
 }

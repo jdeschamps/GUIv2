@@ -1,18 +1,18 @@
 package activation;
 
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import micromanager.Log;
 import ij.ImagePlus;
 import ij.gui.ImageWindow;
+import ij.gui.Roi;
 import ij.process.ImageProcessor;
 
 public class NMS {
-	ImageProcessor imp;
+	ImageProcessor imp, impresult;
 	ImagePlus im_, imtemp_;
 	ImageWindow iw;
+	Roi roi;
 	int width_, height_;
 	int n_,max_num;
 	double cutoff_;
@@ -25,20 +25,23 @@ public class NMS {
 		peaks = new ArrayList<Peak>();
 		imtemp_ = new ImagePlus();
 		imtemp_.setTitle("NMS");
+		roi = new Roi(0,0,10,10);
 	}
 	
-	public void run(ImagePlus im, int n, int max, double cutoff, boolean display){
+	public ImageProcessor run(ImagePlus im, int n, int max, double cutoff, boolean display){
 		im_ = im;		
 		width_ = im.getWidth();
 		height_ = im.getHeight();
 		imp = im.getProcessor();
+		impresult = (ImageProcessor) imp.clone();
+		impresult.setValue(255);
 		n_ = n;
 		max_num = max;
 		cutoff_ = cutoff;
 		display_ = display;
 		peaks.clear();
 		
-		process();
+		return process();
 	}
 	
 	public int getN(){
@@ -51,7 +54,7 @@ public class NMS {
 		return N;
 	}
 	
-	public void process(){
+	public ImageProcessor process(){
 		int i,j,ii,jj,ll,kk;
 		int mi,mj;
 		boolean failed=false;
@@ -86,65 +89,12 @@ public class NMS {
 				if(!failed && peaks.size()<max_num){
 					if(imp.get(mi,mj) > cutoff_){
 						peaks.add(new Peak(mi, mj, imp.get(mi,mj)));
+						roi.setLocation(mi, mj);
+						impresult.draw(roi);
 					}
 				}
 			}			
 		}	
-		
-		
-		
-		
-		// Display NMS result on an image
-		if(display_   ){												//display_
-
-			//im_.show();
-			imtemp_.hide();
-			
-			imp = im_.getProcessor();
-			int max = (int) imp.getMax();
-			for(ll=0;ll<width_;ll++){
-				for(kk=0;kk<height_;kk++){
-					imp.set(ll, kk, max-imp.get(ll, kk));
-				}
-			}
-			int x,y;
-
-
-			for(int l=0;l<peaks.size();l++){ 
-
-				x =peaks.get(l).getX();
-				y= peaks.get(l).getY();
-
-				for(ll=0;ll<10;ll++){
-					
-					if(x+ll<width_ && x-ll>0 && y+10<height_ && y-10>0){
-						imp.set(x+ll, y+10, 0);
-						imp.set(x-ll, y-10, 0);
-						imp.set(x+ll, y-10, 0);
-						imp.set(x-ll, y+10, 0);
-
-					}
-					if(x+10<width_ && x-10>0 && y+ll<height_ && y-ll>0){
-						imp.set(x+10, y+ll, 0);
-						imp.set(x-10, y-ll, 0);
-						imp.set(x+10, y-ll, 0);
-						imp.set(x-10, y+ll, 0);
-					}
-				}
-				 
-				imp.set(x, y, 5000);
-			}
-
-			imtemp_.setProcessor(imp.duplicate());
-			/*imtemp_.setProcessor(imp.duplicate());
-			  if(!win){
-				imtemp_.show();
-				win = true;
-			}
-			imtemp_.update()*/
-			imtemp_.show();
-
-		}
-		//writer.close();
+		return impresult;
 	}
 }
