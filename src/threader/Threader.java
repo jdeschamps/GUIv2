@@ -9,7 +9,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
 import swing.GUIFrame;
-import swing.Graph;
 import swing.LogarithmicJSlider;
 import device.MSystem;
 import micromanager.MConfiguration;

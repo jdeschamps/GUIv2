@@ -168,7 +168,6 @@ public class FocusPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public Graph focusGraph;
     public TimeChart gr;
     private javax.swing.JLabel jLabel_position;
     private javax.swing.JPanel jPanel_controls;
