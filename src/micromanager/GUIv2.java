@@ -55,7 +55,6 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
            {
         	   sys_ = new MSystem(core_,log_);
         	   frame = new GUIFrame(sys_, log_);
-        	   frame.setVisible(true);
            }
        }); 
 	   

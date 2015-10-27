@@ -12,7 +12,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import threader.Threader;
 import micromanager.Log;
@@ -47,16 +49,6 @@ public class GUIFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     private void initComponents() {
-
-    	this.addWindowListener(new WindowAdapter() {
-    	    @Override
-    	    public void windowClosing(WindowEvent e) {
-    	    	sys_.shutDown();
-    	    	th_.stop();
-    	    	log_.closeLog();
-    	    	dispose();
-    	    }
-    	});
     	    	
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -87,6 +79,19 @@ public class GUIFrame extends javax.swing.JFrame {
         getContentPane().add(tabs, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 460, 250));
 
         pack();
+ 	    this.setVisible(true);
+
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    	this.addWindowListener(new WindowAdapter() {
+    	    @Override
+    	    public void windowClosing(WindowEvent e) {
+    	    	sys_.shutDown();
+    	    	th_.stop();
+    	    	log_.closeLog();
+    	    	dispose();
+    	    }
+    	});
+        
     }// </editor-fold>//GEN-END:initComponents
 
     /*
