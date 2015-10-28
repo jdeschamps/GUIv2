@@ -1,11 +1,14 @@
 package micromanager;
 
+import gui.MainFrame;
+
 import javax.swing.SwingUtilities;
 
 import mmcorej.CMMCore;
 
 import org.micromanager.api.ScriptInterface;
 //import org.micromanager.MainFrame;
+
 
 
 
@@ -24,7 +27,7 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
    private Log log_;
    private MSystem sys_;
    private PluginTest pt_;
-   private GUIFrame frame;
+   private MainFrame frame;
    
    public void dispose() {
       /*
@@ -54,7 +57,7 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
            public void run()
            {
         	   sys_ = new MSystem(core_,log_);
-        	   frame = new GUIFrame(sys_, log_);
+        	   frame = new MainFrame(sys_, log_);
            }
        }); 
 	   

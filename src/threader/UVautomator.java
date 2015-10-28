@@ -1,6 +1,7 @@
 package threader;
 
 import swing.ActivationPanel;
+import gui.ActivationTab;
 import ij.ImagePlus;
 import ij.plugin.ImageCalculator;
 import ij.plugin.filter.GaussianBlur;
@@ -21,7 +22,7 @@ public class UVautomator extends Updater{
 	MSystem sys_;
 	CMMCore core_;
 	Log log_;
-	ActivationPanel pane_;
+	ActivationTab pane_;
 	double cutoffArray[];
 	int nArray[];
 	int count = 0;
@@ -33,12 +34,12 @@ public class UVautomator extends Updater{
 	double min = 0.4;
 
 	
-	public UVautomator(Device d, MSystem sys, Log log, ActivationPanel pane) {
+	public UVautomator(Device d, MSystem sys, Log log, ActivationTab activationTab) {
 		super(d, 3);
 		sys_ = sys;
 		log_ = log;
 		core_ = sys_.getCore();
-		pane_ = pane;
+		pane_ = activationTab;
 
 	    cutoffArray = new double[10];
 	    for(int i=0;i<10;i++){

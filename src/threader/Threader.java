@@ -2,6 +2,7 @@ package threader;
 
 import graph.Chart;
 import graph.TimeChart;
+import gui.MainFrame;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Threader {
 	
 	MSystem sys_;
 	Log log_;
-	GUIFrame frame_;
+	MainFrame frame_;
 	
 	PImonitor pim_;
 	QPDmonitor qpdm_;
@@ -28,13 +29,13 @@ public class Threader {
 	boolean initialized_ = false;
 	boolean running_ = false;
 	
-	public Threader(GUIFrame frame){
+	public Threader(MainFrame mainFrame){
 		pim_ = new PImonitor(null);
 		qpdm_ = new QPDmonitor(null);
-		frame_ = frame;
+		frame_ = mainFrame;
 	}
 	
-	public Threader(MSystem sys, Log log, GUIFrame frame){
+	public Threader(MSystem sys, Log log, MainFrame frame){
 		sys_ = sys;
 		log_ = log;
 		frame_ = frame;
@@ -105,7 +106,7 @@ public class Threader {
 		Double[] resultPI, resultQPD, resultUV;
 		Chart qpdg3;
 		TimeChart pig, qpdg1, qpdg2, uvg;
-		LogarithmicJSlider uvlgs;
+		gui.LogarithmicJSlider uvlgs;
 		JTextField uvjtf, uvcutoff;
 		int counter;
 		
