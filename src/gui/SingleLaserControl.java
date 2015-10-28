@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+
 import device.MSystem;
 
 /**
@@ -48,7 +49,7 @@ public class SingleLaserControl extends javax.swing.JPanel {
         jToggleButton_20perc = new javax.swing.JToggleButton();
         jToggleButton_1perc = new javax.swing.JToggleButton();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, label_, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, color_));
 
         jToggleButton_laserOperation.setBorderPainted(false);
         jToggleButton_laserOperation.setBorder(null);
@@ -70,16 +71,19 @@ public class SingleLaserControl extends javax.swing.JPanel {
         });
 
         jTextField_userInput.setText("50");
-        jTextField_userInput.addKeyListener(new KeyAdapter(){
+        jTextField_userInput.addKeyListener(new KeyAdapter(){        	
         	@Override
         	public void keyReleased(KeyEvent ke) {
         	    String typed = jTextField_userInput.getText();
         	    if(!typed.matches("\\d+") || typed.length() > 3) {
         	        return;
-        	    }
-        	    jToggleButton_userperc.setText(typed+"%");
-        	    if(jToggleButton_userperc.isSelected()){
-        	    	sys_.setLaserPowerPerc(label_, Integer.parseInt(typed));
+        	    }    
+        	    int val = Integer.parseInt(typed);
+        	    if(val<=100){
+	        	    jToggleButton_userperc.setText(typed+"%");
+	        	    if(jToggleButton_userperc.isSelected()){
+	        	    	sys_.setLaserPowerPerc(label_, val);
+	        	    }
         	    }
         	}
         	});     

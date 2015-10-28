@@ -8,7 +8,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JSlider;
+
 import micromanager.MConfiguration;
 import device.MSystem;
 
@@ -42,14 +44,19 @@ public class UVPulsePanel extends javax.swing.JPanel {
 		logarithmicJSlider.setMajorTickSpacing(10);
 		logarithmicJSlider.setMinorTickSpacing(10);
 		logarithmicJSlider.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {					
-					if(logarithmicJSlider.getValue()<1000*sys_.getExposureTime()){
+			public void mouseReleased(MouseEvent e) {				
+					int max = (int) (1000*sys_.getExposureTime());
+					if(logarithmicJSlider.getValue()<max){
 						try{
 							jTextField_pulse.setText(String.valueOf(logarithmicJSlider.getValue()));
 							sys_.setLaserPulseLength(MConfiguration.laserkeys[0], logarithmicJSlider.getValue());
 						} catch(Exception ex){
 				    		 sys_.writeToLog("Error setting UV pulse from slider to "+logarithmicJSlider.getValue());
 						}
+					} 
+					else {
+						jTextField_pulse.setText(String.valueOf(max));
+						sys_.setLaserPulseLength(MConfiguration.laserkeys[0], max);
 					}	    
 			}});
 

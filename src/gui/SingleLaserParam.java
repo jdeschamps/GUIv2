@@ -11,6 +11,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JComboBox;
 
@@ -79,6 +81,25 @@ public class SingleLaserParam extends javax.swing.JPanel {
         	    sys_.setLaserPulseLength(label_, Integer.parseInt(typed));
         	}
         });    
+        
+        jSlider_pulse.setMaximum(MConfiguration.ardlasermaxpulse);
+        jSlider_pulse.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+					int max  = (int) (1000*sys_.getExposureTime());
+					jSlider_pulse.setMaximum(max);
+					if(jSlider_pulse.getValue()<max){
+						try{
+							jTextField_pulse.setText(String.valueOf(jSlider_pulse.getValue()));
+							sys_.setLaserPulseLength(label_, jSlider_pulse.getValue());
+						} catch(Exception ex){
+				    		 sys_.writeToLog("Error setting UV pulse from slider to "+jSlider_pulse.getValue());
+						}
+					} else {
+						jTextField_pulse.setText(String.valueOf(max));
+						sys_.setLaserPulseLength(label_, max);
+					}
+			}});
+
 
         jLabel_maxpower.setText("Max power (mW) :");
 
@@ -135,10 +156,6 @@ public class SingleLaserParam extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jComboBox_behaviourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_behaviourActionPerformed
-
-    }//GEN-LAST:event_jComboBox_behaviourActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jComboBox_behaviour;
