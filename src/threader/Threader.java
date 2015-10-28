@@ -3,14 +3,9 @@ package threader;
 import graph.Chart;
 import graph.TimeChart;
 import gui.MainFrame;
-
 import java.util.List;
-
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
-
-import swing.GUIFrame;
-import swing.LogarithmicJSlider;
 import device.MSystem;
 import micromanager.MConfiguration;
 import micromanager.Log;
@@ -197,8 +192,9 @@ public class Threader {
 					  break;
 				  case 2:	// UV 
 					  uvg.addPoint(result[1].intValue());
-					  uvlgs.setMaximum((int) (1000*sys_.getExposureTime()));
-					  if(result[1] != 0){										/// what if >max
+					  int max = (int) (1000*sys_.getExposureTime());
+					  uvlgs.setMaximum(max);
+					  if(result[2] != 0 && result[2]<= max){										
 						  uvlgs.setValue(result[2].intValue());
 					  } else {
 						  uvlgs.setValue(1);

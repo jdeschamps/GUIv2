@@ -1,21 +1,10 @@
 package micromanager;
 
 import gui.MainFrame;
-
 import javax.swing.SwingUtilities;
-
 import mmcorej.CMMCore;
-
 import org.micromanager.api.ScriptInterface;
-//import org.micromanager.MainFrame;
-
-
-
-
-
-
 import device.MSystem;
-import swing.GUIFrame;
 import test.PluginTest;
 
 

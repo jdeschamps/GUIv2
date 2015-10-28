@@ -1,6 +1,5 @@
 package threader;
 
-import swing.ActivationPanel;
 import gui.ActivationTab;
 import ij.ImagePlus;
 import ij.plugin.ImageCalculator;

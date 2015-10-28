@@ -24,7 +24,12 @@ import javax.swing.plaf.basic.BasicSliderUI;
 public class LogarithmicJSlider extends JSlider {
 
 
-    public LogarithmicJSlider(int orientation) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1252749148757719750L;
+
+	public LogarithmicJSlider(int orientation) {
         super(orientation);
         SliderUI ui = new LogSliderUI(this);
         this.setUI(ui);
