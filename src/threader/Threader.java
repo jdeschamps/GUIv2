@@ -63,7 +63,10 @@ public class Threader {
 	}
 	
 	public void stop(){
-		running_ = true;
+		running_ = false;
+		qpdm_.stop();
+		pim_.stop();
+		uva_.stop();
 	}
 
 	public void startUpdater(String key){
@@ -193,20 +196,22 @@ public class Threader {
 				  case 2:	// UV 
 					  uvg.addPoint(result[1].intValue());
 					  int max = (int) (1000*sys_.getExposureTime());
-					  uvlgs.setMaximum(max);
+					  if(max > 0){
+						  uvlgs.setMaximum(max);
+					  } 
 					  if(result[2] != 0 && result[2]<= max){										
 						  uvlgs.setValue(result[2].intValue());
 					  } else {
 						  uvlgs.setValue(1);
 					  }
-					  if(!frame_.isUVTextSelected()){
+					 if(!frame_.isUVTextSelected()){
 						  uvjtf.setText(result[2].toString());
 					  }
 					  if(frame_.isNewCutOff()){
 						  uvcutoff.setText(result[3].toString());
 					  }
 					  if(frame_.isNMSChecked()){
-						  frame_.setNMSImageProcessor(uva_.getNMSresult());
+						  //frame_.setNMSImageProcessor(uva_.getNMSresult());
 					  }
 					  break;
 				  }

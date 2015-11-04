@@ -19,11 +19,7 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
    private MainFrame frame;
    
    public void dispose() {
-      /*
-       * you can put things that need to be run on shutdown here
-       * note: if you launch a JDialog from the plugin using show(), shutdown of the dialog will not automatically call dispose()
-       * You will need to add a call to dispose() from the formWindowClosing() method of your JDialog.
-       */
+	   
 	   log_.closeLog();
    }
 

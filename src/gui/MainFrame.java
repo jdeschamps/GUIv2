@@ -83,8 +83,9 @@ public class MainFrame extends javax.swing.JFrame {
     	this.addWindowListener(new WindowAdapter() {
     	    @Override
     	    public void windowClosing(WindowEvent e) {
+    	    	System.out.println("Shutting down");
     	    	sys_.shutDown();
-    	    	// th_.stop();
+    	    	th_.stop();
     	    	log_.closeLog();
     	    	dispose();
     	    }
