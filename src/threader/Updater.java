@@ -5,7 +5,8 @@ import device.Device;
 public abstract class Updater {
 
 	Device device_;
-	Boolean running_ = false;
+	Boolean running_;
+	Boolean empty_ = false;
 	int nOut_;
 	protected double[] output_;
 	
@@ -13,13 +14,14 @@ public abstract class Updater {
 		device_ = d;
 		nOut_ = nOut;
 		output_ = new double[nOut_];
+		running_ = false;
 	}
 	
 	public Device getDevice(){
 		return device_;
 	}
 
-	public void start(){
+	public void start(){ 
 		running_ = true;
 	}
 	
@@ -50,10 +52,17 @@ public abstract class Updater {
 	public abstract void update();
 	
 	public String outputToString(){
-		String s = "Output from "+device_.getLabel()+" :";
-		for(int i=0;i<nOut_;i++){
-			s += " "+output_[i];
+		if(!isEmpty()){
+			String s = "Output from "+device_.getLabel()+" :";
+			for(int i=0;i<nOut_;i++){
+				s += " "+output_[i];
+			}
+			return s;
 		}
-		return s;
+		return "null";
+	}
+	
+	public Boolean isEmpty(){
+		return empty_;
 	}
 }

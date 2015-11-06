@@ -37,7 +37,7 @@ public class Threader {
 	}
 
 	private void initialize() {
-		pim_ = new PImonitor(sys_.getPIStage());
+		pim_ = new PImonitor(sys_.getPIStage());		
 		qpdm_ = new QPDmonitor(sys_.getQPD());
 		uva_ = new UVautomator(sys_.getLaser(MConfiguration.laserkeys[0]), sys_, log_, frame_.getActivateTab());
 		initialized_ = true;
@@ -63,10 +63,12 @@ public class Threader {
 	}
 	
 	public void stop(){
-		running_ = false;
-		qpdm_.stop();
-		pim_.stop();
-		uva_.stop();
+		if(isInitialized()){
+			running_ = false;
+			qpdm_.stop();
+			pim_.stop();
+			uva_.stop();
+		}
 	}
 
 	public void startUpdater(String key){

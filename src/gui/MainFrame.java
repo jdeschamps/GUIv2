@@ -40,7 +40,7 @@ public class MainFrame extends javax.swing.JFrame {
     	sys_ = sys;
     	log_ = log;
 
-    	th_ = new Threader(this);
+    	//th_ = new Threader(this);
         th_ = new Threader(sys_, log_, this);
 
     	initComponents();
