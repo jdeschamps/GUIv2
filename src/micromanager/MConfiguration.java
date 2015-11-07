@@ -1,9 +1,11 @@
 package micromanager;
 
 import java.awt.Color;
+import java.io.File;
 
 public class MConfiguration {
-
+	
+	public static final String configpath = "GUIConfiguration.txt";
 
 	//////////////////////////////////////////////
 	//// Log 
@@ -69,4 +71,136 @@ public class MConfiguration {
 	public static final int maxNPI = 30;
 	public static final int[] maxNQPD = {30,30,1};
 	public static final int maxNUV = 1000;
+	
+	//////////////////////////////////////////////
+	//// 
+	public double UVcoeff=0.5, SDcoeff=0.5;
+
+	public double getUVcoeff(){
+		return UVcoeff;
+	}
+	public double getSDcoeff(){
+		return SDcoeff;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	MConfiguration(){
+		importConfiguration();
+	}
+	
+	public void importConfiguration(){
+		if(!doesFileExist()){
+			createConfiguration();
+		} else {
+			readConfiguration();
+		}
+	}
+	
+	
+	public void createConfiguration(){
+		System.out.println("Create configuration");
+		File f = new File(configpath);
+		txtWriter writer = new txtWriter(f);
+		writer.process("Configuration\r\n");
+		writer.process("UVcoeff="+UVcoeff+";\r\n");
+		writer.process("SDcoeff="+SDcoeff+";\r\n");
+		writer.process("end;");
+		writer.close();
+	}
+	
+	public boolean doesFileExist(){
+		File f = new File(configpath);
+		if(f.exists() && !f.isDirectory()) { 
+			return true;
+		}
+		return false;
+	}
+	
+	public void readConfiguration(){
+		System.out.println("Read configuration:");
+		File f = new File(configpath);
+		txtReader reader = new txtReader(f);
+		reader.process();
+		reader.printContent();
+		parseConfiguration(reader);
+		reader.close();
+	}
+	
+	public void parseConfiguration(txtReader reader){
+		String content = String.copyValueOf(reader.getContent());
+		String buffer="";
+		String endpoint = ";";
+		String configuration="Configuration", end="end", uvcoeff="UVcoeff", sdcoeff="SDcoeff";
+
+		/*System.out.println("--------------------");
+		for(int i=0;i<content.length();i++){
+			System.out.println(i+"="+content.charAt(i));
+		}
+		System.out.println("--------------------");*/
+		
+
+		int i = 0;
+		
+		buffer = content.substring(i, i+configuration.length());
+		if(!buffer.equals(configuration)){
+			System.out.println("Error reading configuration: "+buffer);
+			return;
+		} else {
+			i = configuration.length()+2;
+		}
+
+		buffer = content.substring(i, i+uvcoeff.length());
+		if(!buffer.equals(uvcoeff)){
+			System.out.println("Error reading uvcoeff: "+buffer);
+			return;
+		} else {
+			i = i+uvcoeff.length()+1;
+			buffer="";
+		}
+		
+		while(content.charAt(i) != endpoint.charAt(0)){
+			buffer = buffer+content.charAt(i);
+			i++;
+		}
+		//System.out.println(buffer);
+		UVcoeff = Double.parseDouble(buffer);
+		i=i+3;
+		
+		buffer = content.substring(i, i+sdcoeff.length());
+		if(!buffer.equals(sdcoeff)){
+			System.out.println("Error reading sdcoeff: "+buffer);
+			return;
+		} else {
+			i = i+sdcoeff.length()+1;
+			buffer="";
+		}
+		
+		while(content.charAt(i) != endpoint.charAt(0)){
+			buffer = buffer+content.charAt(i);
+			i++;
+		}
+		//System.out.println(buffer);
+		SDcoeff = Double.parseDouble(buffer);
+		i=i+3;
+		
+		buffer = content.substring(i, i+end.length());
+		if(!buffer.equals(end)){
+			System.out.println("Error reading end of configuration: "+buffer);
+		} else {
+			System.out.println("End parsing configuration");
+			return;
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+

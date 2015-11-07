@@ -18,6 +18,7 @@ import javax.swing.WindowConstants;
 
 import threader.Threader;
 import micromanager.Log;
+import micromanager.MConfiguration;
 import mmcorej.CMMCore;
 import device.MSystem;
 
@@ -35,11 +36,13 @@ public class MainFrame extends javax.swing.JFrame {
 	MSystem sys_;
 	Threader th_;
 	Log log_;
+	MConfiguration config_;
 
-    public MainFrame(MSystem sys, Log log) {
+    public MainFrame(MSystem sys, Log log, MConfiguration config) {
     	sys_ = sys;
     	log_ = log;
-
+    	config_ = config;
+    	
     	//th_ = new Threader(this);
         th_ = new Threader(sys_, log_, this);
 
@@ -67,7 +70,7 @@ public class MainFrame extends javax.swing.JFrame {
     	
         opticsPanel = new ControlPanel(sys_);
         focusPanel = new FocusPanel(sys_, th_);
-        tabs = new SettingTabs(sys_, th_);
+        tabs = new SettingTabs(sys_, th_, config_);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);

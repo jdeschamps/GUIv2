@@ -17,6 +17,7 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
    private MSystem sys_;
    private PluginTest pt_;
    private MainFrame frame;
+   private MConfiguration config_;
    
    public void dispose() {
 	   
@@ -41,8 +42,9 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
            @Override
            public void run()
            {
-        	   sys_ = new MSystem(core_,log_);
-        	   frame = new MainFrame(sys_, log_);
+        	   config_ = new MConfiguration();
+        	   sys_ = new MSystem(core_,log_,config_);
+        	   frame = new MainFrame(sys_, log_,config_);
            }
        }); 
 	   

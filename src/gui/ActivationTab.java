@@ -25,13 +25,15 @@ public class ActivationTab extends javax.swing.JPanel {
 	private static final long serialVersionUID = -8002444578776391643L;
 	MSystem sys_;
 	Threader th_;
+	MConfiguration config_;
 	ImageProcessor ip_;
 	ImagePlus im_;
 	boolean checkedNMS = false;
 
-    public ActivationTab(MSystem sys, Threader th) {
+    public ActivationTab(MSystem sys, Threader th, MConfiguration config) {
     	sys_ = sys;
     	th_ = th;
+    	config_ = config;
     	im_ = new ImagePlus("NMS result");
         initComponents();
     }
@@ -78,13 +80,13 @@ public class ActivationTab extends javax.swing.JPanel {
             }
         });
 
-        jLabel_stdcoeff.setText("Std coeff:");
+        jLabel_stdcoeff.setText("Sd coeff:");
 
         jLabel_uvcoeff.setText("UV coeff:");
 
-        jTextField_stdcoeff.setText("0.5");
+        jTextField_stdcoeff.setText(String.valueOf(config_.getSDcoeff()));
 
-        jTextField_uvcoeff.setText("0.5");
+        jTextField_uvcoeff.setText(String.valueOf(config_.getUVcoeff()));
 
         jButton_GetN.setText("Get N");
         jButton_GetN.setMargin(new java.awt.Insets(2, 2, 2, 2));

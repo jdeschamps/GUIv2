@@ -12,6 +12,7 @@ import mmcorej.StrVector;
 public class MSystem {
 
 	CMMCore core_;
+	MConfiguration config_;
 	QPD qpd_;
 	Stage pi_;
 	Laser l405_, l488_, l638_;
@@ -27,10 +28,10 @@ public class MSystem {
 		// empty to test
 	}
 	
-	public MSystem(CMMCore core, Log log){
+	public MSystem(CMMCore core, Log log, MConfiguration config){
 		core_ = core;
 		log_ = log;
-		readMConfiguration();
+		config_ = config;
 		
 		devicesAbsent_ = new StrVector();
 		

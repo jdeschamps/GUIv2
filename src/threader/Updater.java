@@ -5,8 +5,8 @@ import device.Device;
 public abstract class Updater {
 
 	Device device_;
-	Boolean running_;
-	Boolean empty_ = false;
+	boolean running_;
+	boolean empty_ = false;
 	int nOut_;
 	protected double[] output_;
 	

@@ -4,6 +4,7 @@
  */
 package gui;
 
+import micromanager.MConfiguration;
 import threader.Threader;
 import device.MSystem;
 
@@ -19,10 +20,12 @@ public class SettingTabs extends javax.swing.JPanel {
 	private static final long serialVersionUID = 744836798730047169L;
 	MSystem sys_;
 	Threader th_;
+	MConfiguration config_;
 	
-    public SettingTabs(MSystem sys, Threader th) {
+    public SettingTabs(MSystem sys, Threader th, MConfiguration config) {
     	sys_ = sys;
     	th_ = th;
+    	config_ = config;
         initComponents();
     }
 
@@ -30,7 +33,7 @@ public class SettingTabs extends javax.swing.JPanel {
 
         jTabbedPane_QPD = new javax.swing.JTabbedPane();
         qPDPanel = new QPDTab(sys_,th_);
-        activationPanel = new ActivationTab(sys_,th_);
+        activationPanel = new ActivationTab(sys_,th_,config_);
         laserParamTab = new LaserTab(sys_);
         controlPanel = new LensPanel(sys_);
 
