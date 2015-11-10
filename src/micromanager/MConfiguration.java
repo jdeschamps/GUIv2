@@ -44,7 +44,7 @@ public class MConfiguration {
 	//Servos
 	public static final String[] servolabel = {"MaestroServo","Arduino-Servo","Arduino-Servo"};
 	public static final String[] proplabel = {"Position","BFP State","3DA state"};
-	public static final int[] numposservo = {5,4,2};
+	public static final int[] numposservo = {5,4,2};															//// here careful with the FW (num positions)
 	public static final String[] servokeys = {"FW","BFP","3DA"};
 	public static final int bfpPosition = 3;															/// here matters
 	public static final int[] maestropos = {1950,1740,1500,1250,1040};
