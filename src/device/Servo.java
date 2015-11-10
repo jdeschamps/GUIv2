@@ -31,7 +31,7 @@ public class Servo extends Device{
 	}
 	
 	public double getState(){									
-		return position_.getCurrentValue();									
+		return position_.getValue();									
 	}
 
 	public void setState(int val){

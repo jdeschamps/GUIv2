@@ -232,6 +232,17 @@ public class MSystem {
 		} 
 	}
 	
+	public int getServoState(String name){
+		if(name.equals(MConfiguration.servokeys[0])){
+			fw_.getState();
+		} else if(name.equals(MConfiguration.servokeys[1])){
+			bfp_.getState();
+		} else if(name.equals(MConfiguration.servokeys[2])){
+			astig_.getState();
+		} 
+		return 0;
+	}
+	
 	//////////////////////////////////////////////////////
 	////// Lasers 
 	public Device getLaser(String name){

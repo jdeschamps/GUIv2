@@ -47,7 +47,12 @@ public class LensPanel extends javax.swing.JPanel {
 				}
             }
         });
-
+        if(sys_.getServoState(bpflabel_)==1){
+        	jToggleButton_bfp.setSelected(true);
+        } else {
+        	jToggleButton_bfp.setSelected(false);
+        }
+        
         jToggleButton_3DA.setText(astiglabel_);
         jToggleButton_3DA.setMargin(new java.awt.Insets(2, 2, 2, 2));
         jToggleButton_3DA.addItemListener(new ItemListener(){
@@ -59,6 +64,12 @@ public class LensPanel extends javax.swing.JPanel {
 				}
             }
         });
+        if(sys_.getServoState(astiglabel_)==1){
+        	jToggleButton_3DA.setSelected(true);
+        } else {
+        	jToggleButton_3DA.setSelected(false);
+        }
+        
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
