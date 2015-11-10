@@ -30,18 +30,19 @@ public class SingleLaserParam extends javax.swing.JPanel {
 	 */
 	private static final long serialVersionUID = 8068642939086006022L;
 	String label_;
-	int maxpower_,currentmaxpower_;
+	int maxpower_,currentmaxpower_,defaultBehaviour_;
 	boolean ispowermodif_;
 	Color color_;
 	MSystem sys_;
 
-    public SingleLaserParam(MSystem sys, String label, int maxpower, boolean ispowermodif, Color color) {
+    public SingleLaserParam(MSystem sys, String label, int maxpower, boolean ispowermodif, Color color, int defaultBehaviour) {
     	sys_ = sys;
     	label_ = label;
     	maxpower_ = maxpower;
     	currentmaxpower_ = maxpower;
     	ispowermodif_ = ispowermodif;
     	color_ = color;
+    	defaultBehaviour_ = defaultBehaviour;
         initComponents();
     }
 
@@ -66,7 +67,8 @@ public class SingleLaserParam extends javax.swing.JPanel {
 	    		sys_.setLaserBehaviour(label_, val);
 	    	}
         });
-        
+        jComboBox_behaviour.setSelectedIndex(defaultBehaviour_);
+        System.out.println("Behaviour selected for "+label_+" "+defaultBehaviour_);
 
         jLabel_pulse.setText("Pulse length :");
 

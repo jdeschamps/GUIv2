@@ -108,11 +108,6 @@ public class MSystem {
 		return true;
 	}						
 
-	
-	private void readMConfiguration(){
-																					///////implement
-	}
-	
 	public void shutDown(){
 		pi_.setSensorState(0);
 		l405_.setOperation(0);
@@ -296,7 +291,7 @@ public class MSystem {
 			l638_.setBehaviour(val);
 		} 
 	}	
-	
+
 	public void setLaserPulseLength(String name, int val){
 		if(name.equals(MConfiguration.laserkeys[0])){
 			l405_.setPulseLength(val);
@@ -307,6 +302,19 @@ public class MSystem {
 		} else if(name.equals(MConfiguration.laserkeys[2])){
 			l638_.setPulseLength(val);
 		} 
+	}
+
+	public int getLaserOperation(String name){
+		if(name.equals(MConfiguration.laserkeys[0])){
+			return l405_.getOperation();
+		} else if(name.equals(MConfiguration.laserkeys[1])){
+			return l488_.getOperation();
+		} else if(name.equals(MConfiguration.laserkeys[3])){			
+			return l561_.getOperation();
+		} else if(name.equals(MConfiguration.laserkeys[2])){
+			return l638_.getOperation();
+		} 
+		return 0;
 	}
 
 	public void setUVPulse(int val){

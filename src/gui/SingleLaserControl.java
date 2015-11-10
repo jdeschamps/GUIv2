@@ -69,7 +69,12 @@ public class SingleLaserControl extends javax.swing.JPanel {
 				}
 			}
         });
-
+        if(sys_.getLaserOperation(label_)==1){
+        	jToggleButton_laserOperation.setSelected(true);
+        } else {
+        	jToggleButton_laserOperation.setSelected(false);
+        }
+        
         jTextField_userInput.setText("50");
         jTextField_userInput.addKeyListener(new KeyAdapter(){        	
         	@Override

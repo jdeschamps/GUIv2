@@ -34,7 +34,7 @@ public class SettingTabs extends javax.swing.JPanel {
         jTabbedPane_QPD = new javax.swing.JTabbedPane();
         qPDPanel = new QPDTab(sys_,th_);
         activationPanel = new ActivationTab(sys_,th_,config_);
-        laserParamTab = new LaserTab(sys_);
+        laserParamTab = new LaserTab(sys_, config_);
         controlPanel = new LensPanel(sys_);
 
         setMaximumSize(new java.awt.Dimension(462, 240));

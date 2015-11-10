@@ -64,7 +64,7 @@ public class MConfiguration {
 	public static final String[] filters = {"525/50","600/60","700/100","Sp","Empty","Empty"};
 	
 	// Laser parameters tab
-	public static final String[] laserbehaviourlabel = {"Camera","Rising","Falling","On","Off"};
+	public static final String[] laserbehaviourlabel = {"Off","On","Camera","Rising","Falling"};
 	
 	//////////////////////////////////////////////
 	//// Threads
@@ -75,6 +75,10 @@ public class MConfiguration {
 	//////////////////////////////////////////////
 	//// 
 	public double UVcoeff=0.5, SDcoeff=0.5;
+	public int laser1BehaviourDefault = 3;
+	public int laser2BehaviourDefault = 2;
+	public int laser3BehaviourDefault = 2;
+	public int laser4BehaviourDefault = 2;
 
 	public double getUVcoeff(){
 		return UVcoeff;
@@ -83,6 +87,23 @@ public class MConfiguration {
 		return SDcoeff;
 	}
 
+	public int getLaser1DefaultBehaviour(){
+		return laser1BehaviourDefault;
+	}
+
+	public int getLaser2DefaultBehaviour(){
+		return laser2BehaviourDefault;
+	}
+
+	public int getLaser3DefaultBehaviour(){
+		return laser3BehaviourDefault;
+	}
+
+	public int getLaser4DefaultBehaviour(){
+		return laser4BehaviourDefault;
+	}
+	
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	MConfiguration(){
@@ -105,6 +126,10 @@ public class MConfiguration {
 		writer.process("Configuration\r\n");
 		writer.process("UVcoeff="+UVcoeff+";\r\n");
 		writer.process("SDcoeff="+SDcoeff+";\r\n");
+		writer.process("Laser1Behaviour="+3+";\r\n");
+		writer.process("Laser2Behaviour="+2+";\r\n");
+		writer.process("Laser3Behaviour="+2+";\r\n");
+		writer.process("Laser4Behaviour="+2+";\r\n");
 		writer.process("end;");
 		writer.close();
 	}
@@ -131,7 +156,8 @@ public class MConfiguration {
 		String content = String.copyValueOf(reader.getContent());
 		String buffer="";
 		String endpoint = ";";
-		String configuration="Configuration", end="end", uvcoeff="UVcoeff", sdcoeff="SDcoeff";
+		String configuration="Configuration", end="end;", uvcoeff="UVcoeff", sdcoeff="SDcoeff";
+		String laser1b="Laser1Behaviour", laser2b="Laser2Behaviour", laser3b="Laser3Behaviour", laser4b="Laser4Behaviour";
 
 		/*System.out.println("--------------------");
 		for(int i=0;i<content.length();i++){
@@ -142,6 +168,7 @@ public class MConfiguration {
 
 		int i = 0;
 		
+		// Configuration
 		buffer = content.substring(i, i+configuration.length());
 		if(!buffer.equals(configuration)){
 			System.out.println("Error reading configuration: "+buffer);
@@ -150,6 +177,7 @@ public class MConfiguration {
 			i = configuration.length()+2;
 		}
 
+		// UV coeff
 		buffer = content.substring(i, i+uvcoeff.length());
 		if(!buffer.equals(uvcoeff)){
 			System.out.println("Error reading uvcoeff: "+buffer);
@@ -167,6 +195,7 @@ public class MConfiguration {
 		UVcoeff = Double.parseDouble(buffer);
 		i=i+3;
 		
+		// SD coeff
 		buffer = content.substring(i, i+sdcoeff.length());
 		if(!buffer.equals(sdcoeff)){
 			System.out.println("Error reading sdcoeff: "+buffer);
@@ -184,6 +213,80 @@ public class MConfiguration {
 		SDcoeff = Double.parseDouble(buffer);
 		i=i+3;
 		
+		// Laser1 behaviour
+		buffer = content.substring(i, i+laser1b.length());
+		if(!buffer.equals(laser1b)){
+			System.out.println("Error reading laser1 behaviour: "+buffer);
+			return;
+		} else {
+			i = i+laser1b.length()+1;
+			buffer="";
+		}
+		
+		while(content.charAt(i) != endpoint.charAt(0)){
+			buffer = buffer+content.charAt(i);
+			i++;
+		}
+		//System.out.println(buffer);
+		laser1BehaviourDefault = Integer.parseInt(buffer);
+		i=i+3;
+		
+		// Laser2 behaviour
+		buffer = content.substring(i, i+laser2b.length());
+		if(!buffer.equals(laser2b)){
+			System.out.println("Error reading laser2 behaviour: "+buffer);
+			return;
+		} else {
+			i = i+laser2b.length()+1;
+			buffer="";
+		}
+		
+		while(content.charAt(i) != endpoint.charAt(0)){
+			buffer = buffer+content.charAt(i);
+			i++;
+		}
+		//System.out.println(buffer);
+		laser2BehaviourDefault = Integer.parseInt(buffer);
+		i=i+3;		
+		
+		// Laser3 behaviour
+		buffer = content.substring(i, i+laser3b.length());
+		if(!buffer.equals(laser3b)){
+			System.out.println("Error reading laser3 behaviour: "+buffer);
+			return;
+		} else {
+			i = i+laser3b.length()+1;
+			buffer="";
+		}
+		
+		while(content.charAt(i) != endpoint.charAt(0)){
+			buffer = buffer+content.charAt(i);
+			i++;
+		}
+		//System.out.println(buffer);
+		laser3BehaviourDefault = Integer.parseInt(buffer);
+		i=i+3;
+		
+		// Laser4 behaviour
+		buffer = content.substring(i, i+laser4b.length());
+		if(!buffer.equals(laser4b)){
+			System.out.println("Error reading laser4 behaviour: "+buffer);
+			return;
+		} else {
+			i = i+laser4b.length()+1;
+			buffer="";
+		}
+		
+		while(content.charAt(i) != endpoint.charAt(0)){
+			buffer = buffer+content.charAt(i);
+			i++;
+		}
+		//System.out.println(buffer);
+		laser4BehaviourDefault = Integer.parseInt(buffer);
+		i=i+3;
+		
+		
+		// End
 		buffer = content.substring(i, i+end.length());
 		if(!buffer.equals(end)){
 			System.out.println("Error reading end of configuration: "+buffer);
