@@ -23,6 +23,7 @@ public class Threader {
 	UIupdater task;
 	boolean initialized_ = false;
 	boolean running_ = false;
+	int counter =0;
 	
 	public Threader(MainFrame mainFrame){
 		pim_ = new PImonitor(null);
@@ -185,7 +186,9 @@ public class Threader {
 				  switch(result[0].intValue()){
 				  case 0:	// PI pos
 					  if(result.length == 2){
-						  pig.addPoint(result[1]);
+						  //pig.addPoint(result[1]);
+						  counter++;
+						  pig.addPoint(counter);
 					  }
 					  break;
 				  case 1:	// QPD 
@@ -213,6 +216,7 @@ public class Threader {
 						  uvcutoff.setText(result[3].toString());
 					  }
 					  if(frame_.isNMSChecked()){
+						  System.out.println("NMS checked, update image processor");
 						  frame_.setNMSImageProcessor(uva_.getNMSresult());
 					  }
 					  break;

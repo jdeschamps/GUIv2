@@ -238,9 +238,12 @@ public class ActivationTab extends javax.swing.JPanel {
     }       
     private void jCheckBox_showNMSActionPerformed(java.awt.event.ItemEvent evt) {                                                  
         if(evt.getStateChange() == ItemEvent.SELECTED){
+        	System.out.println("Show img NMS");
         	checkedNMS = true;
         	im_.show();
+        	
         } else {
+        	System.out.println("Close img NMS");
         	checkedNMS = false;
         	im_.close();
         }

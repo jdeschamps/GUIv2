@@ -26,6 +26,7 @@ public class TimeChart {
     ChartPanel cp;
     int	time_counter = 0;
     boolean ranged_ = false;
+    double lastpoint_=0;
     int[] t;
     
 	public TimeChart(String name, String nameX, String nameY, int maxN, int minY, int maxY, int width, int height){
@@ -93,14 +94,17 @@ public class TimeChart {
     	NumberFormat formatter = new DecimalFormat("#0.00");
     	rangeAxis.setNumberFormatOverride(formatter);
     	
+    	ValueAxis yAxis = plot.getRangeAxis();
         if(ranged_){
-        	ValueAxis yAxis = plot.getRangeAxis();
         	yAxis.setRange(minY_,maxY_);
+        } else {
+        	yAxis.setAutoRange(true);
+        	rangeAxis.setAutoRangeIncludesZero(false);
         }
 	}
 	
 	public ChartPanel getChart(){
-		return cp;
+		return cp;  
 	}
 	
 	public void clearChart(){
@@ -127,13 +131,11 @@ public class TimeChart {
 		} else {
 			series.add(t[time_counter%maxN_], point);
 		}
+		lastpoint_ = point;
 	}
 	
 	public double getLastPoint(){
-		if(series.getItemCount()>0){
-			return (Double) series.getY(series.getItemCount()-1);
-		}
-		return 0;
+		return lastpoint_;
 	}
 	
 }

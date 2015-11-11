@@ -40,6 +40,8 @@ public class UVautomator extends Updater{
 		core_ = sys_.getCore();
 		pane_ = activationTab;
 
+		ip_ = new ShortProcessor(200,200);
+		
 	    cutoffArray = new double[10];
 	    for(int i=0;i<10;i++){
 	    	cutoffArray[i]=0;
