@@ -124,13 +124,15 @@ public class UVautomator extends Updater{
 					
 					// Gaussian filter
 					gau.blurGaussian(imp3.getProcessor(), 2, 2, 0.01);
-					ImagePlus imp4 = imp3.duplicate();
+					//ImagePlus imp4 = imp3.duplicate();
 			   	      				
 					tempcutoff = imp3.getStatistics().mean+pane_.getThreshold()*imp3.getStatistics().stdDev;	
 					cutoffArray[count%10] = tempcutoff;
 			           	      
 					if( (pane_.isAutoCutoffOn() && count%10==9) || pane_.isCutoffNeeded()){
 						cutoff_ = meanArray(cutoffArray);
+					} else {
+						cutoff_ = pane_.getCutoff();
 					}
 			           	      
 					ip_ = NMSuppr.run(imp3,10,300,cutoff_,false);

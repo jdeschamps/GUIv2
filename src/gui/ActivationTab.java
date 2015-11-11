@@ -265,6 +265,14 @@ public class ActivationTab extends javax.swing.JPanel {
     public boolean isAutoCutoffOn(){
     	return jToggleButton_autocutoff.isSelected();
     }
+    
+    public boolean isCutoffNeeded(){
+    	if(getcutoff){
+    		getcutoff = false;
+        	return !getcutoff;
+    	}
+    	return getcutoff;
+    }
 
     public double getCutoff(){
     	return Double.parseDouble(jTextField_cutoff.getText());
@@ -284,14 +292,6 @@ public class ActivationTab extends javax.swing.JPanel {
 
     public int getN(){
     	return Integer.parseInt(jTextField_N.getText());
-    }
-    
-    public boolean isCutoffNeeded(){
-    	if(getcutoff){
-    		getcutoff = false;
-        	return !getcutoff;
-    	}
-    	return getcutoff;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

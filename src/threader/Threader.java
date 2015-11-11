@@ -3,9 +3,14 @@ package threader;
 import graph.Chart;
 import graph.TimeChart;
 import gui.MainFrame;
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
+
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
+
 import device.MSystem;
 import micromanager.MConfiguration;
 import micromanager.Log;
@@ -24,6 +29,7 @@ public class Threader {
 	boolean initialized_ = false;
 	boolean running_ = false;
 	int counter =0;
+	DecimalFormat df;
 	
 	public Threader(MainFrame mainFrame){
 		pim_ = new PImonitor(null);
@@ -42,6 +48,10 @@ public class Threader {
 		qpdm_ = new QPDmonitor(sys_.getQPD());
 		uva_ = new UVautomator(sys_.getLaser(MConfiguration.laserkeys[0]), sys_, log_, frame_.getActivateTab());
 		initialized_ = true;
+		
+		df = new DecimalFormat("##.");
+		df.setRoundingMode(RoundingMode.DOWN);
+		
 		start();
 	}
 
@@ -213,7 +223,7 @@ public class Threader {
 						  uvjtf.setText(String.valueOf(result[2].intValue()));
 					  }
 					  if(frame_.isNewCutOff()){
-						  uvcutoff.setText(result[3].toString());
+						  uvcutoff.setText((df.format(result[3])).toString());
 					  }
 					  if(frame_.isNMSChecked()){
 						  System.out.println("NMS checked, update image processor");
