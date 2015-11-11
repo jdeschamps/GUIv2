@@ -60,7 +60,10 @@ public class UVautomator extends Updater{
 	@Override
 	public void refresh() {
 		N_ = getN();
+		System.out.println("N done");
+
 		newpulse_ = getNewPulse();
+		System.out.println("Got new pulse");
 		
 		output_[0] = N_;
 		output_[1] = newpulse_;
@@ -71,10 +74,11 @@ public class UVautomator extends Updater{
 
 	public int getN() { 
 		if(core_.isSequenceRunning()){
+			System.out.println("Sequence running");
 			int width, height;
 			long byteDepth;
 			double tempcutoff;
-			int tempn;
+			//int tempn;
 			TaggedImage tagged1 = null, tagged2 = null;
 			ShortProcessor ip, ip2;
 			ImagePlus imp, imp2;
@@ -142,6 +146,7 @@ public class UVautomator extends Updater{
 	 			}
 			}
 		}
+		System.out.println("Got N");
 		return 0;
 	}
 
@@ -171,8 +176,11 @@ public class UVautomator extends Updater{
 	
 	public double getNewPulse(){
 		double N = (double) N_;
+
+		System.out.println("Will get N from pane");
 		double N0 = pane_.getN();
-		
+
+		System.out.println("Got N from pane");
 		double temppulse=0;
 
 		pulse_ = sys_.getUVPulse();

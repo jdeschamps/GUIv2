@@ -196,9 +196,9 @@ public class Threader {
 				  switch(result[0].intValue()){
 				  case 0:	// PI pos
 					  if(result.length == 2){
-						  //pig.addPoint(result[1]);
-						  counter++;
-						  pig.addPoint(counter);
+						  pig.addPoint(result[1]);
+						  //counter++;
+						  //pig.addPoint(counter);
 					  }
 					  break;
 				  case 1:	// QPD 
@@ -209,7 +209,9 @@ public class Threader {
 					  }
 					  break;
 				  case 2:	// UV 
-					  uvg.addPoint(result[1].intValue());
+					  //uvg.addPoint(result[1].intValue());
+					  counter++;
+					  uvg.addPoint(counter);
 					  int max = (int) (1000*sys_.getExposureTime());
 					  if(max > 0){
 						  uvlgs.setMaximum(max);

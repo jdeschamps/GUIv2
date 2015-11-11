@@ -7,8 +7,12 @@ package gui;
 import graph.TimeChart;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
+
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 import micromanager.MConfiguration;
 import threader.Threader;
 import device.MSystem;
@@ -29,12 +33,17 @@ public class ActivationTab extends javax.swing.JPanel {
 	ImageProcessor ip_;
 	ImagePlus im_;
 	boolean checkedNMS = false;
+	DecimalFormat df;
 
     public ActivationTab(MSystem sys, Threader th, MConfiguration config) {
     	sys_ = sys;
     	th_ = th;
     	config_ = config;
     	im_ = new ImagePlus("NMS result");
+    	
+    	df = new DecimalFormat();
+		df.setDecimalSeparatorAlwaysShown(false);
+    	
         initComponents();
     }
 
@@ -218,7 +227,10 @@ public class ActivationTab extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_GetNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GetNActionPerformed
-    	jTextField_N.setText(String.valueOf(gr.getLastPoint()));
+    	
+    	System.out.println(df.format(gr.getLastPoint()));
+
+    	jTextField_N.setText(String.valueOf(df.format(gr.getLastPoint())));
     }//GEN-LAST:event_jButton_GetNActionPerformed
 
     private void jButton_getcutoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_getcutoffActionPerformed
@@ -269,9 +281,9 @@ public class ActivationTab extends javax.swing.JPanel {
     public boolean isCutoffNeeded(){
     	if(getcutoff){
     		getcutoff = false;
-        	return !getcutoff;
+        	return true;
     	}
-    	return getcutoff;
+    	return false;
     }
 
     public double getCutoff(){
@@ -290,8 +302,10 @@ public class ActivationTab extends javax.swing.JPanel {
     	return Double.parseDouble(jTextField_uvcoeff.getText());
     }
 
-    public int getN(){
-    	return Integer.parseInt(jTextField_N.getText());
+    public double getN(){
+		System.out.println("Sending N");
+		System.out.println(jTextField_N.getText());
+    	return Double.parseDouble(jTextField_N.getText());
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
