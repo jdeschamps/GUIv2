@@ -172,7 +172,7 @@ public class Threader {
 					counter = 0;
 				}
 				
-				Thread.sleep(100);
+				Thread.sleep(50);
 			}
 			return 1;
 		}
@@ -207,7 +207,7 @@ public class Threader {
 						  uvlgs.setValue(1);
 					  }
 					 if(!frame_.isUVTextSelected()){
-						  uvjtf.setText(result[2].toString());
+						  uvjtf.setText(String.valueOf(result[2].intValue()));
 					  }
 					  if(frame_.isNewCutOff()){
 						  uvcutoff.setText(result[3].toString());

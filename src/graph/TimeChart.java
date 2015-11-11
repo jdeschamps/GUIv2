@@ -83,7 +83,7 @@ public class TimeChart {
 
     	XYItemRenderer renderer = plot.getRenderer();  
     	renderer.setSeriesPaint(0, new Color(255,91,91));    	
-    	renderer.setSeriesStroke(0, new BasicStroke(3));
+    	renderer.setSeriesStroke(0, new BasicStroke(2));
     	
     	ValueAxis xAxis = plot.getDomainAxis();
     	xAxis.setRange(0,maxN_);
