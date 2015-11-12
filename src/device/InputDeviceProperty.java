@@ -31,13 +31,13 @@ public class InputDeviceProperty {
 	}
 	
 	public double getValue(){
-		System.out.println("[GUI] get inputproperty value");
+		//System.out.println("[GUI] get inputproperty value");
 		if(!isEmpty_){
-			System.out.println("[GUI] Property is not empty");
+			//System.out.println("[GUI] Property is not empty");
 			String val;
 			try {
 				val = core_.getProperty(device_, property_);
-				System.out.println("[GUI] Value: "+val);
+				//System.out.println("[GUI] Value: "+val);
 
 				if(isDouble(val)){
 					currentvalue_ = Double.parseDouble(val);

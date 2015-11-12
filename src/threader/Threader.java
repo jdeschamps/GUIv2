@@ -228,7 +228,7 @@ public class Threader {
 						  uvcutoff.setText((df.format(result[3])).toString());
 					  }
 					  if(frame_.isNMSChecked()){
-						  System.out.println("NMS checked, update image processor");
+						  //System.out.println("NMS checked, update image processor");
 						  frame_.setNMSImageProcessor(uva_.getNMSresult());
 					  }
 					  break;

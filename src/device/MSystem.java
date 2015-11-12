@@ -267,7 +267,7 @@ public class MSystem {
 	}
 	
 	public void setLaserOperation(String name, int val){
-		System.out.println("[GUI] set laser operation "+name+" "+val);
+		//System.out.println("[GUI] set laser operation "+name+" "+val);
 		if(name.equals(MConfiguration.laserkeys[0])){
 			l405_.setOperation(val);
 		} else if(name.equals(MConfiguration.laserkeys[1])){

@@ -7,6 +7,7 @@ package gui;
 import graph.TimeChart;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
+import ij.process.ShortProcessor;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -39,7 +40,8 @@ public class ActivationTab extends javax.swing.JPanel {
     	sys_ = sys;
     	th_ = th;
     	config_ = config;
-    	im_ = new ImagePlus("NMS result");
+    	ip_ = new ShortProcessor(200,200);
+    	im_ = new ImagePlus("NMS result",ip_);
     	
     	df = new DecimalFormat();
 		df.setDecimalSeparatorAlwaysShown(false);
@@ -228,7 +230,7 @@ public class ActivationTab extends javax.swing.JPanel {
 
     private void jButton_GetNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GetNActionPerformed
     	
-    	System.out.println(df.format(gr.getLastPoint()));
+    	//System.out.println(df.format(gr.getLastPoint()));
 
     	jTextField_N.setText(String.valueOf(df.format(gr.getLastPoint())));
     }//GEN-LAST:event_jButton_GetNActionPerformed
@@ -252,8 +254,8 @@ public class ActivationTab extends javax.swing.JPanel {
         if(evt.getStateChange() == ItemEvent.SELECTED){
         	System.out.println("Show img NMS");
         	checkedNMS = true;
+        	im_.setProcessor(ip_);
         	im_.show();
-        	
         } else {
         	System.out.println("Close img NMS");
         	checkedNMS = false;
@@ -262,7 +264,8 @@ public class ActivationTab extends javax.swing.JPanel {
     }             
     
     public void setImageProcessor(ImageProcessor ipn){
-    	im_.setProcessor(ipn);
+    	ip_ = ipn;
+    	im_.setProcessor(ip_);
     	im_.updateAndRepaintWindow();
     }
     
@@ -303,8 +306,8 @@ public class ActivationTab extends javax.swing.JPanel {
     }
 
     public double getN(){
-		System.out.println("Sending N");
-		System.out.println(jTextField_N.getText());
+		//System.out.println("Sending N");
+		//System.out.println(jTextField_N.getText());
     	return Double.parseDouble(jTextField_N.getText());
     }
     
