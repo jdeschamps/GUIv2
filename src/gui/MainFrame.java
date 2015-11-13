@@ -136,6 +136,10 @@ public class MainFrame extends javax.swing.JFrame {
     	}
     	return false;
     }
+    
+    public void setRequestOff(){
+    		tabs.activationPanel.setRequestOff();
+    }
 
     public boolean isNMSChecked(){
     	return tabs.activationPanel.isNMSchecked();

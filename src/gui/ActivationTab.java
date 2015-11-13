@@ -282,11 +282,13 @@ public class ActivationTab extends javax.swing.JPanel {
     }
     
     public boolean isCutoffNeeded(){
+    	return getcutoff;
+    }
+    
+    public void setRequestOff(){
     	if(getcutoff){
-    		getcutoff = false;
-        	return true;
+    		getcutoff=false;
     	}
-    	return false;
     }
 
     public double getCutoff(){

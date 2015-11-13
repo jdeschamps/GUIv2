@@ -179,7 +179,9 @@ public class UVautomator extends Updater{
 
 		//System.out.println("Will get N from pane");
 		double N0 = pane_.getN();
+		System.out.println("[UV] N requested: "+N0);
 
+		System.out.println("[UV] Current N: "+N);
 		//System.out.println("Got N from pane");
 		double temppulse=0;
 
@@ -190,11 +192,15 @@ public class UVautomator extends Updater{
 			pulse_ = min;
 		}
 
+		System.out.println("[UV] Current pulse: "+pulse_);
+		
 		// calculate new pulse
 		if(N0 != 0){
 			temppulse = pulse_*(1+pane_.getFeedback()*(1-N/N0));
 		} 
 
+		System.out.println("[UV] New pulse: "+temppulse);
+		
 		if(temppulse < min){
 			temppulse = min;
 		}
