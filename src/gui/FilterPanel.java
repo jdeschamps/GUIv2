@@ -109,7 +109,7 @@ public class FilterPanel extends javax.swing.JPanel {
         group.add(jToggleButton_filter5);
         group.add(jToggleButton_filter6);
         
-        int selected = sys_.getServoState(MConfiguration.servokeys[0]);
+        /*int selected = sys_.getServoState(MConfiguration.servokeys[0]);
         switch(selected){
     	case 0:
     		jToggleButton_filter1.setSelected(true);
@@ -129,7 +129,7 @@ public class FilterPanel extends javax.swing.JPanel {
     	case 5:
     		jToggleButton_filter6.setSelected(true);
     		break;
-        }
+        }*/
         
     }// </editor-fold>//GEN-END:initComponents
 

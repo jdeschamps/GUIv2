@@ -164,7 +164,7 @@ public class SingleLaserParam extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel_behaviour;
     private javax.swing.JLabel jLabel_maxpower;
     private javax.swing.JLabel jLabel_pulse;
-    private javax.swing.JSlider jSlider_pulse;
+    public javax.swing.JSlider jSlider_pulse;
     private javax.swing.JTextField jTextField_maxpower;
     private javax.swing.JTextField jTextField_pulse;
     // End of variables declaration//GEN-END:variables

@@ -119,7 +119,7 @@ public class FocusPanel extends javax.swing.JPanel {
 
         add(jPanel_controls);
         
-        gr = new TimeChart("position","time","position",MConfiguration.maxNPI,370,220);
+        gr = new TimeChart("position","time","position",MConfiguration.maxNPI,370,220,false);
         add(gr.getChart());
     }
 

@@ -13,6 +13,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
@@ -150,6 +151,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     public ActivationTab getActivateTab(){
     	return tabs.activationPanel;
+    }
+    
+    public JSlider getUVParamSlider(){
+    	return tabs.laserParamTab.singleLaserParamPanel1.jSlider_pulse;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

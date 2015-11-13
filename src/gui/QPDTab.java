@@ -36,8 +36,8 @@ public class QPDTab extends javax.swing.JPanel {
 
     private void initComponents() {
 
-        gr1 = new TimeChart("X","t","X",MConfiguration.maxNQPD[0],200,100);
-        gr2 = new TimeChart("S","t","S",MConfiguration.maxNQPD[1],200,100);
+        gr1 = new TimeChart("X","t","X",MConfiguration.maxNQPD[0],200,100,true);
+        gr2 = new TimeChart("S","t","S",MConfiguration.maxNQPD[1],200,100,true);
         gr3 = new Chart("tot","X","Y",MConfiguration.maxNQPD[2],300,300);
 
         jPanel_left = new javax.swing.JPanel();

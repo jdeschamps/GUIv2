@@ -6,8 +6,10 @@ import gui.MainFrame;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
+import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
@@ -29,7 +31,7 @@ public class Threader {
 	boolean initialized_ = false;
 	boolean running_ = false;
 	int counter =0;
-	DecimalFormat df;
+	NumberFormat df;
 	
 	public Threader(MainFrame mainFrame){
 		pim_ = new PImonitor(null);
@@ -49,8 +51,9 @@ public class Threader {
 		uva_ = new UVautomator(sys_.getLaser(MConfiguration.laserkeys[0]), sys_, log_, frame_.getActivateTab());
 		initialized_ = true;
 		
-		df = new DecimalFormat("##.");
-		df.setRoundingMode(RoundingMode.DOWN);
+		NumberFormat df = DecimalFormat.getInstance();
+		df.setRoundingMode(RoundingMode.FLOOR);
+		df.setMinimumFractionDigits(0);
 		
 		start();
 	}
@@ -119,7 +122,8 @@ public class Threader {
 		TimeChart pig, qpdg1, qpdg2, uvg;
 		gui.LogarithmicJSlider uvlgs;
 		JTextField uvjtf, uvcutoff;
-		int counter;
+		JSlider uvjsld;
+		int counter, NMScounter;
 		
 		public UIupdater(){
 			resultPI = new Double[2];
@@ -134,11 +138,13 @@ public class Threader {
 			uvlgs = frame_.getUVSlider();
 			uvjtf = frame_.getUVtext();
 			uvcutoff = frame_.getUVCutoff();
+			uvjsld = frame_.getUVParamSlider();
 		}
 
 		@Override
 		protected Integer doInBackground() throws Exception {
 			int counter = 0;
+			int NMScounter = 0;
 			while(running_ && !isCancelled()){
 				switch(counter%3){
 				case 0:
@@ -209,13 +215,15 @@ public class Threader {
 					  }
 					  break;
 				  case 2:	// UV 
-					  //uvg.addPoint(result[1].intValue());
-					  counter++;
-					  uvg.addPoint(counter);
+					  uvg.addPoint(result[1].intValue());
+					  //counter++;
+					  //uvg.addPoint(counter);
 					  int max = (int) (1000*sys_.getExposureTime());
 					  if(max > 0){
 						  uvlgs.setMaximum(max);
+						  uvjsld.setMaximum(max);
 					  } 
+					  uvjsld.setValue(result[2].intValue());
 					  if(result[2] != 0 && result[2]<= max){										
 						  uvlgs.setValue(result[2].intValue());
 					  } else {
@@ -229,7 +237,13 @@ public class Threader {
 					  }
 					  if(frame_.isNMSChecked()){
 						  //System.out.println("NMS checked, update image processor");
-						  frame_.setNMSImageProcessor(uva_.getNMSresult());
+						  NMScounter++;
+						  if(NMScounter % 10 == 0){
+							  frame_.setNMSImageProcessor(uva_.getNMSresult());
+						  }
+						  if(NMScounter == Integer.MAX_VALUE){
+							  NMScounter = 0;
+						  }
 					  }
 					  break;
 				  }

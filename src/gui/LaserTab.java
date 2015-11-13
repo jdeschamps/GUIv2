@@ -40,7 +40,7 @@ public class LaserTab extends javax.swing.JPanel {
         add(singleLaserParamPanel4);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private SingleLaserParam singleLaserParamPanel1;
+    public SingleLaserParam singleLaserParamPanel1;
     private SingleLaserParam singleLaserParamPanel2;
     private SingleLaserParam singleLaserParamPanel3;
     private SingleLaserParam singleLaserParamPanel4;

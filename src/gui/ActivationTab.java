@@ -152,7 +152,7 @@ public class ActivationTab extends javax.swing.JPanel {
 
 
         //// Chart
-        gr = new TimeChart("N","time","N",MConfiguration.maxNUV,300,300);
+        gr = new TimeChart("N","time","N",MConfiguration.maxNUV,300,300, true);
         add(gr.getChart(), new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 380, 230));
         
         jLabel_cutoff.setText("Cutoff:");

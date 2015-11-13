@@ -70,7 +70,7 @@ public class MConfiguration {
 	//// Threads
 	public static final int maxNPI = 30;
 	public static final int[] maxNQPD = {30,30,1};
-	public static final int maxNUV = 1000;
+	public static final int maxNUV = 200;
 	
 	//////////////////////////////////////////////
 	//// 

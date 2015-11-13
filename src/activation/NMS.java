@@ -17,7 +17,7 @@ public class NMS {
 	int n_,max_num;
 	double cutoff_;
 	boolean display_;
-	
+	int sizeRoi=10;
 	
 	ArrayList<Peak> peaks;
 	
@@ -25,7 +25,7 @@ public class NMS {
 		peaks = new ArrayList<Peak>();
 		imtemp_ = new ImagePlus();
 		imtemp_.setTitle("NMS");
-		roi = new Roi(0,0,10,10);
+		roi = new Roi(0,0,sizeRoi,sizeRoi);
 	}
 	
 	public ImageProcessor run(ImagePlus im, int n, int max, double cutoff, boolean display){
@@ -34,7 +34,7 @@ public class NMS {
 		height_ = im.getHeight();
 		imp = im.getProcessor();
 		impresult = (ImageProcessor) imp.clone();
-		impresult.setValue(255);
+		impresult.setValue(0);		// white
 		n_ = n;
 		max_num = max;
 		cutoff_ = cutoff;
@@ -89,7 +89,7 @@ public class NMS {
 				if(!failed && peaks.size()<max_num){
 					if(imp.get(mi,mj) > cutoff_){
 						peaks.add(new Peak(mi, mj, imp.get(mi,mj)));
-						roi.setLocation(mi, mj);
+						roi.setLocation(mi-sizeRoi/2, mj-sizeRoi/2);
 						impresult.draw(roi);
 					}
 				}

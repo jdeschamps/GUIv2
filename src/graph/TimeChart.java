@@ -26,6 +26,7 @@ public class TimeChart {
     ChartPanel cp;
     int	time_counter = 0;
     boolean ranged_ = false;
+    boolean zeroincluded_ = false;
     double lastpoint_=0;
     int[] t;
     
@@ -44,13 +45,15 @@ public class TimeChart {
 		initialize();
 	}
 
-	public TimeChart(String name, String nameX, String nameY, int maxN, int width, int height){
+	public TimeChart(String name, String nameX, String nameY, int maxN, int width, int height, boolean zeroincluded){
 		name_ = name;
 		nameX_ = nameX;
 		nameY_ = nameY;
 		width_ = width;
 		height_ = height;
 		maxN_ = maxN;
+		
+		zeroincluded_ = zeroincluded;
 
 		ranged_ = false;
 		
@@ -99,7 +102,7 @@ public class TimeChart {
         	yAxis.setRange(minY_,maxY_);
         } else {
         	yAxis.setAutoRange(true);
-        	rangeAxis.setAutoRangeIncludesZero(false);
+        	rangeAxis.setAutoRangeIncludesZero(zeroincluded_);
         }
 	}
 	

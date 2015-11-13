@@ -73,7 +73,7 @@ public class SettingTabs extends javax.swing.JPanel {
     public ActivationTab activationPanel;
     private LensPanel controlPanel;
     private javax.swing.JTabbedPane jTabbedPane_QPD;
-    private LaserTab laserParamTab;
+    public LaserTab laserParamTab;
     public QPDTab qPDPanel;
     // End of variables declaration//GEN-END:variables
 }
