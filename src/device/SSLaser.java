@@ -24,7 +24,7 @@ public class SSLaser extends Device{
 	private void createProperties() {
 		operation_ = new DeviceProperty(label_, MConfiguration.coboltproplabel[0], 0, 1,core_,log_,true, !detected_);
 		powerPerc_ = new DeviceProperty(arduinoLabel2_, MConfiguration.ard2proplabel, 0, 100,core_,log_,false, !detected_);
-		powerMax_ = new DeviceProperty(label_, MConfiguration.coboltproplabel[0], 0, 300,core_,log_,false, !detected_);
+		powerMax_ = new DeviceProperty(label_, MConfiguration.coboltproplabel[1], 0, 300,core_,log_,false, !detected_);
 		behaviour_ = new DeviceProperty(arduinoLabel1_, MConfiguration.ardproplabel[0], 0, 4,core_,log_,false, !detected_);
 		pulse_ = new DeviceProperty(arduinoLabel1_, MConfiguration.ardproplabel[1], 0, MConfiguration.ardlasermaxpulse,core_,log_,false, !detected_);
 

@@ -34,7 +34,7 @@ public class NMS {
 		height_ = im.getHeight();
 		imp = im.getProcessor();
 		impresult = (ImageProcessor) imp.clone();
-		impresult.setValue(0);		// white
+		impresult.setValue(65535);		// white
 		n_ = n;
 		max_num = max;
 		cutoff_ = cutoff;

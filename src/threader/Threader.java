@@ -31,7 +31,7 @@ public class Threader {
 	boolean initialized_ = false;
 	boolean running_ = false;
 	int counter =0;
-	NumberFormat df;
+	DecimalFormat df;
 	
 	public Threader(MainFrame mainFrame){
 		pim_ = new PImonitor(null);
@@ -51,9 +51,10 @@ public class Threader {
 		uva_ = new UVautomator(sys_.getLaser(MConfiguration.laserkeys[0]), sys_, log_, frame_.getActivateTab());
 		initialized_ = true;
 		
-		NumberFormat df = DecimalFormat.getInstance();
+		DecimalFormat df = new DecimalFormat();//DecimalFormat.getInstance();
 		df.setRoundingMode(RoundingMode.FLOOR);
 		df.setMinimumFractionDigits(0);
+		df.setMaximumFractionDigits(0);
 		
 		start();
 	}
@@ -233,7 +234,7 @@ public class Threader {
 						  uvjtf.setText(String.valueOf(result[2].intValue()));
 					  }
 					  if(frame_.isNewCutOff()){
-						  uvcutoff.setText((df.format(result[3])).toString());
+						  uvcutoff.setText(((result[3])).toString());
 						  frame_.setRequestOff();
 					  }
 					  if(frame_.isNMSChecked()){
