@@ -24,7 +24,7 @@ public class UVautomator extends Updater{
 	ActivationTab pane_;
 	double cutoffArray[];
 	int nArray[];
-	int sizeNarray = 15;
+	int sizeNarray = 10;
 	int count = 0;
 	ImageProcessor ip_;
 	

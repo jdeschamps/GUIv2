@@ -17,7 +17,7 @@ public class NMS {
 	int n_;
 	double cutoff_;
 	boolean display_;
-	int sizeRoi;
+	int sizeRoi=10;
 	
 	ArrayList<Peak> peaks;
 	
@@ -36,7 +36,6 @@ public class NMS {
 		impresult = (ImageProcessor) imp.clone();
 		impresult.setValue(65535);		// white
 		n_ = n;
-		sizeRoi = n;
 		cutoff_ = cutoff;
 		display_ = display;
 		peaks.clear();
