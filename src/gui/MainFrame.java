@@ -13,6 +13,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -102,15 +103,19 @@ public class MainFrame extends javax.swing.JFrame {
     	return focusPanel.gr;
     }
     
-    public TimeChart getQPDGraph1(){
+   /* public TimeChart getQPDGraph1(){
     	return tabs.qPDPanel.gr1;
     }    
     
     public TimeChart getQPDGraph2(){
     	return tabs.qPDPanel.gr2;
+    }*/
+
+    public JProgressBar getProgressBar(){
+    	return tabs.qPDPanel.jProgressBar;
     }
     
-    public Chart getQPDGraph3(){
+    public Chart getQPDGraph(){
     	return tabs.qPDPanel.gr3;
     }
     

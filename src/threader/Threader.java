@@ -9,6 +9,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
 
+import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
@@ -119,11 +120,12 @@ public class Threader {
 	public class UIupdater extends SwingWorker<Integer,Double[]>{
 		
 		Double[] resultPI, resultQPD, resultUV;
-		Chart qpdg3;
-		TimeChart pig, qpdg1, qpdg2, uvg;
+		Chart qpdg;
+		TimeChart pig, uvg;
 		gui.LogarithmicJSlider uvlgs;
 		JTextField uvjtf, uvcutoff;
 		JSlider uvjsld;
+		JProgressBar qpdpg;
 		int counter, NMScounter;
 		
 		public UIupdater(){
@@ -132,9 +134,8 @@ public class Threader {
 			resultUV = new Double[4];
 			
 			pig = frame_.getFocusGraph();
-			qpdg1 = frame_.getQPDGraph1();
-			qpdg2 = frame_.getQPDGraph2();
-			qpdg3 = frame_.getQPDGraph3();
+			qpdg = frame_.getQPDGraph();
+			qpdpg = frame_.getProgressBar();
 			uvg = frame_.getNGraph();
 			uvlgs = frame_.getUVSlider();
 			uvjtf = frame_.getUVtext();
@@ -210,9 +211,12 @@ public class Threader {
 					  break;
 				  case 1:	// QPD 
 					  if(result.length == 4){
-						  qpdg1.addPoint(result[1]);
-						  qpdg2.addPoint(result[3]);
-						  qpdg3.addPoint(result[1],result[2]);
+						  if(result[3]<=700){
+							  qpdpg.setValue((int) Math.round(result[3]));
+						  } else {
+							  qpdpg.setValue(700);
+						  }
+						  qpdg.addPoint(result[1],result[2]);
 					  }
 					  break;
 				  case 2:	// UV 
