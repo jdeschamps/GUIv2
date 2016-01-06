@@ -13,6 +13,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 
 import micromanager.MConfiguration;
 import threader.Threader;
@@ -226,18 +229,16 @@ public class ActivationTab extends javax.swing.JPanel {
 
 
         add(jPanel_bottom, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 340, 30));
-    }// </editor-fold>//GEN-END:initComponents
-
+    }
+    
     private void jButton_GetNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GetNActionPerformed
-    	
     	//System.out.println(df.format(gr.getLastPoint()));
-
     	jTextField_N.setText(String.valueOf(df.format(gr.getLastPoint())));
-    }//GEN-LAST:event_jButton_GetNActionPerformed
+    }
 
     private void jButton_getcutoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_getcutoffActionPerformed
     	getcutoff = true;
-    }//GEN-LAST:event_jButton_getcutoffActionPerformed
+    }
 
     private void jToggleButton_autocutoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_autocutoffActionPerformed
     	if(jToggleButton_autocutoff.isSelected()){
@@ -245,7 +246,7 @@ public class ActivationTab extends javax.swing.JPanel {
     	} else {
     		autocutoff = false;
     	}
-    }//GEN-LAST:event_jToggleButton_autocutoffActionPerformed
+    }
 
     private void jButton_clearActionPerformed(java.awt.event.ActionEvent evt) {                                              
     	gr.clearChart();
@@ -304,7 +305,22 @@ public class ActivationTab extends javax.swing.JPanel {
     }
 
     public double getFeedback(){
-    	return Double.parseDouble(jTextField_uvcoeff.getText());
+    	double r1, r2;
+
+    	try {
+			r1 = NumberFormat.getNumberInstance(Locale.GERMANY).parse(jTextField_uvcoeff.getText()).doubleValue();
+			r2 = NumberFormat.getNumberInstance(Locale.ENGLISH).parse(jTextField_uvcoeff.getText()).doubleValue();
+			
+	    	if(r1<r2){
+	    		return r1;
+	    	} else {
+	    		return r2;
+	    	}
+			
+		} catch (Exception e) {
+		}
+
+    	return 0;
     }
 
     public double getN(){

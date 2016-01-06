@@ -4,6 +4,7 @@ import graph.Chart;
 import graph.TimeChart;
 import gui.MainFrame;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -31,7 +32,7 @@ public class Threader {
 	UIupdater task;
 	boolean initialized_ = false;
 	boolean running_ = false;
-	int counter =0;
+	int counter=0;
 	DecimalFormat df;
 	
 	public Threader(MainFrame mainFrame){
@@ -211,12 +212,12 @@ public class Threader {
 					  break;
 				  case 1:	// QPD 
 					  if(result.length == 4){
-						  if(result[3]<=700){
-							  qpdpg.setValue((int) Math.round(result[3]));
+						  if(result[1]<=700){
+							  qpdpg.setValue((int) Math.round(result[1]));
 						  } else {
 							  qpdpg.setValue(700);
 						  }
-						  qpdg.addPoint(result[1],result[2]);
+						  qpdg.addPoint(result[3],result[2]);
 					  }
 					  break;
 				  case 2:	// UV 
@@ -238,7 +239,7 @@ public class Threader {
 						  uvjtf.setText(String.valueOf(result[2].intValue()));
 					  }
 					  if(frame_.isNewCutOff()){
-						  uvcutoff.setText(((result[3])).toString());
+						  uvcutoff.setText(Double.toString(round(result[3],2)));
 						  frame_.setRequestOff();
 					  }
 					  if(frame_.isNMSChecked()){
@@ -256,4 +257,13 @@ public class Threader {
 			  }
 		  }
 	}
+	
+	public double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = new BigDecimal(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
+	}
+
 }

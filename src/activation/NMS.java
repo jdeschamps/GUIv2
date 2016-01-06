@@ -14,7 +14,7 @@ public class NMS {
 	ImageWindow iw;
 	Roi roi;
 	int width_, height_;
-	int n_,max_num;
+	int n_;
 	double cutoff_;
 	boolean display_;
 	int sizeRoi=10;
@@ -28,7 +28,7 @@ public class NMS {
 		roi = new Roi(0,0,sizeRoi,sizeRoi);
 	}
 	
-	public ImageProcessor run(ImagePlus im, int n, int max, double cutoff, boolean display){
+	public ImageProcessor run(ImagePlus im, int n, double cutoff, boolean display){
 		im_ = im;		
 		width_ = im.getWidth();
 		height_ = im.getHeight();
@@ -36,7 +36,6 @@ public class NMS {
 		impresult = (ImageProcessor) imp.clone();
 		impresult.setValue(65535);		// white
 		n_ = n;
-		max_num = max;
 		cutoff_ = cutoff;
 		display_ = display;
 		peaks.clear();
@@ -86,7 +85,7 @@ public class NMS {
 						}
 					}
 				}
-				if(!failed && peaks.size()<max_num){
+				if(!failed){
 					if(imp.get(mi,mj) > cutoff_){
 						peaks.add(new Peak(mi, mj, imp.get(mi,mj)));
 						roi.setLocation(mi-sizeRoi/2, mj-sizeRoi/2);

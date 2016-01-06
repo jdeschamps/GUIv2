@@ -17,13 +17,14 @@ import device.MSystem;
 public class UVautomator extends Updater{
 
 	int N_;
-	double pulse_, newpulse_;
+	double pulse_, newpulse_,prevpulse_;
 	MSystem sys_;
 	CMMCore core_;
 	Log log_;
 	ActivationTab pane_;
 	double cutoffArray[];
 	int nArray[];
+	int sizeNarray = 20;
 	int count = 0;
 	ImageProcessor ip_;
 	
@@ -47,8 +48,8 @@ public class UVautomator extends Updater{
 	    	cutoffArray[i]=0;
 	    }
 
-	    nArray = new int[10];
-	    for(int i=0;i<10;i++){
+	    nArray = new int[sizeNarray];
+	    for(int i=0;i<sizeNarray;i++){
 	    	nArray[i]=0;
 	    }
 		
@@ -139,8 +140,8 @@ public class UVautomator extends Updater{
 						cutoff_ = pane_.getCutoff();
 					}
 			           	      
-					ip_ = NMSuppr.run(imp3,10,300,cutoff_,false);
-					nArray[count%10] = NMSuppr.getN();
+					ip_ = NMSuppr.run(imp3,20,cutoff_,false);
+					nArray[count%sizeNarray] = NMSuppr.getN();
 					
 					return meanArray(nArray);
 	 			}
@@ -189,8 +190,13 @@ public class UVautomator extends Updater{
 
 		// If the pulse is 0, need a non-null starting point
 		if(pulse_ == 0){
-			pulse_ = min;
+			//pulse_ = min;
+			pulse_ = prevpulse_;
 		}
+		
+
+		System.out.println("[UV] UV feedback: "+pane_.getFeedback());
+		System.out.println("[UV] N requested: "+N0);
 
 		System.out.println("[UV] Current pulse: "+pulse_);
 		
@@ -211,6 +217,8 @@ public class UVautomator extends Updater{
 			temppulse = (int) exp; 
 		}
 
+		prevpulse_ = temppulse;
+		
 		return temppulse;
 	}
 	
