@@ -17,7 +17,7 @@ public class NMS {
 	int n_;
 	double cutoff_;
 	boolean display_;
-	int sizeRoi=10;
+	int sizeRoi;
 	
 	ArrayList<Peak> peaks;
 	
@@ -36,6 +36,7 @@ public class NMS {
 		impresult = (ImageProcessor) imp.clone();
 		impresult.setValue(65535);		// white
 		n_ = n;
+		sizeRoi = n;
 		cutoff_ = cutoff;
 		display_ = display;
 		peaks.clear();
@@ -58,8 +59,8 @@ public class NMS {
 		int mi,mj;
 		boolean failed=false;
 	
-		for(i=0;i<=width_-1-n_;i+=n_+1){	// Loop over (n+1)x(n+1)
-			for(j=0;j<=height_-1-n_;j+=n_+1){
+		for(i=0;i<width_-n_;i+=n_+1){	// Loop over (n+1)x(n+1)
+			for(j=0;j<height_-n_;j+=n_+1){
 				mi = i;
 				mj = j;
 				for(ii=i;ii<=i+n_;ii++){	

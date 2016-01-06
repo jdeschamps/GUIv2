@@ -24,7 +24,7 @@ public class UVautomator extends Updater{
 	ActivationTab pane_;
 	double cutoffArray[];
 	int nArray[];
-	int sizeNarray = 20;
+	int sizeNarray = 15;
 	int count = 0;
 	ImageProcessor ip_;
 	
@@ -45,7 +45,7 @@ public class UVautomator extends Updater{
 		
 	    cutoffArray = new double[10];
 	    for(int i=0;i<10;i++){
-	    	cutoffArray[i]=0;
+	    	cutoffArray[i]=400;
 	    }
 
 	    nArray = new int[sizeNarray];
@@ -140,7 +140,7 @@ public class UVautomator extends Updater{
 						cutoff_ = pane_.getCutoff();
 					}
 			           	      
-					ip_ = NMSuppr.run(imp3,20,cutoff_,false);
+					ip_ = NMSuppr.run(imp3,15,cutoff_,false);
 					nArray[count%sizeNarray] = NMSuppr.getN();
 					
 					return meanArray(nArray);
@@ -193,7 +193,6 @@ public class UVautomator extends Updater{
 			//pulse_ = min;
 			pulse_ = prevpulse_;
 		}
-		
 
 		System.out.println("[UV] UV feedback: "+pane_.getFeedback());
 		System.out.println("[UV] N requested: "+N0);
