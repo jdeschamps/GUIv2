@@ -74,7 +74,7 @@ public class MConfiguration {
 	
 	//////////////////////////////////////////////
 	//// 
-	public double UVcoeff=0.5, SDcoeff=0.5;
+	public double UVcoeff=0.8, SDcoeff=1.5;
 	public int laser1BehaviourDefault = 3;
 	public int laser2BehaviourDefault = 2;
 	public int laser3BehaviourDefault = 2;

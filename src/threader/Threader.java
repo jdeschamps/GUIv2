@@ -147,7 +147,7 @@ public class Threader {
 		@Override
 		protected Integer doInBackground() throws Exception {
 			int counter = 0;
-			int NMScounter = 0;
+			//int NMScounter = 0;
 			while(running_ && !isCancelled()){
 				switch(counter%3){
 				case 0:

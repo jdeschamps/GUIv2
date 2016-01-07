@@ -24,7 +24,7 @@ public class UVautomator extends Updater{
 	ActivationTab pane_;
 	double cutoffArray[];
 	int nArray[];
-	int sizeNarray = 10;
+	int sizeNarray = 5;
 	int count = 0;
 	ImageProcessor ip_;
 	
@@ -140,7 +140,7 @@ public class UVautomator extends Updater{
 						cutoff_ = pane_.getCutoff();
 					}
 			           	      
-					ip_ = NMSuppr.run(imp3,15,cutoff_,false);
+					ip_ = NMSuppr.run(imp3,15,cutoff_);
 					nArray[count%sizeNarray] = NMSuppr.getN();
 					
 					return meanArray(nArray);

@@ -16,7 +16,6 @@ public class NMS {
 	int width_, height_;
 	int n_;
 	double cutoff_;
-	boolean display_;
 	int sizeRoi=10;
 	
 	ArrayList<Peak> peaks;
@@ -28,7 +27,7 @@ public class NMS {
 		roi = new Roi(0,0,sizeRoi,sizeRoi);
 	}
 	
-	public ImageProcessor run(ImagePlus im, int n, double cutoff, boolean display){
+	public ImageProcessor run(ImagePlus im, int n, double cutoff){
 		im_ = im;		
 		width_ = im.getWidth();
 		height_ = im.getHeight();
@@ -37,7 +36,6 @@ public class NMS {
 		impresult.setValue(65535);		// white
 		n_ = n;
 		cutoff_ = cutoff;
-		display_ = display;
 		peaks.clear();
 		
 		return process();
@@ -58,8 +56,8 @@ public class NMS {
 		int mi,mj;
 		boolean failed=false;
 	
-		for(i=0;i<width_-n_;i+=n_+1){	// Loop over (n+1)x(n+1)
-			for(j=0;j<height_-n_;j+=n_+1){
+		for(i=0;i<width_-n_-1;i+=n_+1){	// Loop over (n+1)x(n+1)
+			for(j=0;j<height_-n_-1;j+=n_+1){
 				mi = i;
 				mj = j;
 				for(ii=i;ii<=i+n_;ii++){	
@@ -88,12 +86,18 @@ public class NMS {
 				if(!failed){
 					if(imp.get(mi,mj) > cutoff_){
 						peaks.add(new Peak(mi, mj, imp.get(mi,mj)));
-						roi.setLocation(mi-sizeRoi/2, mj-sizeRoi/2);
-						impresult.draw(roi);
 					}
 				}
 			}			
 		}	
+
+		for(int k=0;k<peaks.size();k++){
+			mi = peaks.get(k).getX();
+			mj = peaks.get(k).getY();
+			roi.setLocation(mi-sizeRoi/2, mj-sizeRoi/2);
+			impresult.draw(roi);
+		}
+		
 		return impresult;
 	}
 }
