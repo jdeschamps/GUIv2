@@ -221,23 +221,28 @@ public class Threader {
 					  }
 					  break;
 				  case 2:	// UV 
+					  int currpulse = Integer.parseInt(uvcutoff.getText());
 					  uvg.addPoint(result[1].intValue());
 					  //counter++;
 					  //uvg.addPoint(counter);
-					  int max = (int) (1000*sys_.getExposureTime());
+					  int max = 1000*sys_.getExposureTime() < MConfiguration.mojomaxpulse ? (int) (1000*sys_.getExposureTime()) : MConfiguration.mojomaxpulse;
 					  if(max > 0){
 						  uvlgs.setMaximum(max);
 						  uvjsld.setMaximum(max);
 					  } 
-					  uvjsld.setValue(result[2].intValue());
-					  if(result[2] != 0 && result[2]<= max){										
-						  uvlgs.setValue(result[2].intValue());
-					  } else {
-						  uvlgs.setValue(1);
-					  }
-					 if(!frame_.isUVTextSelected()){
+					  
+					  if(result[2].intValue()!=currpulse){
+						  uvjsld.setValue(result[2].intValue());
 						  uvjtf.setText(String.valueOf(result[2].intValue()));
+						  if(result[2] != 0 && result[2]<= max){										
+							  uvlgs.setValue(result[2].intValue());
+						  } else {
+							  uvlgs.setValue(1);
+						  }
 					  }
+					  /*if(!frame_.isUVTextSelected()){
+						  uvjtf.setText(String.valueOf(result[2].intValue()));
+					  }*/																				////// not sure fit hat was necessary or even efficient
 					  if(frame_.isNewCutOff()){
 						  uvcutoff.setText(Double.toString(round(result[3],2)));
 						  frame_.setRequestOff();

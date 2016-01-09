@@ -63,10 +63,10 @@ public class MSystem {
 	private void initializeDevices() {
 		qpd_ = new QPD(MConfiguration.qpdlabel,core_,log_, isLoaded(MConfiguration.qpdlabel));
 		pi_ = new Stage(MConfiguration.pilabel,core_,log_, isLoaded(MConfiguration.pilabel), isLoaded(MConfiguration.smaractlabel));
-		l405_ = new Laser(MConfiguration.laserlabel[0], MConfiguration.ardlaserlabel[0],core_,log_, isLoaded(MConfiguration.laserlabel[0]));
-		l488_ = new Laser(MConfiguration.laserlabel[1], MConfiguration.ardlaserlabel[1],core_,log_, isLoaded(MConfiguration.laserlabel[1]));
-		l638_ = new Laser(MConfiguration.laserlabel[2], MConfiguration.ardlaserlabel[2],core_,log_, isLoaded(MConfiguration.laserlabel[2]));
-		l561_ = new SSLaser(MConfiguration.sslaserlabel, MConfiguration.ardlaserlabel[3], MConfiguration.ard2laserlabel,core_,log_, isLoaded(MConfiguration.sslaserlabel));
+		l405_ = new Laser(MConfiguration.laserlabel[0], MConfiguration.mojolabel,core_,log_, isLoaded(MConfiguration.laserlabel[0]));
+		l488_ = new Laser(MConfiguration.laserlabel[1], MConfiguration.mojolabel,core_,log_, isLoaded(MConfiguration.laserlabel[1]));
+		l638_ = new Laser(MConfiguration.laserlabel[2], MConfiguration.mojolabel,core_,log_, isLoaded(MConfiguration.laserlabel[2]));
+		l561_ = new SSLaser(MConfiguration.sslaserlabel, MConfiguration.mojolabel, MConfiguration.ard2laserlabel,core_,log_, isLoaded(MConfiguration.sslaserlabel));
 		fw_ = new Servo(MConfiguration.servolabel[0], MConfiguration.proplabel[0], MConfiguration.numposservo[0],core_,log_, isLoaded(MConfiguration.servolabel[0]));
 		bfp_ = new Servo(MConfiguration.servolabel[1], MConfiguration.proplabel[1], MConfiguration.numposservo[1],core_,log_, isLoaded(MConfiguration.servolabel[1]));
 		astig_ = new Servo(MConfiguration.servolabel[2], MConfiguration.proplabel[2], MConfiguration.numposservo[2],core_,log_, isLoaded(MConfiguration.servolabel[2]));

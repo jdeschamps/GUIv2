@@ -6,7 +6,7 @@ import mmcorej.CMMCore;
 
 public class SSLaser extends Device{
 
-	String arduinoLabel1_,arduinoLabel2_;
+	String controllerLabel1_,controllerLabel2_;
 	DeviceProperty powerPerc_;
 	DeviceProperty operation_;
 	DeviceProperty behaviour_;
@@ -14,19 +14,19 @@ public class SSLaser extends Device{
 	DeviceProperty powerMax_;
 	
 	
-	public SSLaser(String label, String arduinolabel1, String arduinolabel2, CMMCore core, Log log, boolean isLoaded){
+	public SSLaser(String label, String controllerLabel1, String controllerLabel2, CMMCore core, Log log, boolean isLoaded){
 		super(label,core,log, isLoaded);
-		arduinoLabel1_ = arduinolabel1;
-		arduinoLabel2_ = arduinolabel2;
+		controllerLabel1_ = controllerLabel1;
+		controllerLabel2_ = controllerLabel2;
 		createProperties();
 	}
 	
 	private void createProperties() {
 		operation_ = new DeviceProperty(label_, MConfiguration.coboltproplabel[0], 0, 1,core_,log_,true, !detected_);
-		powerPerc_ = new DeviceProperty(arduinoLabel2_, MConfiguration.ard2proplabel, 0, 100,core_,log_,false, !detected_);
+		powerPerc_ = new DeviceProperty(controllerLabel2_, MConfiguration.ard2proplabel, 0, 100,core_,log_,false, !detected_);
 		powerMax_ = new DeviceProperty(label_, MConfiguration.coboltproplabel[1], 0, 300,core_,log_,false, !detected_);
-		behaviour_ = new DeviceProperty(arduinoLabel1_, MConfiguration.ardproplabel[0], 0, 4,core_,log_,false, !detected_);
-		pulse_ = new DeviceProperty(arduinoLabel1_, MConfiguration.ardproplabel[1], 0, MConfiguration.ardlasermaxpulse,core_,log_,false, !detected_);
+		behaviour_ = new DeviceProperty(controllerLabel1_, MConfiguration.getLaserMojoProp(label_)[0], 0, 4,core_,log_,false, !detected_);
+		pulse_ = new DeviceProperty(controllerLabel1_, MConfiguration.getLaserMojoProp(label_)[1], 0, MConfiguration.mojomaxpulse,core_,log_,false, !detected_);
 
 		properties_.add(operation_);
 		properties_.add(powerPerc_);
@@ -35,12 +35,12 @@ public class SSLaser extends Device{
 		properties_.add(pulse_);
 	}
 
-	public String getArduinoLabel1(){
-		return arduinoLabel1_;
+	public String getcontrollerLabel1(){
+		return controllerLabel1_;
 	}
 
-	public String getArduinoLabel2(){
-		return arduinoLabel2_;
+	public String getcontrollerLabel2(){
+		return controllerLabel2_;
 	}
 
 	public void setOperation(int val){	

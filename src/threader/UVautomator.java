@@ -190,8 +190,8 @@ public class UVautomator extends Updater{
 
 		// If the pulse is 0, need a non-null starting point
 		if(pulse_ == 0){
-			//pulse_ = min;
-			pulse_ = prevpulse_;
+			pulse_ = min;
+			//pulse_ = prevpulse_;
 		}
 
 		System.out.println("[UV] UV feedback: "+pane_.getFeedback());
@@ -202,7 +202,10 @@ public class UVautomator extends Updater{
 		// calculate new pulse
 		if(N0 != 0){
 			temppulse = pulse_*(1+pane_.getFeedback()*(1-N/N0));
-		} 
+		} else {
+			N0 = 0.1;
+			temppulse = pulse_*(1+pane_.getFeedback()*(1-N/N0));
+		}
 
 		System.out.println("[UV] New pulse: "+temppulse);
 		
@@ -216,9 +219,9 @@ public class UVautomator extends Updater{
 			temppulse = (int) exp; 
 		}
 
-		prevpulse_ = temppulse;
+		//prevpulse_ = temppulse;
 		
-		return temppulse;
+		return Math.floor(temppulse+0.5);
 	}
 	
 	@Override

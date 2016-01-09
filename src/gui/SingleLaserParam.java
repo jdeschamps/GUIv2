@@ -84,10 +84,10 @@ public class SingleLaserParam extends javax.swing.JPanel {
         	}
         });    
         
-        jSlider_pulse.setMaximum(MConfiguration.ardlasermaxpulse);
+        jSlider_pulse.setMaximum(MConfiguration.mojomaxpulse);
         jSlider_pulse.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
-					int max  = (int) (1000*sys_.getExposureTime());
+					int max  = 1000*sys_.getExposureTime() < MConfiguration.mojomaxpulse ? (int) (1000*sys_.getExposureTime()) : MConfiguration.mojomaxpulse;
 					jSlider_pulse.setMaximum(max);
 					if(jSlider_pulse.getValue()<max){
 						try{
