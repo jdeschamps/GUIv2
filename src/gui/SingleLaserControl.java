@@ -144,6 +144,9 @@ public class SingleLaserControl extends javax.swing.JPanel {
         group.add(jToggleButton_20perc);
         group.add(jToggleButton_1perc);
         
+        jToggleButton_100perc.setSelected(true);
+        sys_.setLaserPowerPerc(label_, 100);
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(

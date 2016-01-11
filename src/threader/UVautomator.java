@@ -139,7 +139,7 @@ public class UVautomator extends Updater{
 						cutoff_ = pane_.getCutoff();
 					}
 			           	      
-					ip_ = NMSuppr.run(imp3,11,cutoff_);
+					ip_ = NMSuppr.run(imp3,7,cutoff_);
 					nArray[count%sizeNarray] = NMSuppr.getN();
 					
 					return meanArray(nArray);
@@ -202,15 +202,18 @@ public class UVautomator extends Updater{
 		pulse_ = sys_.getUVPulse(); 
 
 		// If the pulse is 0, need a non-null starting point
-		if(pulse_ == 0){
+		//if(pulse_ == 0){
+			//pulse_ = min;
+		//}
+		if(prevpulse_ < min){
 			pulse_ = min;
-			//pulse_ = prevpulse_;
-		}
-
-		// use the last value except if it is too far from the current pulse (e.g. user change)
-		if(Math.abs(prevpulse_-pulse_)<1){
+		} else {
 			pulse_ = prevpulse_;
 		}
+		// use the last value except if it is too far from the current pulse (e.g. user change)
+		//if(Math.abs(prevpulse_-pulse_)<1){
+		//	pulse_ = prevpulse_;
+		//}
 
 		System.out.println("[UV] UV feedback: "+pane_.getFeedback());
 		System.out.println("[UV] N requested: "+N0);
@@ -236,13 +239,15 @@ public class UVautomator extends Updater{
 			temppulse = (int) exp; 
 		}
 
-		if(Math.abs(temppulse-pulse_)<0.5){
+		/*if(Math.abs(temppulse-pulse_)<0.5){
 			prevpulse_ = temppulse;
 		} else if(temppulse>pulse_){
 			prevpulse_ = pulse_+1;
 		} else {
 			prevpulse_ = pulse_-1;
-		}
+		}*/
+		
+		prevpulse_ = temppulse;
 		
 		return prevpulse_;
 	}
