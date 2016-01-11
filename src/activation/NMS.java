@@ -97,6 +97,7 @@ public class NMS {
 			roi.setLocation(mi-sizeRoi/2, mj-sizeRoi/2);
 			impresult.draw(roi);
 		}
+		impresult.multiply(8);
 		
 		return impresult;
 	}

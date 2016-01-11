@@ -11,13 +11,12 @@ import ij.process.ShortProcessor;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.Locale;
 
 import micromanager.MConfiguration;
+import micromanager.utils;
 import threader.Threader;
 import device.MSystem;
 
@@ -293,7 +292,14 @@ public class ActivationTab extends javax.swing.JPanel {
     }
 
     public double getCutoff(){
-    	return Double.parseDouble(jTextField_cutoff.getText());
+    	String s = jTextField_cutoff.getText();
+    	/*	if(s.equals("")){
+    		return 0;
+    	}*/
+    	if(utils.isNumeric(s)){
+    		return Double.parseDouble(s);
+    	}
+    	return 0;
     }
     
     public void setCutoff(double val){
@@ -301,11 +307,18 @@ public class ActivationTab extends javax.swing.JPanel {
     }
 
     public double getThreshold(){
-    	return Double.parseDouble(jTextField_stdcoeff.getText());
+    	String s = jTextField_stdcoeff.getText();
+    	/*	if(s.equals("")){
+    		return 0;
+    	}*/
+    	if(utils.isNumeric(s)){
+    		return Double.parseDouble(s);
+    	}
+    	return 0;
     }
 
     public double getFeedback(){
-    	double r1, r2;
+    	/*double r1, r2;
 
     	try {
 			r1 = NumberFormat.getNumberInstance(Locale.GERMANY).parse(jTextField_uvcoeff.getText()).doubleValue();
@@ -318,16 +331,25 @@ public class ActivationTab extends javax.swing.JPanel {
 	    	}
 			
 		} catch (Exception e) {
-		}
-
+		}*/
+       	String s = jTextField_uvcoeff.getText();
+    	if(utils.isNumeric(s)){
+    		return Double.parseDouble(s);
+    	}
     	return 0;
     }
 
     public double getN(){
-		//System.out.println("Sending N");
-		//System.out.println(jTextField_N.getText());
-    	return Double.parseDouble(jTextField_N.getText());
+    	String s = jTextField_N.getText();
+    	/*	if(s.equals("")){
+    		return 0;
+    	}*/
+    	if(utils.isNumeric(s)){
+    		return Double.parseDouble(s);
+    	}
+    	return 0;
     }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public double cutoff;																/// from config file

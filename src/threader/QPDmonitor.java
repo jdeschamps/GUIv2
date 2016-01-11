@@ -6,12 +6,13 @@ import device.QPD;
 public class QPDmonitor extends Updater{
 
 	double X,Y,S;
+	int max = 700;
 	
 	public QPDmonitor(Device d) {
 		super(d, 3);
 		
 		X=0;
-		Y=700;
+		Y=0;
 		S=0;
 	}
 

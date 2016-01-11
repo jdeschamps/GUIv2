@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JSlider;
 
 import micromanager.MConfiguration;
+import micromanager.utils;
 import device.MSystem;
 
 /**
@@ -59,6 +60,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
 						sys_.setLaserPulseLength(MConfiguration.laserkeys[0], max);
 					}	    
 			}});
+		logarithmicJSlider.setValue(sys_.getUVPulse()>0 ? (int)sys_.getUVPulse() : 1);
 
 
         jTextField_pulse.setText(Double.toString(sys_.getUVPulse()));
@@ -66,12 +68,19 @@ public class UVPulsePanel extends javax.swing.JPanel {
 	         public void actionPerformed(java.awt.event.ActionEvent evt) {
 	        	 int val = 0; 
 		    	 
-		    	 try{  
+		    	/* try{  
 		    		 val = Integer.parseInt(jTextField_pulse.getText());
 		    	 }catch (NumberFormatException e) { 
 		    		 sys_.writeToLog("Error parsing UV text field to number.");
 		    		 return;
-		    	 }
+		    	 }*/
+	        	 
+	        	 String s = jTextField_pulse.getText();
+	        	 if(!utils.isNumeric(s)){
+	        		 return;
+	        	 } else {
+	        		 val = Integer.parseInt(s);
+	        	 }
 		   
 		    	 if(val>0){
 		    		 try {

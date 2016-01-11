@@ -5,12 +5,15 @@
 package gui;
 
 import graph.TimeChart;
+
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
 import threader.Threader;
 import micromanager.MConfiguration;
+import micromanager.utils;
 import device.MSystem;
 
 /**
@@ -52,7 +55,7 @@ public class FocusPanel extends javax.swing.JPanel {
         	@Override
         	public void keyReleased(KeyEvent ke) {
         	    String typed = jTextField_position.getText();
-        	    if(!typed.matches("\\d+") || typed.length() > 3) {
+        	    if(!utils.isNumeric(typed)) {
         	        return;
         	    }
         	    sys_.setStagePosition(Integer.parseInt(typed));
@@ -122,7 +125,7 @@ public class FocusPanel extends javax.swing.JPanel {
         gr = new TimeChart("position","time","position",MConfiguration.maxNPI,370,220,false);
         add(gr.getChart());
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public TimeChart gr;
     private javax.swing.JLabel jLabel_position;

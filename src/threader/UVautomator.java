@@ -24,10 +24,10 @@ public class UVautomator extends Updater{
 	ActivationTab pane_;
 	double cutoffArray[];
 	int nArray[];
-	int sizeNarray = 5;
+	int sizeNarray = 10;
 	int count = 0;
 	ImageProcessor ip_;
-	
+	boolean cutoffinit_ = false;
 	double cutoff_;
 	
 	// Constants
@@ -45,9 +45,8 @@ public class UVautomator extends Updater{
 		
 	    cutoffArray = new double[10];
 	    for(int i=0;i<10;i++){
-	    	cutoffArray[i]=400;
+	    	cutoffArray[i]=0;
 	    }
-
 	    nArray = new int[sizeNarray];
 	    for(int i=0;i<sizeNarray;i++){
 	    	nArray[i]=0;
@@ -131,16 +130,16 @@ public class UVautomator extends Updater{
 					gau.blurGaussian(imp3.getProcessor(), 2, 2, 0.01);
 					//ImagePlus imp4 = imp3.duplicate();
 			   	      				
-					tempcutoff = imp3.getStatistics().mean+pane_.getThreshold()*imp3.getStatistics().stdDev;	
-					cutoffArray[count%10] = tempcutoff;
-			           	      
+					tempcutoff = imp3.getStatistics().mean+pane_.getThreshold()*imp3.getStatistics().stdDev;
+					cutoffArray[count%sizeNarray] = tempcutoff;
+					
 					if( (pane_.isAutoCutoffOn() && count%10==9) || pane_.isCutoffNeeded()){
-						cutoff_ = meanArray(cutoffArray);
+						cutoff_ = meanArrayWOzeros(cutoffArray);
 					} else {
 						cutoff_ = pane_.getCutoff();
 					}
 			           	      
-					ip_ = NMSuppr.run(imp3,15,cutoff_);
+					ip_ = NMSuppr.run(imp3,11,cutoff_);
 					nArray[count%sizeNarray] = NMSuppr.getN();
 					
 					return meanArray(nArray);
@@ -154,12 +153,26 @@ public class UVautomator extends Updater{
 	public ImageProcessor getNMSresult(){
 		return ip_;
 	}
-	
+
 	public double meanArray(double[] a){
 		int s = a.length;
 		double n = 0;
 		for(int i=0;i<s;i++){
 			n = n+a[i];
+		}
+		n=n/s;
+		return n;
+	}
+
+	public double meanArrayWOzeros(double[] a){
+		int s = a.length;
+		double n = 0;
+		for(int i=0;i<s;i++){
+			if(a[i]!=0){
+				n = n+a[i];
+			} else {
+				s = s-1;
+			}
 		}
 		n=n/s;
 		return n;
@@ -186,12 +199,17 @@ public class UVautomator extends Updater{
 		//System.out.println("Got N from pane");
 		double temppulse=0;
 
-		pulse_ = sys_.getUVPulse();
+		pulse_ = sys_.getUVPulse(); 
 
 		// If the pulse is 0, need a non-null starting point
 		if(pulse_ == 0){
 			pulse_ = min;
 			//pulse_ = prevpulse_;
+		}
+
+		// use the last value except if it is too far from the current pulse (e.g. user change)
+		if(Math.abs(prevpulse_-pulse_)<1){
+			pulse_ = prevpulse_;
 		}
 
 		System.out.println("[UV] UV feedback: "+pane_.getFeedback());
@@ -203,8 +221,7 @@ public class UVautomator extends Updater{
 		if(N0 != 0){
 			temppulse = pulse_*(1+pane_.getFeedback()*(1-N/N0));
 		} else {
-			N0 = 0.1;
-			temppulse = pulse_*(1+pane_.getFeedback()*(1-N/N0));
+			return 0;
 		}
 
 		System.out.println("[UV] New pulse: "+temppulse);
@@ -219,9 +236,15 @@ public class UVautomator extends Updater{
 			temppulse = (int) exp; 
 		}
 
-		//prevpulse_ = temppulse;
+		if(Math.abs(temppulse-pulse_)<0.5){
+			prevpulse_ = temppulse;
+		} else if(temppulse>pulse_){
+			prevpulse_ = pulse_+1;
+		} else {
+			prevpulse_ = pulse_-1;
+		}
 		
-		return Math.floor(temppulse+0.5);
+		return prevpulse_;
 	}
 	
 	@Override

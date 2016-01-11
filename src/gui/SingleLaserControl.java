@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 
+import micromanager.utils;
 import device.MSystem;
 
 /**
@@ -80,9 +81,9 @@ public class SingleLaserControl extends javax.swing.JPanel {
         	@Override
         	public void keyReleased(KeyEvent ke) {
         	    String typed = jTextField_userInput.getText();
-        	    if(!typed.matches("\\d+") || typed.length() > 3) {
+        	    if(!utils.isNumeric(typed)) {
         	        return;
-        	    }    
+        	    }  
         	    int val = Integer.parseInt(typed);
         	    if(val<=100){
 	        	    jToggleButton_userperc.setText(typed+"%");
