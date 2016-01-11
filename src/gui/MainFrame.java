@@ -154,9 +154,9 @@ public class MainFrame extends javax.swing.JFrame {
     	tabs.activationPanel.setImageProcessor(ipn);
     }
     
-    public boolean isUVTextSelected(){
+    /*public boolean isUVTextSelected(){
     	return opticsPanel.uvPulsePanel.isTextSelected();
-    }
+    }*/
 
     public ActivationTab getActivateTab(){
     	return tabs.activationPanel;

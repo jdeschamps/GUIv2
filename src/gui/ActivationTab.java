@@ -9,6 +9,10 @@ import ij.ImagePlus;
 import ij.process.ImageProcessor;
 import ij.process.ShortProcessor;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.DecimalFormat;
@@ -38,6 +42,9 @@ public class ActivationTab extends javax.swing.JPanel {
 	boolean checkedNMS = false;
 	DecimalFormat df;
 
+	int N0_;
+	double uvcoeff_, stdcoeff_;
+	
     public ActivationTab(MSystem sys, Threader th, MConfiguration config) {
     	sys_ = sys;
     	th_ = th;
@@ -98,9 +105,74 @@ public class ActivationTab extends javax.swing.JPanel {
         jLabel_uvcoeff.setText("UV coeff:");
 
         jTextField_stdcoeff.setText(String.valueOf(config_.getSDcoeff()));
-
+        stdcoeff_ = config_.getSDcoeff();
+        jTextField_stdcoeff.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent arg0) {}
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				String s = jTextField_cutoff.getText();
+		    	if(utils.isNumeric(s)){
+		    		stdcoeff_ = Double.parseDouble(s);
+		    	}
+			}
+         });
+        jTextField_stdcoeff.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String s = jTextField_cutoff.getText();
+		    	if(utils.isNumeric(s)){
+		    		stdcoeff_ = Double.parseDouble(s);
+		    	}
+			}
+        });
+        
         jTextField_uvcoeff.setText(String.valueOf(config_.getUVcoeff()));
-
+        uvcoeff_ = config_.getUVcoeff();
+        jTextField_uvcoeff.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent arg0) {}
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				String s = jTextField_uvcoeff.getText();
+		    	if(utils.isNumeric(s)){
+		    		uvcoeff_ = Double.parseDouble(s);
+		    	}
+			}
+         });
+        jTextField_uvcoeff.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String s = jTextField_uvcoeff.getText();
+		    	if(utils.isNumeric(s)){
+		    		uvcoeff_ = Double.parseDouble(s);
+		    	}
+			}
+        });
+        
+        jTextField_N.setText("0");
+        N0_ = 0;
+        jTextField_N.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent arg0) {}
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				String s = jTextField_N.getText();
+		    	if(utils.isNumeric(s)){
+		    		N0_ = Integer.parseInt(s);
+		    	}
+			}
+         });
+        jTextField_N.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String s = jTextField_N.getText();
+		    	if(utils.isNumeric(s)){
+		    		N0_ = Integer.parseInt(s);
+		    	}
+			}
+        });
+        
         jButton_GetN.setText("Get N");
         jButton_GetN.setMargin(new java.awt.Insets(2, 2, 2, 2));
         jButton_GetN.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +181,6 @@ public class ActivationTab extends javax.swing.JPanel {
             }
         });
 
-        jTextField_N.setText("0");
 
 
         javax.swing.GroupLayout jPanel_leftLayout = new javax.swing.GroupLayout(jPanel_left);
@@ -307,47 +378,15 @@ public class ActivationTab extends javax.swing.JPanel {
     }
 
     public double getThreshold(){
-    	String s = jTextField_stdcoeff.getText();
-    	/*	if(s.equals("")){
-    		return 0;
-    	}*/
-    	if(utils.isNumeric(s)){
-    		return Double.parseDouble(s);
-    	}
-    	return 0;
+    	return stdcoeff_;
     }
 
     public double getFeedback(){
-    	/*double r1, r2;
-
-    	try {
-			r1 = NumberFormat.getNumberInstance(Locale.GERMANY).parse(jTextField_uvcoeff.getText()).doubleValue();
-			r2 = NumberFormat.getNumberInstance(Locale.ENGLISH).parse(jTextField_uvcoeff.getText()).doubleValue();
-			
-	    	if(r1<r2){
-	    		return r1;
-	    	} else {
-	    		return r2;
-	    	}
-			
-		} catch (Exception e) {
-		}*/
-       	String s = jTextField_uvcoeff.getText();
-    	if(utils.isNumeric(s)){
-    		return Double.parseDouble(s);
-    	}
-    	return 0;
+    	return uvcoeff_;
     }
 
     public double getN(){
-    	String s = jTextField_N.getText();
-    	/*	if(s.equals("")){
-    		return 0;
-    	}*/
-    	if(utils.isNumeric(s)){
-    		return Double.parseDouble(s);
-    	}
-    	return 0;
+    	return N0_;
     }
     
     

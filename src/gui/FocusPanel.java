@@ -6,6 +6,10 @@ package gui;
 
 import graph.TimeChart;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -51,7 +55,7 @@ public class FocusPanel extends javax.swing.JPanel {
         
         
         jTextField_position.setText(String.valueOf(sys_.getPIPosition()));
-        jTextField_position.addKeyListener(new KeyAdapter(){
+       /* jTextField_position.addKeyListener(new KeyAdapter(){
         	@Override
         	public void keyReleased(KeyEvent ke) {
         	    String typed = jTextField_position.getText();
@@ -61,7 +65,30 @@ public class FocusPanel extends javax.swing.JPanel {
         	    sys_.setStagePosition(Integer.parseInt(typed));
         	}
         });   
-        	
+        */
+        jTextField_position.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent arg0) {}
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				 String typed = jTextField_position.getText();
+	        	 if(!utils.isNumeric(typed)) {
+	        	    return;
+	        	 }
+	        	 sys_.setStagePosition(Integer.parseInt(typed));
+			}
+         });
+        jTextField_position.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 String typed = jTextField_position.getText();
+	        	 if(!utils.isNumeric(typed)) {
+	        		 return;
+	        	 }
+	        	 sys_.setStagePosition(Integer.parseInt(typed));
+			}
+        });
+        
         jToggleButton_lockz.setText("Lock");
         jToggleButton_lockz.setMargin(new java.awt.Insets(2, 2, 2, 2));
         jToggleButton_lockz.addItemListener(new ItemListener(){

@@ -5,6 +5,10 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -77,7 +81,7 @@ public class SingleLaserControl extends javax.swing.JPanel {
         }
         
         jTextField_userInput.setText("50");
-        jTextField_userInput.addKeyListener(new KeyAdapter(){        	
+        /*jTextField_userInput.addKeyListener(new KeyAdapter(){        	
         	@Override
         	public void keyReleased(KeyEvent ke) {
         	    String typed = jTextField_userInput.getText();
@@ -92,7 +96,41 @@ public class SingleLaserControl extends javax.swing.JPanel {
 	        	    }
         	    }
         	}
-        	});     
+        	}); */
+        jTextField_userInput.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent arg0) {}
+			@Override
+			public void focusLost(FocusEvent arg0) {
+	       	    String typed = jTextField_userInput.getText();
+        	    if(!utils.isNumeric(typed)) {
+        	        return;
+        	    }  
+        	    int val = Integer.parseInt(typed);
+        	    if(val<=100){
+	        	    jToggleButton_userperc.setText(typed+"%");
+	        	    if(jToggleButton_userperc.isSelected()){
+	        	    	sys_.setLaserPowerPerc(label_, val);
+	        	    }
+        	    }
+        	}
+         });
+        jTextField_userInput.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+	       	    String typed = jTextField_userInput.getText();
+        	    if(!utils.isNumeric(typed)) {
+        	        return;
+        	    }  
+        	    int val = Integer.parseInt(typed);
+        	    if(val<=100){
+	        	    jToggleButton_userperc.setText(typed+"%");
+	        	    if(jToggleButton_userperc.isSelected()){
+	        	    	sys_.setLaserPowerPerc(label_, val);
+	        	    }
+        	    }
+        	}
+        });
         
         jToggleButton_userperc.setText("50%");
         jToggleButton_userperc.setMargin(new java.awt.Insets(2, 2, 2, 2));

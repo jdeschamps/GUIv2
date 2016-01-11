@@ -26,7 +26,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
 	 */
 	private static final long serialVersionUID = 8987000512087033422L;
 	MSystem sys_;
-	boolean textselected = false;
+	//boolean textselected = false;
 	
     public UVPulsePanel(MSystem sys) {
     	sys_ = sys;
@@ -63,7 +63,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
 		logarithmicJSlider.setValue(sys_.getUVPulse()>0 ? (int)sys_.getUVPulse() : 1);
 
 
-        jTextField_pulse.setText(Double.toString(sys_.getUVPulse()));
+        jTextField_pulse.setText(Integer.toString((int) sys_.getUVPulse()));
         jTextField_pulse.addActionListener(new java.awt.event.ActionListener() {
 	         public void actionPerformed(java.awt.event.ActionEvent evt) {
 	        	 int val = 0; 
@@ -89,14 +89,14 @@ public class UVPulsePanel extends javax.swing.JPanel {
 							 sys_.setLaserPulseLength(MConfiguration.laserkeys[0], val);
 						 }
 					} catch (Exception e) {
-						sys_.writeToLog("Ëxception when setting UV pulse to "+val);
+						sys_.writeToLog("Exception when setting UV pulse to "+val);
 					}
 		    	 }else{
 		    		try {
 		    			logarithmicJSlider.setValue(1);
 		    			sys_.setLaserPulseLength(MConfiguration.laserkeys[0], 0);
 					} catch (Exception e) {
-						sys_.writeToLog("Ëxception when setting UV pulse to 0");
+						sys_.writeToLog("Exception when setting UV pulse to 0");
 					}
 		    	 }
 	         }
@@ -104,13 +104,38 @@ public class UVPulsePanel extends javax.swing.JPanel {
         jTextField_pulse.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-            	textselected = true;
+            	//textselected = true;
             }
 
             @Override
             public void focusLost(FocusEvent e) {
-            	textselected = false;
-            }
+            	int val=0;
+            	//textselected = false;
+	        	 String s = jTextField_pulse.getText();
+	        	 if(!utils.isNumeric(s)){
+	        		 return;
+	        	 } else {
+	        		 val = Integer.parseInt(s);
+	        	 }
+		   
+		    	 if(val>0){
+		    		 try {
+						if(val<1000*sys_.getExposureTime()){
+							 logarithmicJSlider.setValue(val); 
+							 sys_.setLaserPulseLength(MConfiguration.laserkeys[0], val);
+						 }
+					} catch (Exception ed) {
+						sys_.writeToLog("Exception when setting UV pulse to "+val);
+					}
+		    	 }else{
+		    		try {
+		    			logarithmicJSlider.setValue(1);
+		    			sys_.setLaserPulseLength(MConfiguration.laserkeys[0], 0);
+					} catch (Exception ed) {
+						sys_.writeToLog("Exception when setting UV pulse to 0");
+					}
+		    	 }
+	         }
         });
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -141,9 +166,9 @@ public class UVPulsePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     
     
-    public boolean isTextSelected(){
+   /* public boolean isTextSelected(){
     	return textselected;
-    }
+    }*/
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTextField jTextField_pulse;
