@@ -137,8 +137,11 @@ public class UVautomator extends Updater{
 						cutoff_ = meanArrayWOzeros(cutoffArray);
 					} else {
 						cutoff_ = pane_.getCutoff();
+						if(cutoff_ == 0){
+							cutoff_ = tempcutoff;
+						}
 					}
-			           	      
+			        System.out.println(cutoff_);
 					ip_ = NMSuppr.run(imp3,7,cutoff_);
 					nArray[count%sizeNarray] = NMSuppr.getN();
 					
