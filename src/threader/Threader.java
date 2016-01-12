@@ -192,7 +192,7 @@ public class Threader {
 					counter = 0;
 				}
 				
-				Thread.sleep(50);
+				Thread.sleep((long) Math.floor(sys_.getExposureTime()));
 			}
 			return 1;
 		}
