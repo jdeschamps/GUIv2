@@ -131,6 +131,7 @@ public class UVautomator extends Updater{
 					//ImagePlus imp4 = imp3.duplicate();
 			   	      				
 					tempcutoff = imp3.getStatistics().mean+pane_.getThreshold()*imp3.getStatistics().stdDev;
+			        System.out.println(pane_.getThreshold());
 					cutoffArray[count%sizeNarray] = tempcutoff;
 					
 					if( (pane_.isAutoCutoffOn() && count%10==9) || pane_.isCutoffNeeded()){
@@ -138,7 +139,7 @@ public class UVautomator extends Updater{
 					} else {
 						cutoff_ = pane_.getCutoff();
 						if(cutoff_ == 0){
-							cutoff_ = tempcutoff;
+							cutoff_ = meanArrayWOzeros(cutoffArray);
 						}
 					}
 			        System.out.println(cutoff_);

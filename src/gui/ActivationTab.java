@@ -111,7 +111,7 @@ public class ActivationTab extends javax.swing.JPanel {
 			public void focusGained(FocusEvent arg0) {}
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				String s = jTextField_cutoff.getText();
+				String s = jTextField_stdcoeff.getText();
 		    	if(utils.isNumeric(s)){
 		    		stdcoeff_ = Double.parseDouble(s);
 		    	}
@@ -120,7 +120,7 @@ public class ActivationTab extends javax.swing.JPanel {
         jTextField_stdcoeff.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String s = jTextField_cutoff.getText();
+				String s = jTextField_stdcoeff.getText();
 		    	if(utils.isNumeric(s)){
 		    		stdcoeff_ = Double.parseDouble(s);
 		    	}
