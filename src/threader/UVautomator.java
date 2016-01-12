@@ -1,5 +1,7 @@
 package threader;
 
+import java.util.ArrayList;
+
 import gui.ActivationTab;
 import ij.ImagePlus;
 import ij.plugin.ImageCalculator;
@@ -22,9 +24,9 @@ public class UVautomator extends Updater{
 	CMMCore core_;
 	Log log_;
 	ActivationTab pane_;
-	double cutoffArray[];
-	int nArray[];
-	int sizeNarray = 10;
+	ArrayList<Double> cutoffArray, nArray;
+	//double cutoffArray[];
+	//int nArray[];
 	int count = 0;
 	ImageProcessor ip_;
 	boolean cutoffinit_ = false;
@@ -43,14 +45,17 @@ public class UVautomator extends Updater{
 
 		ip_ = new ShortProcessor(200,200);
 		
-	    cutoffArray = new double[10];
+		cutoffArray = new ArrayList<Double>();
+		nArray = new ArrayList<Double>();
+		
+	   /* cutoffArray = new double[10];
 	    for(int i=0;i<10;i++){
 	    	cutoffArray[i]=0;
 	    }
 	    nArray = new int[sizeNarray];
 	    for(int i=0;i<sizeNarray;i++){
 	    	nArray[i]=0;
-	    }
+	    }*/
 		
 		if(!d.getLabel().equals("Luxx405")){
 			// exception!
@@ -132,21 +137,21 @@ public class UVautomator extends Updater{
 			   	      				
 					tempcutoff = imp3.getStatistics().mean+pane_.getThreshold()*imp3.getStatistics().stdDev;
 			        System.out.println(pane_.getThreshold());
-					cutoffArray[count%sizeNarray] = tempcutoff;
+			        addCutOff(tempcutoff);
 					
 					if( (pane_.isAutoCutoffOn() && count%10==9) || pane_.isCutoffNeeded()){
-						cutoff_ = meanArrayWOzeros(cutoffArray);
+						cutoff_ = meanArrayListWOzeros(cutoffArray);
 					} else {
 						cutoff_ = pane_.getCutoff();
 						if(cutoff_ == 0){
-							cutoff_ = meanArrayWOzeros(cutoffArray);
+							cutoff_ = meanArrayListWOzeros(cutoffArray);
 						}
 					}
 			        System.out.println(cutoff_);
 					ip_ = NMSuppr.run(imp3,7,cutoff_);
-					nArray[count%sizeNarray] = NMSuppr.getN();
+					addN(NMSuppr.getN());
 					
-					return meanArray(nArray);
+					return (int) Math.floor(meanArrayListWOzeros(nArray)+0.5);
 	 			}
 			}
 		}
@@ -158,35 +163,35 @@ public class UVautomator extends Updater{
 		return ip_;
 	}
 
-	public double meanArray(double[] a){
-		int s = a.length;
-		double n = 0;
-		for(int i=0;i<s;i++){
-			n = n+a[i];
+	public void addCutOff(double newcutoff){
+		int s = cutoffArray.size();
+		if(s<pane_.getdT()){
+			cutoffArray.add(newcutoff);
+		} else {
+			cutoffArray.remove(0);
+			cutoffArray.add(newcutoff);
 		}
-		n=n/s;
-		return n;
 	}
 
-	public double meanArrayWOzeros(double[] a){
-		int s = a.length;
+	public void addN(double newn){
+		int s = nArray.size();
+		if(s<pane_.getdT()){
+			nArray.add(newn);
+		} else {
+			nArray.remove(0);
+			nArray.add(newn);
+		}
+	}
+
+	public double meanArrayListWOzeros(ArrayList<Double> a){
+		int s = a.size();
 		double n = 0;
 		for(int i=0;i<s;i++){
-			if(a[i]!=0){
-				n = n+a[i];
+			if(a.get(i)!=0){
+				n = n+a.get(i);
 			} else {
 				s = s-1;
 			}
-		}
-		n=n/s;
-		return n;
-	}
-	
-	public int meanArray(int[] a){
-		int s = a.length;
-		int n = 0;
-		for(int i=0;i<s;i++){
-			n = n+a[i];
 		}
 		n=n/s;
 		return n;

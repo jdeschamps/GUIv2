@@ -81,16 +81,24 @@ public class MConfiguration {
 	//////////////////////////////////////////////
 	//// 
 	public double UVcoeff=0.8, SDcoeff=1.5;
+	public int dT=10;
 	public int laser1BehaviourDefault = 2;	// UV0
 	public int laser2BehaviourDefault = 4;	// blue
 	public int laser3BehaviourDefault = 4;	// green
 	public int laser4BehaviourDefault = 4;	// red
+	
+	String configuration="Configuration", end="end;", uvcoeff="UVcoeff", sdcoeff="SDcoeff", dt="dT";
+	String laser1b="Laser1Behaviour", laser2b="Laser2Behaviour", laser3b="Laser3Behaviour", laser4b="Laser4Behaviour";
 
-	public double getUVcoeff(){
+	public double getDefaultUVcoeff(){
 		return UVcoeff;
 	}
-	public double getSDcoeff(){
+	public double getDefaultSDcoeff(){
 		return SDcoeff;
+	}
+	
+	public int getDefaultdT(){
+		return dT;
 	}
 
 	public int getLaser1DefaultBehaviour(){
@@ -137,18 +145,18 @@ public class MConfiguration {
 		}
 	}
 	
-	
 	public void createConfiguration(){
 		System.out.println("Create configuration");
 		File f = new File(configpath);
 		txtWriter writer = new txtWriter(f);
-		writer.process("Configuration\r\n");
-		writer.process("UVcoeff="+UVcoeff+";\r\n");
-		writer.process("SDcoeff="+SDcoeff+";\r\n");
-		writer.process("Laser1Behaviour="+3+";\r\n");
-		writer.process("Laser2Behaviour="+2+";\r\n");
-		writer.process("Laser3Behaviour="+2+";\r\n");
-		writer.process("Laser4Behaviour="+2+";\r\n");
+		writer.process(configuration+"\r\n");
+		writer.process(uvcoeff+"="+UVcoeff+";\r\n");
+		writer.process(sdcoeff+"="+SDcoeff+";\r\n");
+		writer.process(dt+"="+dT+";\r\n");
+		writer.process(laser1b+"="+3+";\r\n");
+		writer.process(laser2b+"="+2+";\r\n");
+		writer.process(laser3b+"="+2+";\r\n");
+		writer.process(laser4b+"="+2+";\r\n");
 		writer.process("end;");
 		writer.close();
 	}
@@ -175,8 +183,6 @@ public class MConfiguration {
 		String content = String.copyValueOf(reader.getContent());
 		String buffer="";
 		String endpoint = ";";
-		String configuration="Configuration", end="end;", uvcoeff="UVcoeff", sdcoeff="SDcoeff";
-		String laser1b="Laser1Behaviour", laser2b="Laser2Behaviour", laser3b="Laser3Behaviour", laser4b="Laser4Behaviour";
 
 		/*System.out.println("--------------------");
 		for(int i=0;i<content.length();i++){
@@ -230,6 +236,24 @@ public class MConfiguration {
 		}
 		//System.out.println(buffer);
 		SDcoeff = Double.parseDouble(buffer);
+		i=i+3;
+		
+		// dT
+		buffer = content.substring(i, i+dt.length());
+		if(!buffer.equals(dt)){
+			System.out.println("Error reading dt: "+buffer);
+			return;
+		} else {
+			i = i+dt.length()+1;
+			buffer="";
+		}
+		
+		while(content.charAt(i) != endpoint.charAt(0)){
+			buffer = buffer+content.charAt(i);
+			i++;
+		}
+		//System.out.println(buffer);
+		dT = Integer.parseInt(buffer);
 		i=i+3;
 		
 		// Laser1 behaviour
