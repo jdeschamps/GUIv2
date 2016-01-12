@@ -96,7 +96,7 @@ public class MainFrame extends javax.swing.JFrame {
     	    }
     	});
         
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>//GEN-END:initComponents 
 
     ////////////////////////////////////////////////// Interface with Threader
     public TimeChart getFocusGraph(){

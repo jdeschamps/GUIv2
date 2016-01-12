@@ -204,8 +204,8 @@ public class MSystem {
 		pi_.setSensorState(val);
 	}
 	
-	public void setStagePosition(int val){
-		pi_.setPosition(val);
+	public void setStagePosition(double d){
+		pi_.setPosition(d);
 	}
 	
 	//////////////////////////////////////////////////////
