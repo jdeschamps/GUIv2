@@ -222,16 +222,19 @@ public class Threader {
 					  break;
 				  case 2:	// UV 
 					  int currpulse = (int) Double.parseDouble(uvcutoff.getText());
+					  
+					  // Refresh the graph
 					  uvg.addPoint(result[1].intValue());
-					  //counter++;
-					  //uvg.addPoint(counter);
+
+					  // Maximum of the sliders   																																/// having that every round is maybe not so great since exposure won't really change during activation
 					  int max = 1000*sys_.getExposureTime() < MConfiguration.mojomaxpulse ? (int) (1000*sys_.getExposureTime()) : MConfiguration.mojomaxpulse;
 					  if(max > 0){
 						  uvlgs.setMaximum(max);
 						  uvjsld.setMaximum(max);
 					  } 
 					  
-					  if(result[2].intValue()!=currpulse){
+					  // Update UV
+					  if(frame_.isUVChecked() && result[2].intValue()!=currpulse){
 						  uvjsld.setValue(result[2].intValue());
 						  uvjtf.setText(String.valueOf(result[2].intValue()));
 						  if(result[2] != 0 && result[2]<= max){										
@@ -240,15 +243,20 @@ public class Threader {
 							  uvlgs.setValue(1);
 						  }
 					  }
+					  
+					  
 					  /*if(!frame_.isUVTextSelected()){
 						  uvjtf.setText(String.valueOf(result[2].intValue()));
-					  }*/																				////// not sure fit that was necessary or even efficient
+					  }*/		////// not sure fit that was necessary or even efficient
+					  
+					  // Cutoff
 					  if(frame_.isNewCutOff()){
 						  uvcutoff.setText(Double.toString(round(result[3],2)));
 						  frame_.setRequestOff();
 					  }
+					  
+					  // Update NMS frame
 					  if(frame_.isNMSChecked()){
-						  //System.out.println("NMS checked, update image processor");
 						  NMScounter++;
 						  if(NMScounter % 10 == 0){
 							  frame_.setNMSImageProcessor(uva_.getNMSresult());

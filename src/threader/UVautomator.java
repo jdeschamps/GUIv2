@@ -199,65 +199,65 @@ public class UVautomator extends Updater{
 	
 	public double getNewPulse(){
 		double N = (double) N_;
-
-		//System.out.println("Will get N from pane");
 		double N0 = pane_.getN();
-		System.out.println("[UV] N requested: "+N0);
-
-		System.out.println("[UV] Current N: "+N);
-		//System.out.println("Got N from pane");
 		double temppulse=0;
 
-		pulse_ = sys_.getUVPulse(); 
-
-		// If the pulse is 0, need a non-null starting point
-		//if(pulse_ == 0){
-			//pulse_ = min;
-		//}
-		if(prevpulse_ < min){
-			pulse_ = min;
-		} else {
-			pulse_ = prevpulse_;
-		}
-		// use the last value except if it is too far from the current pulse (e.g. user change)
-		//if(Math.abs(prevpulse_-pulse_)<1){
-		//	pulse_ = prevpulse_;
-		//}
-
-		System.out.println("[UV] UV feedback: "+pane_.getFeedback());
 		System.out.println("[UV] N requested: "+N0);
+		System.out.println("[UV] Current N: "+N);
 
-		System.out.println("[UV] Current pulse: "+pulse_);
+		pulse_ = sys_.getUVPulse(); 
 		
-		// calculate new pulse
-		if(N0 != 0){
-			temppulse = pulse_*(1+pane_.getFeedback()*(1-N/N0));
-		} else {
-			return 0;
-		}
-
-		System.out.println("[UV] New pulse: "+temppulse);
-		
-		if(temppulse < min){
-			temppulse = min;
-		}
-
-		// if new pulse is higher than camera exposure
-		double exp = 1000*sys_.getExposureTime();
-		if(temppulse > exp) {
-			temppulse = (int) exp; 
-		}
-
-		/*if(Math.abs(temppulse-pulse_)<0.5){
+		if(pane_.isUVselected()){
+			// If the pulse is 0, need a non-null starting point
+			//if(pulse_ == 0){
+				//pulse_ = min;
+			//}
+			if(prevpulse_ < min){
+				pulse_ = min;
+			} else {
+				pulse_ = prevpulse_;
+			}
+			// use the last value except if it is too far from the current pulse (e.g. user change)
+			//if(Math.abs(prevpulse_-pulse_)<1){
+			//	pulse_ = prevpulse_;
+			//}
+	
+			System.out.println("[UV] UV feedback: "+pane_.getFeedback());
+			System.out.println("[UV] N requested: "+N0);
+	
+			System.out.println("[UV] Current pulse: "+pulse_);
+			
+			// calculate new pulse
+			if(N0 != 0){
+				temppulse = pulse_*(1+pane_.getFeedback()*(1-N/N0));
+			} else {
+				return 0;
+			}
+	
+			System.out.println("[UV] New pulse: "+temppulse);
+			
+			if(temppulse < min){
+				temppulse = min;
+			}
+	
+			// if new pulse is higher than camera exposure
+			double exp = 1000*sys_.getExposureTime();
+			if(temppulse > exp) {
+				temppulse = (int) exp; 
+			}
+	
+			/*if(Math.abs(temppulse-pulse_)<0.5){
+				prevpulse_ = temppulse;
+			} else if(temppulse>pulse_){
+				prevpulse_ = pulse_+1;
+			} else {
+				prevpulse_ = pulse_-1;
+			}*/
+			
 			prevpulse_ = temppulse;
-		} else if(temppulse>pulse_){
-			prevpulse_ = pulse_+1;
 		} else {
-			prevpulse_ = pulse_-1;
-		}*/
-		
-		prevpulse_ = temppulse;
-		
+			prevpulse_ = pulse_;													/// it would maybe be better to use the isuvselected to not update at all the UV...
+		}
 		return prevpulse_;
 	}
 	

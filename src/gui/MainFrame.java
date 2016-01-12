@@ -149,6 +149,10 @@ public class MainFrame extends javax.swing.JFrame {
     public boolean isNMSChecked(){
     	return tabs.activationPanel.isNMSchecked();
     }
+
+    public boolean isUVChecked(){
+    	return tabs.activationPanel.isUVselected();
+    }
     
     public void setNMSImageProcessor(ImageProcessor ipn){
     	tabs.activationPanel.setImageProcessor(ipn);

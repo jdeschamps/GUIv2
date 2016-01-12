@@ -39,7 +39,7 @@ public class ActivationTab extends javax.swing.JPanel {
 	MConfiguration config_;
 	ImageProcessor ip_;
 	ImagePlus im_;
-	boolean checkedNMS = false;
+	boolean checkedNMS = false, checkedUV = false;
 	DecimalFormat df;
 
 	int N0_, dT_;
@@ -81,6 +81,7 @@ public class ActivationTab extends javax.swing.JPanel {
         jTextField_cutoff = new javax.swing.JTextField();
         jButton_getcutoff = new javax.swing.JButton();
         jToggleButton_autocutoff = new javax.swing.JToggleButton();
+        jCheckBox_activate = new javax.swing.JCheckBox();
         jCheckBox_showNMS = new javax.swing.JCheckBox();
         jButton_clear = new javax.swing.JButton();
 
@@ -104,6 +105,18 @@ public class ActivationTab extends javax.swing.JPanel {
             }
         });
 
+        jCheckBox_activate.setSelected(checkedUV);
+        jCheckBox_activate.addItemListener(new java.awt.event.ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent evt) {
+				if(jCheckBox_activate.isSelected()){
+					checkedUV = true;
+				} else {
+					checkedUV = false;
+				}
+			}
+        });
+        
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Text Fields first part
         /////////////////////////////////////////////////////////////////////////////////////////////// sdcoeff
         jTextField_stdcoeff.setText(String.valueOf(config_.getDefaultSDcoeff()));
@@ -215,6 +228,7 @@ public class ActivationTab extends javax.swing.JPanel {
         jLabel_uvcoeff.setText("UV coeff:");
         jLabel_dT.setText("dT:");
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Layout
         javax.swing.GroupLayout jPanel_leftLayout = new javax.swing.GroupLayout(jPanel_left);
         jPanel_left.setLayout(jPanel_leftLayout);
         jPanel_leftLayout.setHorizontalGroup(
@@ -224,15 +238,17 @@ public class ActivationTab extends javax.swing.JPanel {
                 .addGroup(jPanel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jToggleButton_activate, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                     .addGroup(jPanel_leftLayout.createSequentialGroup()
-                        .addGroup(jPanel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField_uvcoeff)
-                            .addComponent(jLabel_stdcoeff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel_uvcoeff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField_stdcoeff)
-                            .addComponent(jButton_GetN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField_N, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel_dT)
-                            .addComponent(jTextField_dT))
+                        .addGroup(jPanel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextField_uvcoeff)
+                                .addComponent(jLabel_stdcoeff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel_uvcoeff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextField_stdcoeff)
+                                .addComponent(jButton_GetN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextField_N, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel_dT)
+                                .addComponent(jTextField_dT))
+                            .addComponent(jCheckBox_activate))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -255,7 +271,9 @@ public class ActivationTab extends javax.swing.JPanel {
                 .addComponent(jButton_GetN)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_N, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox_activate)
+                .addGap(1, 1, 1)
                 .addComponent(jToggleButton_activate, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -286,6 +304,7 @@ public class ActivationTab extends javax.swing.JPanel {
         });
         
         jCheckBox_showNMS.setText("NMS");
+        jCheckBox_showNMS.setSelected(checkedNMS);
         jCheckBox_showNMS.addItemListener(new java.awt.event.ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent evt) {
@@ -386,6 +405,10 @@ public class ActivationTab extends javax.swing.JPanel {
     	return jToggleButton_activate.isSelected();
     }
 
+    public boolean isUVselected(){
+    	return checkedUV;
+    }
+    
     public boolean isAutoCutoffOn(){
     	return jToggleButton_autocutoff.isSelected();
     }
@@ -443,6 +466,7 @@ public class ActivationTab extends javax.swing.JPanel {
     private javax.swing.JButton jButton_clear;
     private javax.swing.JButton jButton_getcutoff;
     private javax.swing.JCheckBox jCheckBox_showNMS;
+    private javax.swing.JCheckBox jCheckBox_activate;
     private javax.swing.JLabel jLabel_cutoff;
     private javax.swing.JLabel jLabel_dT;
     private javax.swing.JLabel jLabel_stdcoeff;
