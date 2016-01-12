@@ -24,7 +24,7 @@ public class UVautomator extends Updater{
 	CMMCore core_;
 	Log log_;
 	ActivationTab pane_;
-	ArrayList<Double> cutoffArray, nArray;
+	ArrayList<Double> cutoffArray, nArray, pulseArray;
 	//double cutoffArray[];
 	//int nArray[];
 	int count = 0;
@@ -132,7 +132,7 @@ public class UVautomator extends Updater{
 					imp3 = calcul.run("Substract create", imp, imp2);
 					
 					// Gaussian filter
-					gau.blurGaussian(imp3.getProcessor(), 2, 2, 0.01);
+					gau.blurGaussian(imp3.getProcessor(), 2, 2, 0.02);
 					//ImagePlus imp4 = imp3.duplicate();
 			   	      				
 					tempcutoff = imp3.getStatistics().mean+pane_.getThreshold()*imp3.getStatistics().stdDev;
@@ -183,6 +183,16 @@ public class UVautomator extends Updater{
 		}
 	}
 
+	public void addPulse(double newpulse){
+		int s = pulseArray.size();
+		if(s<pane_.getdT()){
+			pulseArray.add(newpulse);
+		} else {
+			pulseArray.remove(0);
+			pulseArray.add(newpulse);
+		}
+	}
+
 	public double meanArrayListWOzeros(ArrayList<Double> a){
 		int s = a.size();
 		double n = 0;
@@ -192,6 +202,16 @@ public class UVautomator extends Updater{
 			} else {
 				s = s-1;
 			}
+		}
+		n=n/s;
+		return n;
+	}
+
+	public double meanArrayList(ArrayList<Double> a){
+		int s = a.size();
+		double n = 0;
+		for(int i=0;i<s;i++){
+			n = n+a.get(i);
 		}
 		n=n/s;
 		return n;
@@ -213,9 +233,9 @@ public class UVautomator extends Updater{
 				//pulse_ = min;
 			//}
 			if(prevpulse_ < min){
-				pulse_ = min;
+				pulse_ = min;			
 			} else {
-				pulse_ = prevpulse_;
+				pulse_ = prevpulse_;	// avoid getting stuck between 0 and 1 (otherwise newp=0.4+0.4*1.99*coeff < 1 unless coeff > 1 which is not godd)
 			}
 			// use the last value except if it is too far from the current pulse (e.g. user change)
 			//if(Math.abs(prevpulse_-pulse_)<1){
@@ -224,7 +244,6 @@ public class UVautomator extends Updater{
 	
 			System.out.println("[UV] UV feedback: "+pane_.getFeedback());
 			System.out.println("[UV] N requested: "+N0);
-	
 			System.out.println("[UV] Current pulse: "+pulse_);
 			
 			// calculate new pulse
@@ -254,9 +273,10 @@ public class UVautomator extends Updater{
 				prevpulse_ = pulse_-1;
 			}*/
 			
+			addPulse(temppulse);
 			prevpulse_ = temppulse;
 		} else {
-			prevpulse_ = pulse_;													/// it would maybe be better to use the isuvselected to not update at all the UV...
+			prevpulse_ = meanArrayList(pulseArray);													/// it would maybe be better to use the isuvselected to not update at all the UV...
 		}
 		return prevpulse_;
 	}
