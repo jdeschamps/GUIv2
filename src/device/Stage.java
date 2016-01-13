@@ -9,6 +9,7 @@ public class Stage extends Device{
 	DeviceProperty sensorState_;
 	DeviceProperty position_;
 	boolean smaractDetected_;
+	boolean locked_ = false;					// bug here
 
 	public Stage(String label, CMMCore core, Log log, boolean isLoaded, boolean smaractDetected) {
 		super(label, core, log, isLoaded);
@@ -26,6 +27,7 @@ public class Stage extends Device{
 	
 	public void setSensorState(int val){									
 		if(val==1){
+			locked_ = true; 											/// bug, I mean this needs to be gone and use instead the property bu8t this leads to QPD being -10 ??!?!?!
 			setProperty(sensorState_.getPropertyName(),val);
 			try {
 				if(smaractDetected_){
@@ -35,6 +37,8 @@ public class Stage extends Device{
 				log_.writeToLog(label_+" : error setting focus device "+MConfiguration.smaractlabel);
 			}
 		} else if(val==0){
+			locked_ = false; 											/// bug, I mean this needs to be gone and use instead the property bu8t this leads to QPD being -10 ??!?!?!
+
 			setProperty(sensorState_.getPropertyName(),val);							/// maybe modify directly the object
 
 			try {
@@ -50,7 +54,7 @@ public class Stage extends Device{
 	}
 	
 	public void setPosition(double val){
-		if(val>=position_.getMinValue() && val<=position_.getMaxValue() ){
+		if(val>=position_.getMinValue() && val<=position_.getMaxValue() && !locked_ ){
 			//setProperty(position_.getPropertyName(),val);
 			try {
 				setProperty(position_.getPropertyName(),val);

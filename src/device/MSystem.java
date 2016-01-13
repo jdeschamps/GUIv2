@@ -209,9 +209,9 @@ public class MSystem {
 	}
 	
 	public void setStagePosition(double d){
-		if(getPISensorState()==0){
+		//if(getPISensorState()==0){														/// if uncommented, it bugs, why???
 			pi_.setPosition(d);
-		}
+		//}
 	}
 	
 	//////////////////////////////////////////////////////
