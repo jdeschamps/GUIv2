@@ -18,7 +18,8 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import threader.Threader;
+import threader.CommonThreader;
+import threader.UVThreader;
 import micromanager.Log;
 import micromanager.MConfiguration;
 import mmcorej.CMMCore;
@@ -36,7 +37,8 @@ public class MainFrame extends javax.swing.JFrame {
 	 */
 	private static final long serialVersionUID = -2764220934742005216L;
 	MSystem sys_;
-	Threader th_;
+	CommonThreader th_;
+	UVThreader uv_;
 	Log log_;
 	MConfiguration config_;
 
@@ -46,7 +48,8 @@ public class MainFrame extends javax.swing.JFrame {
     	config_ = config;
     	
     	//th_ = new Threader(this);
-        th_ = new Threader(sys_, log_, this);
+        th_ = new CommonThreader(sys_, log_, this);
+        uv_ = new UVThreader(sys_, log_, this);
 
     	initComponents();
     }
@@ -72,7 +75,7 @@ public class MainFrame extends javax.swing.JFrame {
     	
         opticsPanel = new ControlPanel(sys_);
         focusPanel = new FocusPanel(sys_, th_);
-        tabs = new SettingTabs(sys_, th_, config_);
+        tabs = new SettingTabs(sys_, th_, uv_, config_);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -91,6 +94,7 @@ public class MainFrame extends javax.swing.JFrame {
     	    	System.out.println("Shutting down");
     	    	sys_.shutDown();
     	    	th_.stop();
+    	    	uv_.stop();
     	    	log_.closeLog();
     	    	dispose();
     	    }

@@ -15,7 +15,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import threader.Threader;
+import threader.CommonThreader;
 import micromanager.MConfiguration;
 import micromanager.utils;
 import device.MSystem;
@@ -31,9 +31,9 @@ public class FocusPanel extends javax.swing.JPanel {
 	 */
 	private static final long serialVersionUID = -5035259490968319272L;
 	MSystem sys_;
-	Threader th_;
+	CommonThreader th_;
 	
-    public FocusPanel(MSystem sys, Threader th) {
+    public FocusPanel(MSystem sys, CommonThreader th) {
     	sys_ = sys;
     	th_ = th;
         initComponents();

@@ -21,7 +21,7 @@ import java.util.Locale;
 
 import micromanager.MConfiguration;
 import micromanager.utils;
-import threader.Threader;
+import threader.UVThreader;
 import device.MSystem;
 
 /**
@@ -35,7 +35,7 @@ public class ActivationTab extends javax.swing.JPanel {
 	 */
 	private static final long serialVersionUID = -8002444578776391643L;
 	MSystem sys_;
-	Threader th_;
+	UVThreader uv_;
 	MConfiguration config_;
 	ImageProcessor ip_;
 	ImagePlus im_;
@@ -45,9 +45,9 @@ public class ActivationTab extends javax.swing.JPanel {
 	int N0_, dT_;
 	double uvcoeff_, stdcoeff_;
 	
-    public ActivationTab(MSystem sys, Threader th, MConfiguration config) {
+    public ActivationTab(MSystem sys, UVThreader uv, MConfiguration config) {
     	sys_ = sys;
-    	th_ = th;
+    	uv_ = uv;
     	config_ = config;
     	ip_ = new ShortProcessor(200,200);
     	im_ = new ImagePlus("NMS result",ip_);
@@ -96,10 +96,10 @@ public class ActivationTab extends javax.swing.JPanel {
         jToggleButton_activate.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e){
 				if(e.getStateChange()==ItemEvent.SELECTED){
-					th_.startUpdater("UV");
+					uv_.startUpdater("UV");
 					activate = true;
 				}else if(e.getStateChange()==ItemEvent.DESELECTED){
-					th_.stopUpdater("UV");
+					uv_.stopUpdater("UV");
 					activate = false;
 				}
             }

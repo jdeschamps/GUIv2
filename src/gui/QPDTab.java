@@ -17,7 +17,7 @@ import java.awt.event.ItemListener;
 
 import micromanager.MConfiguration;
 import micromanager.utils;
-import threader.Threader;
+import threader.CommonThreader;
 import device.MSystem;
 
 
@@ -25,10 +25,10 @@ public class QPDTab extends javax.swing.JPanel {
 
 	private static final long serialVersionUID = -3185947669212669882L;
 	MSystem sys_;
-	Threader th_;
+	CommonThreader th_;
 	double largesteps, smallsteps;
 	
-    public QPDTab(MSystem sys, Threader th) {
+    public QPDTab(MSystem sys, CommonThreader th) {
     	sys_ = sys;
     	th_ = th;
         initComponents();
