@@ -24,7 +24,7 @@ public class UVautomator extends Updater{
 	CMMCore core_;
 	Log log_;
 	ActivationTab pane_;
-	ArrayList<Double> cutoffArray, nArray, pulseArray;
+	//ArrayList<Double> cutoffArray, nArray, pulseArray;
 	//double cutoffArray[];
 	//int nArray[];
 	int count = 0;
@@ -45,8 +45,8 @@ public class UVautomator extends Updater{
 
 		ip_ = new ShortProcessor(200,200);
 		
-		cutoffArray = new ArrayList<Double>();
-		nArray = new ArrayList<Double>();
+		//cutoffArray = new ArrayList<Double>();
+		//nArray = new ArrayList<Double>();
 		
 	   /* cutoffArray = new double[10];
 	    for(int i=0;i<10;i++){
@@ -132,26 +132,30 @@ public class UVautomator extends Updater{
 					imp3 = calcul.run("Substract create", imp, imp2);
 					
 					// Gaussian filter
-					gau.blurGaussian(imp3.getProcessor(), 2, 2, 0.02);
+					gau.blurGaussian(imp3.getProcessor(), 3, 3, 0.02);
 					//ImagePlus imp4 = imp3.duplicate();
 			   	      				
 					tempcutoff = imp3.getStatistics().mean+pane_.getThreshold()*imp3.getStatistics().stdDev;
 			        System.out.println(pane_.getThreshold());
-			        addCutOff(tempcutoff);
+			        //addCutOff(tempcutoff);
 					
 					if( (pane_.isAutoCutoffOn() && count%10==9) || pane_.isCutoffNeeded()){
-						cutoff_ = meanArrayListWOzeros(cutoffArray);
+						//cutoff_ = meanArrayListWOzeros(cutoffArray);
+						cutoff_ = tempcutoff;
 					} else {
 						cutoff_ = pane_.getCutoff();
 						if(cutoff_ == 0){
-							cutoff_ = meanArrayListWOzeros(cutoffArray);
+							//cutoff_ = meanArrayListWOzeros(cutoffArray);
+							cutoff_ = tempcutoff;
 						}
 					}
 			        System.out.println(cutoff_);
 					ip_ = NMSuppr.run(imp3,7,cutoff_);
-					addN(NMSuppr.getN());
+					//addN(NMSuppr.getN());
 					
-					return (int) Math.floor(meanArrayListWOzeros(nArray)+0.5);
+							
+					//return (int) Math.floor(meanArrayListWOzeros(nArray)+0.5);
+					return NMSuppr.getN();
 	 			}
 			}
 		}
@@ -162,7 +166,7 @@ public class UVautomator extends Updater{
 	public ImageProcessor getNMSresult(){
 		return ip_;
 	}
-
+/*
 	public void addCutOff(double newcutoff){
 		int s = cutoffArray.size();
 		if(s<pane_.getdT()){
@@ -216,8 +220,8 @@ public class UVautomator extends Updater{
 		n=n/s;
 		return n;
 	}
-	
-	public double getNewPulse(){
+	*/
+	public double getNewPulse(){			// code should be cleaned, variables are not used properly
 		double N = (double) N_;
 		double N0 = pane_.getN();
 		double temppulse=0;
@@ -235,7 +239,7 @@ public class UVautomator extends Updater{
 			if(prevpulse_ < min){
 				pulse_ = min;			
 			} else {
-				pulse_ = prevpulse_;	// avoid getting stuck between 0 and 1 (otherwise newp=0.4+0.4*1.99*coeff < 1 unless coeff > 1 which is not godd)
+				pulse_ = prevpulse_;	// avoid getting stuck between 0 and 1 (otherwise newp=0.4+0.4*1.99*coeff < 1 unless coeff ~> 0.7 which is not good for higher values)
 			}
 			// use the last value except if it is too far from the current pulse (e.g. user change)
 			//if(Math.abs(prevpulse_-pulse_)<1){
@@ -273,10 +277,10 @@ public class UVautomator extends Updater{
 				prevpulse_ = pulse_-1;
 			}*/
 			
-			addPulse(temppulse);
+			//addPulse(temppulse);
 			prevpulse_ = temppulse;
 		} else {
-			prevpulse_ = meanArrayList(pulseArray);													/// it would maybe be better to use the isuvselected to not update at all the UV...
+			prevpulse_ = pulse_;													/// it would maybe be better to use the isuvselected to not update at all the UV...
 		}
 		return prevpulse_;
 	}
