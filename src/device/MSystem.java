@@ -134,6 +134,10 @@ public class MSystem {
 		return core_;
 	}
 	
+	public boolean isCameraAcquiring(){
+		return core_.isSequenceRunning();
+	}
+	
 	//////////////////////////////////////////////////////
 	////// QPD
 	public QPD getQPD(){
