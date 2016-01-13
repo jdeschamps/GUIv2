@@ -42,8 +42,8 @@ public class ActivationTab extends javax.swing.JPanel {
 	boolean checkedNMS = false, checkedUV = false;
 	DecimalFormat df;
 
-	int N0_, dT_;
-	double uvcoeff_, stdcoeff_;
+	int dT_;
+	double N0_, uvcoeff_, stdcoeff_;
 	
     public ActivationTab(MSystem sys, UVThreader uv, MConfiguration config) {
     	sys_ = sys;
@@ -176,7 +176,7 @@ public class ActivationTab extends javax.swing.JPanel {
 			public void focusLost(FocusEvent arg0) {
 				String s = jTextField_N.getText();
 		    	if(utils.isNumeric(s)){
-		    		N0_ = Integer.parseInt(s);
+		    		N0_ = Double.parseDouble(s);
 		    	}
 			}
          });
@@ -185,7 +185,7 @@ public class ActivationTab extends javax.swing.JPanel {
 			public void actionPerformed(ActionEvent e) {
 				String s = jTextField_N.getText();
 		    	if(utils.isNumeric(s)){
-		    		N0_ = Integer.parseInt(s);
+		    		N0_ = Double.parseDouble(s);
 		    	}
 			}
         });

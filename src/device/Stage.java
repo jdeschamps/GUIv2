@@ -54,7 +54,7 @@ public class Stage extends Device{
 	}
 	
 	public void setPosition(double val){
-		if(val>=position_.getMinValue() && val<=position_.getMaxValue() && !locked_ ){
+		if(val>=position_.getMinValue() && val<=position_.getMaxValue()){
 			//setProperty(position_.getPropertyName(),val);
 			try {
 				setProperty(position_.getPropertyName(),val);
