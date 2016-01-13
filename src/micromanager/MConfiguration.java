@@ -158,10 +158,10 @@ public class MConfiguration {
 		writer.process(uvcoeff+"="+UVcoeff+";\r\n");
 		writer.process(sdcoeff+"="+SDcoeff+";\r\n");
 		writer.process(dt+"="+dT+";\r\n");
-		writer.process(laser1b+"="+3+";\r\n");
-		writer.process(laser2b+"="+2+";\r\n");
-		writer.process(laser3b+"="+2+";\r\n");
-		writer.process(laser4b+"="+2+";\r\n");
+		writer.process(laser1b+"="+laser1BehaviourDefault+";\r\n");
+		writer.process(laser2b+"="+laser2BehaviourDefault+";\r\n");
+		writer.process(laser3b+"="+laser3BehaviourDefault+";\r\n");
+		writer.process(laser4b+"="+laser4BehaviourDefault+";\r\n");
 		writer.process("end;");
 		writer.close();
 	}
