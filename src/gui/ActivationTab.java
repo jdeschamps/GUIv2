@@ -45,9 +45,10 @@ public class ActivationTab extends javax.swing.JPanel {
 	int dT_;
 	double N0_, uvcoeff_, stdcoeff_;
 	
-    public ActivationTab(MSystem sys, UVThreader uv, MConfiguration config) {
+	private MainFrame parent_;
+	
+    public ActivationTab(MSystem sys, MConfiguration config, MainFrame parent) {
     	sys_ = sys;
-    	uv_ = uv;
     	config_ = config;
     	ip_ = new ShortProcessor(200,200);
     	im_ = new ImagePlus("NMS result",ip_);
@@ -55,6 +56,9 @@ public class ActivationTab extends javax.swing.JPanel {
     	df = new DecimalFormat();
 		df.setDecimalSeparatorAlwaysShown(false);
     	
+		parent_ = parent;
+		uv_ = parent_.getnewUVThreader();
+		
         initComponents();
     }
 
@@ -100,6 +104,7 @@ public class ActivationTab extends javax.swing.JPanel {
 					activate = true;
 				}else if(e.getStateChange()==ItemEvent.DESELECTED){
 					uv_.stopUpdater("UV");
+					uv_ = parent_.getnewUVThreader();
 					activate = false;
 				}
             }

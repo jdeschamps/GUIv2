@@ -21,14 +21,14 @@ public class SettingTabs extends javax.swing.JPanel {
 	private static final long serialVersionUID = 744836798730047169L;
 	MSystem sys_;
 	CommonThreader th_;
-	UVThreader uv_;
 	MConfiguration config_;
+	MainFrame parent_;
 	
-    public SettingTabs(MSystem sys, CommonThreader th, UVThreader uv, MConfiguration config) {
+    public SettingTabs(MSystem sys, CommonThreader th, MainFrame parent, MConfiguration config) {
     	sys_ = sys;
     	th_ = th;
-    	uv_ = uv;
     	config_ = config;
+    	parent = parent_;
         initComponents();
     }
 
@@ -36,7 +36,7 @@ public class SettingTabs extends javax.swing.JPanel {
 
         jTabbedPane_QPD = new javax.swing.JTabbedPane();
         qPDPanel = new QPDTab(sys_,th_);
-        activationPanel = new ActivationTab(sys_,uv_,config_);
+        activationPanel = new ActivationTab(sys_,config_, parent_);
         laserParamTab = new LaserTab(sys_, config_);
         controlPanel = new LensPanel(sys_);
 

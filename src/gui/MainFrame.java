@@ -49,7 +49,6 @@ public class MainFrame extends javax.swing.JFrame {
     	
     	//th_ = new Threader(this);
         th_ = new CommonThreader(sys_, log_, this);
-        uv_ = new UVThreader(sys_, log_, this);
 
     	initComponents();
     }
@@ -75,7 +74,7 @@ public class MainFrame extends javax.swing.JFrame {
     	
         opticsPanel = new ControlPanel(sys_);
         focusPanel = new FocusPanel(sys_, th_);
-        tabs = new SettingTabs(sys_, th_, uv_, config_);
+        tabs = new SettingTabs(sys_, th_, this, config_);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -115,6 +114,11 @@ public class MainFrame extends javax.swing.JFrame {
     	return tabs.qPDPanel.gr2;
     }*/
 
+    public UVThreader getnewUVThreader(){
+    	uv_ = new UVThreader(sys_, log_, this);
+    	return uv_;
+    }
+    
     public JProgressBar getProgressBar(){
     	return tabs.qPDPanel.jProgressBar;
     }
