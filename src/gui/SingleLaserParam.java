@@ -80,7 +80,17 @@ public class SingleLaserParam extends javax.swing.JPanel {
         	    if(!typed.matches("\\d+")) {
         	        return;
         	    }
-        	    sys_.setLaserPulseLength(label_, Integer.parseInt(typed));
+				int max  = 1000*sys_.getExposureTime() < MConfiguration.mojomaxpulse ? (int) (1000*sys_.getExposureTime()) : MConfiguration.mojomaxpulse;
+				int val = Integer.parseInt(typed);
+				if(val<max){
+					sys_.setLaserPulseLength(label_, val);
+					jSlider_pulse.setMaximum(max);
+					jSlider_pulse.setValue(val);
+				} else {
+					sys_.setLaserPulseLength(label_, max);
+					jSlider_pulse.setMaximum(max);
+					jSlider_pulse.setValue(max);
+				}
         	}
         });    
         
