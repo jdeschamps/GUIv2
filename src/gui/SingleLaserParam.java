@@ -73,7 +73,7 @@ public class SingleLaserParam extends javax.swing.JPanel {
         jLabel_pulse.setText("Pulse length :");
 
         jTextField_pulse.setText("0");
-        jTextField_pulse.addKeyListener(new KeyAdapter(){
+        jTextField_pulse.addKeyListener(new KeyAdapter(){																///////////////////////////////////////////////////////////////////////////m forgotten in the UV activation scheme
         	@Override
         	public void keyReleased(KeyEvent ke) {
         	    String typed = ((javax.swing.JTextField) ke.getSource()).getText();
@@ -87,6 +87,8 @@ public class SingleLaserParam extends javax.swing.JPanel {
         jSlider_pulse.setMaximum(MConfiguration.mojomaxpulse);
         jSlider_pulse.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
+				  System.out.println("[UV] mouse was released");
+
 					int max  = 1000*sys_.getExposureTime() < MConfiguration.mojomaxpulse ? (int) (1000*sys_.getExposureTime()) : MConfiguration.mojomaxpulse;
 					jSlider_pulse.setMaximum(max);
 					if(jSlider_pulse.getValue()<max){

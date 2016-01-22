@@ -64,24 +64,26 @@ public class UVautomator extends Updater{
 
 	@Override
 	public void refresh() {
+		System.out.println("[UV]0 Get N start");
 		N_ = getN();
-		//System.out.println("N done");
+		System.out.println("[UV]15 Got N: "+N_);
 
+		System.out.println("[UV]16 Get new pulse");
 		newpulse_ = getNewPulse();
 		//System.out.println("Got new pulse");
 		
 		output_[0] = N_;
-		output_[1] = newpulse_;
+		output_[1] = (int) newpulse_;
 		output_[2] = cutoff_;
 		update();
 
 	}
 
 	public int getN() { 
-		if(core_.isSequenceRunning()){
+		if(core_.isSequenceRunning() && core_.getBytesPerPixel() == 2){
+			System.out.println("[UV]1 Sequence running");
 			//System.out.println("Sequence running");
 			int width, height;
-			long byteDepth;
 			double tempcutoff;
 			//int tempn;
 			TaggedImage tagged1 = null, tagged2 = null;
@@ -100,65 +102,90 @@ public class UVautomator extends Updater{
 		   	 
 			width = (int) core_.getImageWidth();
 			height = (int) core_.getImageHeight();
-		   	 
-			byteDepth = core_.getBytesPerPixel();
-	
-			if(byteDepth == 2){   														
-				if(!core_.isSequenceRunning()){
-					try {
-						sys_.setUVPulse(0);
-					} catch (Exception e) {
-						log_.writeToLog("Couldn't set property UV");
-					}
-				} else {
-	
-					try {
-						tagged1 = core_.getLastTaggedImage();
-						tagged2 = core_.getNBeforeLastTaggedImage(20);
-					} catch (Exception e) {
-						log_.writeToLog("Couldn't get tagged images");
-					}							
+			System.out.println("[UV]2 got width and height");
+ 
+			
+			try {
+				tagged1 = core_.getLastTaggedImage();
+				tagged2 = core_.getNBeforeLastTaggedImage(20);
+			} catch (Exception e) {
+				log_.writeToLog("Couldn't get tagged images");
+			}		
+			System.out.println("[UV]3 got tagged images");
+
+
+			ip = new ShortProcessor(width, height);
+			ip2 = new ShortProcessor(width, height);
 		
-					ip = new ShortProcessor(width, height);
-					ip2 = new ShortProcessor(width, height);
-					
-					ip.setPixels(tagged1.pix);
-					ip2.setPixels(tagged2.pix);
-					
-					imp = new ImagePlus("", ip);
-					imp2 = new ImagePlus("", ip2);
-					
-					// Subtraction
-					imp3 = calcul.run("Substract create", imp, imp2);
-					
-					// Gaussian filter
-					gau.blurGaussian(imp3.getProcessor(), 3, 3, 0.02);
-					//ImagePlus imp4 = imp3.duplicate();
-			   	      				
-					tempcutoff = imp3.getStatistics().mean+pane_.getThreshold()*imp3.getStatistics().stdDev;
-			        System.out.println(pane_.getThreshold());
-			        //addCutOff(tempcutoff);
-					
-					if( (pane_.isAutoCutoffOn() && count%10==9) || pane_.isCutoffNeeded()){
-						//cutoff_ = meanArrayListWOzeros(cutoffArray);
-						cutoff_ = tempcutoff;
-					} else {
-						cutoff_ = pane_.getCutoff();
-						if(cutoff_ == 0){
-							//cutoff_ = meanArrayListWOzeros(cutoffArray);
-							cutoff_ = tempcutoff;
-						}
-					}
-			        System.out.println(cutoff_);
-					ip_ = NMSuppr.run(imp3,7,cutoff_);
-					//addN(NMSuppr.getN());
-					
-							
-					//return (int) Math.floor(meanArrayListWOzeros(nArray)+0.5);
-					return NMSuppr.getN();
-	 			}
+			ip.setPixels(tagged1.pix);
+			ip2.setPixels(tagged2.pix);
+		
+			System.out.println("[UV]4 conversion into short processors");
+
+			imp = new ImagePlus("", ip);
+			imp2 = new ImagePlus("", ip2);
+			
+			System.out.println("[UV]5 conversion  to imageplus");
+			
+			// Subtraction
+			imp3 = calcul.run("Substract create", imp, imp2);
+			
+			System.out.println("[UV]6 subtraction");
+			
+			// Gaussian filter
+			gau.blurGaussian(imp3.getProcessor(), 3, 3, 0.02);
+			//ImagePlus imp4 = imp3.duplicate();
+	   	      				
+			System.out.println("[UV]7 gaussian blur");
+			System.out.println("[UV]8 threshold is: "+pane_.getThreshold());
+
+			try{
+				tempcutoff = imp3.getStatistics().mean+pane_.getThreshold()*imp3.getStatistics().stdDev;
+				System.out.println("[UV]8-a got threshold: "+tempcutoff);
+
+			} catch(Exception e){
+				tempcutoff = cutoff_;
+				System.out.println("[UV]8-b got threshold: "+tempcutoff);
+
 			}
+			System.out.println("[UV]9 got threshold: "+tempcutoff);
+
+	        //addCutOff(tempcutoff);
+			
+			if( pane_.isAutoCutoffOn() || pane_.isCutoffNeeded()){
+				//cutoff_ = meanArrayListWOzeros(cutoffArray);
+				System.out.println("[UV]10 autocutoff, keep temp cutoff");
+
+				cutoff_ = tempcutoff;
+			} else {
+				System.out.println("[UV]10 autocutoff: "+pane_.isAutoCutoffOn());
+				System.out.println("[UV]10 cutoff needed: "+ pane_.isCutoffNeeded());
+				
+				cutoff_ = pane_.getCutoff();
+				System.out.println("[UV]11 no auto, get user cutoff");
+				System.out.println("[UV]11-a user cutoff: "+cutoff_);
+				
+				
+				if(cutoff_ == 0){
+					System.out.println("[UV]12 cutoff is 0, use temp cutoff");
+
+					//cutoff_ = meanArrayListWOzeros(cutoffArray);
+					cutoff_ = tempcutoff;
+				}
+			}
+
+			ip_ = NMSuppr.run(imp3,7,cutoff_);
+			System.out.println("[UV]13 ran nms with cutoff: "+cutoff_);
+
+			//addN(NMSuppr.getN());
+			
+					
+			//return (int) Math.floor(meanArrayListWOzeros(nArray)+0.5);
+			System.out.println("[UV]14 return N");
+
+			return NMSuppr.getN();
 		}
+
 		//System.out.println("Got N");
 		return 0;
 	}
@@ -225,30 +252,40 @@ public class UVautomator extends Updater{
 		double N = (double) N_;
 		double N0 = pane_.getN();
 		double temppulse=0;
+		
+		System.out.println("[UV]17 Got N user: "+N0);
 
-		System.out.println("[UV] N requested: "+N0);
-		System.out.println("[UV] Current N: "+N);
+
+		System.out.println("[UV]18 N requested: "+N0);
+		System.out.println("[UV]19 Current N: "+N);
 
 		pulse_ = sys_.getUVPulse(); 
-		
+		System.out.println("[UV]20 got current pulse: "+pulse_);
+
 		if(pane_.isUVselected()){
 			// If the pulse is 0, need a non-null starting point
 			//if(pulse_ == 0){
 				//pulse_ = min;
 			//}
+			System.out.println("[UV]21 UV is selected");
+
 			if(prevpulse_ < min){
+				System.out.println("[UV]22 prevpulse was 0, pulse = 0.4");
+
 				pulse_ = min;			
 			} else {
-				pulse_ = prevpulse_;	// avoid getting stuck between 0 and 1 (otherwise newp=0.4+0.4*1.99*coeff < 1 unless coeff ~> 0.7 which is not good for higher values)
+				System.out.println("[UV]23 pulse = prevpulse");
+
+				pulse_ = prevpulse_;	// avoid getting stuck between 0 and 1 (otherwise newp=0.4+0.4*1.99*coeff < 1 unless coeff ~> 0.7 which is not good for higher values), but now it is not bounded t0 <1, keep or change????
 			}
+			
+			
 			// use the last value except if it is too far from the current pulse (e.g. user change)
 			//if(Math.abs(prevpulse_-pulse_)<1){
 			//	pulse_ = prevpulse_;
 			//}
 	
-			System.out.println("[UV] UV feedback: "+pane_.getFeedback());
-			System.out.println("[UV] N requested: "+N0);
-			System.out.println("[UV] Current pulse: "+pulse_);
+			System.out.println("[UV]24 UV feedback is: "+pane_.getFeedback());
 			
 			// calculate new pulse
 			if(N0 != 0){
@@ -257,15 +294,19 @@ public class UVautomator extends Updater{
 				return 0;
 			}
 	
-			System.out.println("[UV] New pulse: "+temppulse);
+			System.out.println("[UV]25 New pulse: "+temppulse);
 			
 			if(temppulse < min){
+				System.out.println("[UV]26 new pulse is too small");
+
 				temppulse = min;
 			}
 	
 			// if new pulse is higher than camera exposure
 			double exp = 1000*sys_.getExposureTime();
 			if(temppulse > exp) {
+				System.out.println("[UV]27 temp pulse is longer than exposure");
+
 				temppulse = (int) exp; 
 			}
 	
@@ -279,7 +320,10 @@ public class UVautomator extends Updater{
 			
 			//addPulse(temppulse);
 			prevpulse_ = temppulse;
+			System.out.println("[UV]28 keep temppulse");
+
 		} else {
+
 			prevpulse_ = pulse_;													/// it would maybe be better to use the isuvselected to not update at all the UV...
 		}
 		return prevpulse_;
@@ -287,6 +331,12 @@ public class UVautomator extends Updater{
 	
 	@Override
 	public void update() {
-		((Laser) device_).setPulseLength(this.getOutput(1));
+		if(sys_.isCameraAcquiring() && pane_.isUVselected()){
+			System.out.println("[UV]29 change pulse");
+			((Laser) device_).setPulseLength((int) this.getOutput(1));
+		}
+		System.out.println("[UV]30 cam acq: "+sys_.isCameraAcquiring());
+		System.out.println("[UV]31 uv selected: "+pane_.isUVselected());
+
 	}
 }

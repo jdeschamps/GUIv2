@@ -70,8 +70,7 @@ public class Laser extends Device{
 		}
 	}
 	
-	public void setPulseLength(double dd){
-		int d = (int) dd;
+	public void setPulseLength(int d){
 		if(d>=pulse_.getMinValue() && d<=pulse_.getMaxValue()){
 			setProperty(pulse_.getPropertyName(),d);
 		} else {
@@ -91,9 +90,9 @@ public class Laser extends Device{
 		return (int) getProperty(behaviour_.getPropertyName());									
 	}
 	
-	public double getPulseLength(){									
-		return getProperty(pulse_.getPropertyName());									
-	}
+	public int getPulseLength(){									
+		return (int) getProperty(pulse_.getPropertyName());									
+	} 
 	
 
 	@Override

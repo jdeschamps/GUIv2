@@ -123,22 +123,25 @@ public class UVThreader {
 			//int NMScounter = 0;
 			while(running_ && !isCancelled()){
 				if(uva_.isRunning()){
-					System.out.println("update uv");
+					System.out.println("[UV] refresh UV");
 					uva_.refresh();
+					System.out.println("[UV] UV refreshed");
 
 					resultUV[0] = 2.;
 					resultUV[1] = uva_.getOutput(0);	// N
 					resultUV[2] = uva_.getOutput(1);	// pulse
 					resultUV[3] = uva_.getOutput(2);	// cutoff
 					publish(resultUV);
+					System.out.println("[UV] published results");
 				}
 				counter++;			
 				
 				if(counter==10000){
 					counter = 0;
 				}
-				
+				System.out.println("[UV] sleep");
 				Thread.sleep((long) Math.floor(sys_.getExposureTime()));
+				System.out.println("[UV] end sleeping");
 			}
 			return 1;
 		}
@@ -149,28 +152,53 @@ public class UVThreader {
 			  for(Double[] result : chunks){
 				  //System.out.println("In evt: "+result[0]+" "+result[1]);
 				  switch(result[0].intValue()){
-				  case 2:	// UV 																					////// very unnecessary now
-					  int currpulse = (int) Double.parseDouble(uvcutoff.getText());
+				  case 2:	// UV 		////// very unnecessary now
 					  
+					  System.out.println("[UV] will update the GUI");
+						int currpulse = sys_.getUVPulse();
+						System.out.println("[UV] got current pulse");
+						
 					  // Refresh the graph
-					  uvg.addPoint(result[1].intValue());
-
+						System.out.println("[UV] will refresh graph with new point: "+result[1]);
+						System.out.println("[UV] will refresh graph with new point (int value): "+result[1].intValue());
+						uvg.addPoint(result[1]);
+						System.out.println("[UV] refresh graph with new point");
+						
 					  // Maximum of the sliders   																																/// having that every round is maybe not so great since exposure won't really change during activation
 					  int max = 1000*sys_.getExposureTime() < MConfiguration.mojomaxpulse ? (int) (1000*sys_.getExposureTime()) : MConfiguration.mojomaxpulse;
+						System.out.println("[UV] max pulse: "+max);
+
 					  if(max > 0){
+							System.out.println("[UV] set max pulse");
+
 						  uvlgs.setMaximum(max);
 						  uvjsld.setMaximum(max);
 					  } 
 					  
 					  // Update UV
-					  if(sys_.isCameraAcquiring() && frame_.isUVChecked() && result[2].intValue()!=currpulse){
-						  uvjsld.setValue(result[2].intValue());
-						  uvjtf.setText(String.valueOf(result[2].intValue()));
-						  if(result[2] != 0 && result[2]<= max){										
-							  uvlgs.setValue(result[2].intValue());
-						  } else {
+						System.out.println("[UV] update UV");
+
+					  if(sys_.isCameraAcquiring() && frame_.isUVChecked()){
+							System.out.println("[UV] camera is acquiring, UV is checked and result is different than current value");
+							System.out.println("[UV] result: "+result[2].intValue()+" and current: "+currpulse);
+
+						  int res = result[2].intValue();
+						  if(res > 0 && res<= max){			
+							  System.out.println("[UV] 0<result<=max");
+							  uvlgs.setValue(res);
+							  uvjsld.setValue(res);
+							  uvjtf.setText(String.valueOf(res));
+						  } else if(res > max){
+							  System.out.println("[UV] result>max");
+							  uvlgs.setValue(max);
+							  uvjsld.setValue(max);
+							  uvjtf.setText(String.valueOf(max));
+						  }  else if(res<0){
+							  System.out.println("[UV] 0>result");
 							  uvlgs.setValue(1);
-						  }
+							  uvjsld.setValue(0);
+							  uvjtf.setText(String.valueOf(0));
+						  } 
 					  }
 					  
 					  
@@ -180,12 +208,18 @@ public class UVThreader {
 					  
 					  // Cutoff
 					  if(frame_.isNewCutOff()){
+						  System.out.println("[UV] we asked for new cutoff");
+
 						  uvcutoff.setText(Double.toString(round(result[3],2)));
 						  frame_.setRequestOff();
+						  System.out.println("[UV] request off");
+
 					  }
 					  
 					  // Update NMS frame
 					  if(frame_.isNMSChecked()){
+						  System.out.println("[UV] NMS is checked");
+
 						  NMScounter++;
 						  if(NMScounter % 10 == 0){
 							  frame_.setNMSImageProcessor(uva_.getNMSresult());
@@ -194,6 +228,8 @@ public class UVThreader {
 							  NMScounter = 0;
 						  }
 					  }
+					  System.out.println("[UV] done");
+
 					  break;
 				  }
 			  }

@@ -265,7 +265,7 @@ public class MSystem {
 		return d;
 	}
 	
-	public double getUVPulse(){
+	public int getUVPulse(){
 		if(l405_ != null){
 			return l405_.getPulseLength();
 		}

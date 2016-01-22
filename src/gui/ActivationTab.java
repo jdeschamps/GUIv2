@@ -398,10 +398,14 @@ public class ActivationTab extends javax.swing.JPanel {
     }
     
     public boolean isNMSchecked(){
+		System.out.println("[UV]NMS --------------"+checkedNMS);
+
     	return checkedNMS;
     }
 
     public boolean isActivateOn(){
+		System.out.println("[UV]Activate on --------------"+jToggleButton_activate.isSelected());
+
     	return jToggleButton_activate.isSelected();
     }
 

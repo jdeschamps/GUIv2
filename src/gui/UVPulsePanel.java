@@ -46,6 +46,8 @@ public class UVPulsePanel extends javax.swing.JPanel {
 		logarithmicJSlider.setMinorTickSpacing(10);
 		logarithmicJSlider.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {				
+				  System.out.println("[UV] mouse was released");
+
 					int max = (int) (1000*sys_.getExposureTime());
 					if(logarithmicJSlider.getValue()<max){
 						try{
@@ -66,6 +68,8 @@ public class UVPulsePanel extends javax.swing.JPanel {
         jTextField_pulse.setText(Integer.toString((int) sys_.getUVPulse()));
         jTextField_pulse.addActionListener(new java.awt.event.ActionListener() {
 	         public void actionPerformed(java.awt.event.ActionEvent evt) {
+				  System.out.println("[UV] action was performed");
+
 	        	 int val = 0; 
 		    	 
 		    	/* try{  
@@ -109,6 +113,8 @@ public class UVPulsePanel extends javax.swing.JPanel {
 
             @Override
             public void focusLost(FocusEvent e) {
+				  System.out.println("[UV] jtextfield focus was lost");
+
             	int val=0;
             	//textselected = false;
 	        	 String s = jTextField_pulse.getText();

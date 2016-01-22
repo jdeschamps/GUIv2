@@ -137,7 +137,7 @@ public class CommonThreader {
 				switch(counter%3){
 				case 0:
 					if(pim_.isRunning()){
-						System.out.println("update pi");
+						//System.out.println("update pi");
 						resultPI[0] = (double) 0;
 						pim_.refresh();
 						resultPI[1] = pim_.getOutput(0);
@@ -148,7 +148,7 @@ public class CommonThreader {
 	
 				case 1:
 					if(qpdm_.isRunning()){
-						System.out.println("update qpd");
+						//System.out.println("update qpd");
 						qpdm_.refresh();
 						resultQPD[0] = 1.;
 						for(int i=0;i<qpdm_.getNOutput();i++){
