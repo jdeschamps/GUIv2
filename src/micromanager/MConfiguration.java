@@ -10,6 +10,7 @@ public class MConfiguration {
 	//////////////////////////////////////////////
 	//// Log 
 	public static final String logpath = "Log_GUI.txt";
+	public static final String logUVpath = "Log_UV.txt";
 	public static final boolean logenabled = true;
 	
 	//////////////////////////////////////////////
@@ -73,25 +74,36 @@ public class MConfiguration {
 	public static final String[] laserbehaviourlabel = {"Off","On","Rising","Falling","Camera"};
 	
 	//////////////////////////////////////////////
-	//// Threads
+	//// Graphs
 	public static final int maxNPI = 30;
 	public static final int[] maxNQPD = {30,30,1};
 	public static final int maxNUV = 800;
-
+	
 	//////////////////////////////////////////////
-	//// steps focus
+	//// Steps focus
 	public static double defaultSmallSteps = 0.5;
 	public static double defaultLargeSteps = 2;
 	
+
 	//////////////////////////////////////////////
-	//// 
+	//// Misc parameters
 	public double UVcoeff=0.8, SDcoeff=1.5;
+	public static int timeDistanceBckgd = 20;
+	public static int gaussianMaskSize = 3;
+	public static double gaussianMaskPrecision = 0.02;
+	public static int nmsMaskSize = 7;
+	
+	
+	
+	
+	
 	public int dT=10;
 	public int laser1BehaviourDefault = 2;	// UV0
 	public int laser2BehaviourDefault = 4;	// blue
 	public int laser3BehaviourDefault = 4;	// green
 	public int laser4BehaviourDefault = 4;	// red
 	
+	//////////////////////////////////////////////
 	String configuration="Configuration", end="end;", uvcoeff="UVcoeff", sdcoeff="SDcoeff", dt="dT";
 	String laser1b="Laser1Behaviour", laser2b="Laser2Behaviour", laser3b="Laser3Behaviour", laser4b="Laser4Behaviour";
 
@@ -137,7 +149,8 @@ public class MConfiguration {
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////// Configuration file
 	MConfiguration(){
 		importConfiguration();
 	}
