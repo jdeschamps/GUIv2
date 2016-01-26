@@ -73,6 +73,9 @@ public class MConfiguration {
 	// Laser parameters tab
 	public static final String[] laserbehaviourlabel = {"Off","On","Rising","Falling","Camera"};
 	
+	// UV pulse panel
+	public static int maxpulsedefault = 5000;
+	
 	//////////////////////////////////////////////
 	//// Graphs
 	public static final int maxNPI = 30;
@@ -92,9 +95,6 @@ public class MConfiguration {
 	public static int gaussianMaskSize = 3;
 	public static double gaussianMaskPrecision = 0.02;
 	public static int nmsMaskSize = 7;
-	
-	
-	
 	
 	
 	public int dT=10;

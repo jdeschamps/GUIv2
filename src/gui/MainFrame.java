@@ -139,6 +139,10 @@ public class MainFrame extends javax.swing.JFrame {
     	return opticsPanel.uvPulsePanel.jTextField_pulse;
     }
     
+    public int getMaxPulse(){
+    	return opticsPanel.uvPulsePanel.getMaxPulse();
+    }
+    
     public JTextField getUVCutoff(){
     	return tabs.activationPanel.jTextField_cutoff;
     }

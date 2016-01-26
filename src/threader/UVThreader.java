@@ -154,7 +154,7 @@ public class UVThreader {
 				  switch(result[0].intValue()){
 				  case 2:	// UV 		////// very unnecessary now
 					  
-					  System.out.println("[UV] will update the GUI");
+					    System.out.println("[UV] will update the GUI");
 						int currpulse = sys_.getUVPulse();
 						System.out.println("[UV] got current pulse");
 						
@@ -165,18 +165,12 @@ public class UVThreader {
 						System.out.println("[UV] refresh graph with new point");
 						
 					  // Maximum of the sliders   																																/// having that every round is maybe not so great since exposure won't really change during activation
-					  int max = 1000*sys_.getExposureTime() < MConfiguration.mojomaxpulse ? (int) (1000*sys_.getExposureTime()) : MConfiguration.mojomaxpulse;
-						System.out.println("[UV] max pulse: "+max);
-
-					  if(max > 0){
-							System.out.println("[UV] set max pulse");
-
-						  uvlgs.setMaximum(max);
-						  uvjsld.setMaximum(max);
-					  } 
+					  int max = frame_.getMaxPulse() < MConfiguration.mojomaxpulse ? frame_.getMaxPulse() : MConfiguration.mojomaxpulse;
+					  System.out.println("[UV] max pulse: "+max);
+					  uvjsld.setMaximum(max);
 					  
 					  // Update UV
-						System.out.println("[UV] update UV");
+					  System.out.println("[UV] update UV");
 
 					  if(sys_.isCameraAcquiring() && frame_.isUVChecked()){
 							System.out.println("[UV] camera is acquiring, UV is checked and result is different than current value");
@@ -200,11 +194,6 @@ public class UVThreader {
 							  uvjtf.setText(String.valueOf(0));
 						  } 
 					  }
-					  
-					  
-					  /*if(!frame_.isUVTextSelected()){
-						  uvjtf.setText(String.valueOf(result[2].intValue()));
-					  }*/		////// not sure fit that was necessary or even efficient
 					  
 					  // Cutoff
 					  if(frame_.isNewCutOff()){

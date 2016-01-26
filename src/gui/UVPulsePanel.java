@@ -38,6 +38,53 @@ public class UVPulsePanel extends javax.swing.JPanel {
         
         jTextField_pulse = new javax.swing.JTextField();
         logarithmicJSlider = new LogarithmicJSlider(JSlider.VERTICAL,1, 10000, 10);
+        jTextField_maxpulse = new javax.swing.JTextField();
+        
+		jTextField_maxpulse.setText(String.valueOf(MConfiguration.maxpulsedefault));
+		jTextField_maxpulse.addActionListener(new java.awt.event.ActionListener() {
+	         public void actionPerformed(java.awt.event.ActionEvent evt) {
+				 System.out.println("[UV] max action was performed");
+	        	 int val =getMaxPulse();
+		   
+		    	 if(val>0){
+		    		 try {
+						if(val<1000*sys_.getExposureTime()){
+							logarithmicJSlider.setMaximum(val);
+						 } else {
+				    		logarithmicJSlider.setMaximum(MConfiguration.maxpulsedefault);
+				    		jTextField_maxpulse.setText(String.valueOf(MConfiguration.maxpulsedefault));
+						}
+					} catch (Exception e) {
+						sys_.writeToLog("Exception when setting max UV pulse to "+val);
+					}
+		    	 }
+	         }
+	    });
+       jTextField_pulse.addFocusListener(new FocusListener() {
+           @Override
+           public void focusGained(FocusEvent ex) {
+           	//textselected = true;
+           }
+
+           @Override
+           public void focusLost(FocusEvent ex) {
+			System.out.println("[UV] jtextfield max focus was lost");
+			int val =getMaxPulse();		   
+		     if(val>0){
+		    	 try {
+					if(val<1000*sys_.getExposureTime()){
+						 logarithmicJSlider.setMaximum(val);
+					} else {
+		    			logarithmicJSlider.setMaximum(MConfiguration.maxpulsedefault);
+			    		jTextField_maxpulse.setText(String.valueOf(MConfiguration.maxpulsedefault));
+					}
+				} catch (Exception e) {
+					sys_.writeToLog("Exception when setting max UV pulse to "+val);
+				}
+	    	 }
+	       }
+       });
+        
         
 		logarithmicJSlider.setPaintTicks(true);
 		logarithmicJSlider.setPaintTrack(true);
@@ -48,7 +95,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
 			public void mouseReleased(MouseEvent e) {				
 				  System.out.println("[UV] mouse was released");
 
-					int max = (int) (1000*sys_.getExposureTime());
+					int max = getMaxPulse();
 					if(logarithmicJSlider.getValue()<max){
 						try{
 							jTextField_pulse.setText(String.valueOf(logarithmicJSlider.getValue()));
@@ -63,8 +110,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
 					}	    
 			}});
 		logarithmicJSlider.setValue(sys_.getUVPulse()>0 ? (int)sys_.getUVPulse() : 1);
-
-
+		
         jTextField_pulse.setText(Integer.toString((int) sys_.getUVPulse()));
         jTextField_pulse.addActionListener(new java.awt.event.ActionListener() {
 	         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,9 +134,13 @@ public class UVPulsePanel extends javax.swing.JPanel {
 		   
 		    	 if(val>0){
 		    		 try {
-						if(val<1000*sys_.getExposureTime()){
+		    			int max = getMaxPulse(); 
+						if(val<max){
 							 logarithmicJSlider.setValue(val); 
 							 sys_.setLaserPulseLength(MConfiguration.laserkeys[0], val);
+						 } else {
+							 logarithmicJSlider.setValue(max); 
+							 sys_.setLaserPulseLength(MConfiguration.laserkeys[0], max);
 						 }
 					} catch (Exception e) {
 						sys_.writeToLog("Exception when setting UV pulse to "+val);
@@ -114,32 +164,34 @@ public class UVPulsePanel extends javax.swing.JPanel {
             @Override
             public void focusLost(FocusEvent e) {
 				  System.out.println("[UV] jtextfield focus was lost");
-
-            	int val=0;
-            	//textselected = false;
-	        	 String s = jTextField_pulse.getText();
-	        	 if(!utils.isNumeric(s)){
-	        		 return;
-	        	 } else {
-	        		 val = Integer.parseInt(s);
-	        	 }
-		   
-		    	 if(val>0){
-		    		 try {
-						if(val<1000*sys_.getExposureTime()){
-							 logarithmicJSlider.setValue(val); 
-							 sys_.setLaserPulseLength(MConfiguration.laserkeys[0], val);
-						 }
-					} catch (Exception ed) {
-						sys_.writeToLog("Exception when setting UV pulse to "+val);
-					}
-		    	 }else{
-		    		try {
-		    			logarithmicJSlider.setValue(1);
-		    			sys_.setLaserPulseLength(MConfiguration.laserkeys[0], 0);
-					} catch (Exception ed) {
-						sys_.writeToLog("Exception when setting UV pulse to 0");
-					}
+		        	 int val = 0;         	 
+			       	 String s = jTextField_pulse.getText();
+			       	 if(!utils.isNumeric(s)){
+			       		 return;
+			       	 } else {
+			       		 val = Integer.parseInt(s);
+			       	 }
+				   
+				     if(val>0){
+				    	 try {
+				    		int max = getMaxPulse(); 
+							if(val<max){
+								 logarithmicJSlider.setValue(val); 
+								 sys_.setLaserPulseLength(MConfiguration.laserkeys[0], val);
+							 } else {
+								 logarithmicJSlider.setValue(max); 
+								 sys_.setLaserPulseLength(MConfiguration.laserkeys[0], max);
+							 }
+						} catch (Exception ex) {
+							sys_.writeToLog("Exception when setting UV pulse to "+val);
+						}
+				    }else{
+					    try {
+					    	logarithmicJSlider.setValue(1);
+					   		sys_.setLaserPulseLength(MConfiguration.laserkeys[0], 0);
+						} catch (Exception ex){ 
+					    		sys_.writeToLog("Exception when setting UV pulse to 0");
+						}
 		    	 }
 	         }
         });
@@ -154,16 +206,18 @@ public class UVPulsePanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(logarithmicJSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField_pulse, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField_pulse, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_maxpulse, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addComponent(jTextField_maxpulse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTextField_pulse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(logarithmicJSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logarithmicJSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         
     	
@@ -171,12 +225,23 @@ public class UVPulsePanel extends javax.swing.JPanel {
         
     }// </editor-fold>//GEN-END:initComponents
     
+    public int getMaxPulse(){
+      	 int val = 0;
+    	 String s = jTextField_pulse.getText();
+    	 if(!utils.isNumeric(s)){
+    		 return MConfiguration.maxpulsedefault;
+    	 } else {
+    		 val = Integer.parseInt(s);
+    	 } 
+    	 return val;
+    }
     
    /* public boolean isTextSelected(){
     	return textselected;
     }*/
     
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables        
+    private javax.swing.JTextField jTextField_maxpulse;
     public javax.swing.JTextField jTextField_pulse;
     public LogarithmicJSlider logarithmicJSlider;
     // End of variables declaration//GEN-END:variables
