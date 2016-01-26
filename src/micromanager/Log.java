@@ -1,6 +1,8 @@
 package micromanager;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 public class Log {
 
@@ -9,7 +11,7 @@ public class Log {
 	
 	
 	String path;
-	txtWriter w;
+	PrintWriter w;
 	boolean enabled = true;
 	 
 	public Log(){
@@ -17,7 +19,12 @@ public class Log {
 		enabled = MConfiguration.logenabled;
 		
 		if(enabled){
-			w = new txtWriter(new File(path));
+			try {
+				w = new PrintWriter(new File(path));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -25,13 +32,18 @@ public class Log {
 		path = s;
 		enabled = MConfiguration.logenabled;
 		if(enabled){
-			w = new txtWriter(new File(path));
+			try {
+				w = new PrintWriter(new File(path));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	public void writeToLog(String s){
 		if(enabled){
-			w.process(new java.util.Date()+" "+s+"\r\n");
+			w.println(new java.util.Date()+" [GUI] "+s+"\r\n");
 		}
 	}
 	

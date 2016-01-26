@@ -102,7 +102,7 @@ public class UVautomator extends Updater{
 				tagged1 = core_.getLastTaggedImage();
 				tagged2 = core_.getNBeforeLastTaggedImage(MConfiguration.timeDistanceBckgd);
 			} catch (Exception e) {
-				log_.writeToLog("Couldn't get tagged images");
+				log_.writeToLog("---[UV]--- Couldn't get tagged images");
 			}		
 
 			ip = new ShortProcessor(width, height);
@@ -124,6 +124,7 @@ public class UVautomator extends Updater{
 				tempcutoff = imp3.getStatistics().mean+pane_.getThreshold()*imp3.getStatistics().stdDev;
 			} catch(Exception e){
 				tempcutoff = cutoff_;
+				writer.println("---[UV]--- problem when calculating tempcutoff");
 			}
 			
 			if( pane_.isAutoCutoffOn() || pane_.isCutoffNeeded()){
@@ -206,7 +207,7 @@ public class UVautomator extends Updater{
 			try{
 				((Laser) device_).setPulseLength((int) this.getOutput(1));
 			} catch (Exception e){
-				// write exception
+				writer.println("---[UV]--- couldn't set laser pulse");
 			}
 		}
 	}
