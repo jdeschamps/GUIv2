@@ -366,7 +366,8 @@ public class ActivationTab extends javax.swing.JPanel {
     
     private void jButton_GetNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GetNActionPerformed
     	//System.out.println(df.format(gr.getLastPoint()));
-    	jTextField_N.setText(String.valueOf(df.format(gr.getLastPoint())));
+    	N0_ = (int) gr.getLastPoint();
+    	jTextField_N.setText(String.valueOf(df.format(N0_))); 	
     }
 
     private void jButton_getcutoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_getcutoffActionPerformed
