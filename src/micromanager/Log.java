@@ -4,6 +4,10 @@ import java.io.File;
 
 public class Log {
 
+	///////////////////////////////////////////////////////////////////////
+	/// rewrite so that it appends (like UVautomator) text and can be seen live, so far it shows nothing
+	
+	
 	String path;
 	txtWriter w;
 	boolean enabled = true;

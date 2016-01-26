@@ -11,7 +11,7 @@ public class MConfiguration {
 	//// Log 
 	public static final String logpath = "Log_GUI.txt";
 	public static final String logUVpath = "Log_UV.txt";
-	public static final boolean logenabled = true;
+	public static final boolean logenabled = false;
 	
 	//////////////////////////////////////////////
 	//// Devices 
