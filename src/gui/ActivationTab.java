@@ -57,9 +57,10 @@ public class ActivationTab extends javax.swing.JPanel {
 		df.setDecimalSeparatorAlwaysShown(false);
     	
 		parent_ = parent;
-		uv_ = parent_.getnewUVThreader();
 		
         initComponents();
+
+		uv_ = parent_.getnewUVThreader();
     }
 
     /**

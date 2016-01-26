@@ -28,7 +28,7 @@ public class SettingTabs extends javax.swing.JPanel {
     	sys_ = sys;
     	th_ = th;
     	config_ = config;
-    	parent = parent_;
+    	parent_ = parent;
         initComponents();
     }
 

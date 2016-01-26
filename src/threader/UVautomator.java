@@ -165,7 +165,7 @@ public class UVautomator extends Updater{
 		if(pane_.isUVselected()){			
 			if(prevpulse_ < min){
 				pulse_ = min;			
-			} else if(pulse_<2){
+			} else {
 				pulse_ = prevpulse_;	// avoid getting stuck between 0 and 1 (otherwise newp=0.4+0.4*1.99*coeff < 1 unless coeff ~> 0.7 which is not good for higher values), but now it is not bounded t0 <1, keep or change????
 			}
 			writer.println("[UV] used pulse: "+pulse_);
