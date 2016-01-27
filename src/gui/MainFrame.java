@@ -93,7 +93,9 @@ public class MainFrame extends javax.swing.JFrame {
     	    	System.out.println("Shutting down");
     	    	sys_.shutDown();
     	    	th_.stop();
-    	    	uv_.stop();
+    	    	if(tabs.activationPanel.activate){
+    	    		uv_.stop();
+    	    	}
     	    	log_.closeLog();
     	    	dispose();
     	    }
@@ -106,14 +108,6 @@ public class MainFrame extends javax.swing.JFrame {
     	return focusPanel.gr;
     }
     
-   /* public TimeChart getQPDGraph1(){
-    	return tabs.qPDPanel.gr1;
-    }    
-    
-    public TimeChart getQPDGraph2(){
-    	return tabs.qPDPanel.gr2;
-    }*/
-
     public UVThreader getnewUVThreader(){
     	uv_ = new UVThreader(sys_, log_, this);
     	return uv_;
