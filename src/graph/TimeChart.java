@@ -23,6 +23,7 @@ public class TimeChart {
 	String name_, nameX_, nameY_;
 	int width_, height_, maxN_, minY_=0, maxY_=100;
     private XYSeries series, buffer;
+    private double zero_ = 0;
     ChartPanel cp;
     int	time_counter = 0;
     boolean ranged_ = false;
@@ -53,7 +54,7 @@ public class TimeChart {
 		height_ = height;
 		maxN_ = maxN;
 		
-		zeroincluded_ = zeroincluded;
+		zeroincluded_ = zeroincluded; // autorange always include zero or not
 
 		ranged_ = false;
 		
@@ -116,7 +117,7 @@ public class TimeChart {
 	}
 	
 	public void addPoint(double point){
-		point = Math.floor(point * 100) / 100;
+		point = (Math.floor(point * 100) / 100)-zero_;
 		int n = series.getItemCount();
 		time_counter ++;
 		if(n>=maxN_){
@@ -140,5 +141,12 @@ public class TimeChart {
 	public double getLastPoint(){
 		return lastpoint_;
 	}
+
+	public void setZero(double z){
+		zero_ = z;
+	}
 	
+	public double getZero(){
+		return zero_;
+	}
 }
