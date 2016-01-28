@@ -146,83 +146,77 @@ public class UVThreader {
 			return 1;
 		}
 		
-		  @Override
-		  protected void process(List<Double[]> chunks) {
-			  //System.out.println("Chunk size: "+chunks.size());
-			  for(Double[] result : chunks){
-				  //System.out.println("In evt: "+result[0]+" "+result[1]);
-				  switch(result[0].intValue()){
-				  case 2:	// UV 		////// very unnecessary now
-					  
-					    System.out.println("[UV] will update the GUI");
-						int currpulse = sys_.getUVPulse();
-						System.out.println("[UV] got current pulse");
+		@Override
+		protected void process(List<Double[]> chunks) {
+			//System.out.println("Chunk size: "+chunks.size());
+			for(Double[] result : chunks){
+				//System.out.println("In evt: "+result[0]+" "+result[1]);
+				switch(result[0].intValue()){
+				case 2:	// UV 															////// very unnecessary now
+					System.out.println("[UV] will update the GUI");
+					int currpulse = sys_.getUVPulse();
+					System.out.println("[UV] got current pulse");
 						
-					  // Refresh the graph
-						System.out.println("[UV] will refresh graph with new point: "+result[1]);
-						System.out.println("[UV] will refresh graph with new point (int value): "+result[1].intValue());
-						uvg.addPoint(result[1]);
-						System.out.println("[UV] refresh graph with new point");
+					// Refresh the graph
+					System.out.println("[UV] will refresh graph with new point: "+result[1]);
+					System.out.println("[UV] will refresh graph with new point (int value): "+result[1].intValue());
+					uvg.addPoint(result[1]);
+					System.out.println("[UV] refresh graph with new point");
+					
+					// Maximum of the sliders   																										/// having that every round is maybe not so great since exposure won't really change during activation
+					int max = (int) (1000*sys_.getExposureTime());
+					System.out.println("[UV] max pulse: "+max);
+					uvjsld.setMaximum(max);
+					uvlgs.setMaximum(max);
+					  
+					// Update UV
+					System.out.println("[UV] update UV");
+
+					if(sys_.isCameraAcquiring() && frame_.isUVChecked()){
+						System.out.println("[UV] camera is acquiring, UV is checked and result is different than current value");
+						System.out.println("[UV] result: "+result[2].intValue()+" and current: "+currpulse);
+
+						int res = result[2].intValue();
+						if(res > 0){			
+							System.out.println("[UV] 0<result");
+							uvlgs.setValueWithin(res);
+							uvjsld.setValue(uvlgs.getValue());
+							uvjtf.setText(String.valueOf(uvlgs.getValue()));
+						}  else{
+							System.out.println("[UV] 0>result");
+							uvlgs.setValueWithin(1);
+							uvjsld.setValue(0);
+							uvjtf.setText(String.valueOf(0));
+						} 
+					}
+					  
+					// Cutoff
+					if(frame_.isNewCutOff()){
+						System.out.println("[UV] we asked for new cutoff");
 						
-					  // Maximum of the sliders   																																/// having that every round is maybe not so great since exposure won't really change during activation
-					  int max = frame_.getMaxPulse() < MConfiguration.mojomaxpulse ? frame_.getMaxPulse() : MConfiguration.mojomaxpulse;
-					  System.out.println("[UV] max pulse: "+max);
-					  uvjsld.setMaximum(max);
+						uvcutoff.setText(Double.toString(round(result[3],2)));
+						frame_.setRequestOff();
+						System.out.println("[UV] request off");
+					}
 					  
-					  // Update UV
-					  System.out.println("[UV] update UV");
+					// Update NMS frame
+					if(frame_.isNMSChecked()){
+						System.out.println("[UV] NMS is checked");
 
-					  if(sys_.isCameraAcquiring() && frame_.isUVChecked()){
-							System.out.println("[UV] camera is acquiring, UV is checked and result is different than current value");
-							System.out.println("[UV] result: "+result[2].intValue()+" and current: "+currpulse);
+						NMScounter++;
+						if(NMScounter % 10 == 0){
+							frame_.setNMSImageProcessor(uva_.getNMSresult());
+						}
+						if(NMScounter == Integer.MAX_VALUE){
+							NMScounter = 0;
+						}
+					}
+					System.out.println("[UV] done");
 
-						  int res = result[2].intValue();
-						  if(res > 0 && res<= max){			
-							  System.out.println("[UV] 0<result<=max");
-							  uvlgs.setValue(res);
-							  uvjsld.setValue(res);
-							  uvjtf.setText(String.valueOf(res));
-						  } else if(res > max){
-							  System.out.println("[UV] result>max");
-							  uvlgs.setValue(max);
-							  uvjsld.setValue(max);
-							  uvjtf.setText(String.valueOf(max));
-						  }  else if(res<0){
-							  System.out.println("[UV] 0>result");
-							  uvlgs.setValue(1);
-							  uvjsld.setValue(0);
-							  uvjtf.setText(String.valueOf(0));
-						  } 
-					  }
-					  
-					  // Cutoff
-					  if(frame_.isNewCutOff()){
-						  System.out.println("[UV] we asked for new cutoff");
-
-						  uvcutoff.setText(Double.toString(round(result[3],2)));
-						  frame_.setRequestOff();
-						  System.out.println("[UV] request off");
-
-					  }
-					  
-					  // Update NMS frame
-					  if(frame_.isNMSChecked()){
-						  System.out.println("[UV] NMS is checked");
-
-						  NMScounter++;
-						  if(NMScounter % 10 == 0){
-							  frame_.setNMSImageProcessor(uva_.getNMSresult());
-						  }
-						  if(NMScounter == Integer.MAX_VALUE){
-							  NMScounter = 0;
-						  }
-					  }
-					  System.out.println("[UV] done");
-
-					  break;
-				  }
-			  }
-		  }
+					break;
+				}
+			}
+		}
 	}
 	
 	public double round(double value, int places) {

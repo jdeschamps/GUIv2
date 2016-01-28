@@ -58,10 +58,10 @@ public class UVPulsePanel extends javax.swing.JPanel {
 		    	 if(maxpulse>0){
 		    		 try {
 						if(maxpulse<1000*sys_.getExposureTime()){
-							logarithmicJSlider.setMaximum(maxpulse);
+							logarithmicJSlider.setMaxWithin(maxpulse);
 						 } else {
 							maxpulse = (int) (1000*sys_.getExposureTime());
-				    		logarithmicJSlider.setMaximum((int) (1000*sys_.getExposureTime()));
+				    		logarithmicJSlider.setMaxWithin((int) (1000*sys_.getExposureTime()));
 				    		jTextField_maxpulse.setText(String.valueOf((int) 1000*sys_.getExposureTime()));
 						}
 					} catch (Exception e) {
@@ -85,16 +85,16 @@ public class UVPulsePanel extends javax.swing.JPanel {
 		    		 maxpulse = MConfiguration.maxpulsedefault;
 		    		 jTextField_maxpulse.setText(String.valueOf(MConfiguration.maxpulsedefault));
 		    	 } else {
-		    		 maxpulse = Integer.parseInt(s);
+		    		 maxpulse = (int) Math.round(Double.parseDouble(s));
 		    	 } 
 		    	 
 		    	 if(maxpulse>0){
 		    		 try {
 						if(maxpulse<1000*sys_.getExposureTime()){
-							logarithmicJSlider.setMaximum(maxpulse);
+							logarithmicJSlider.setMaxWithin(maxpulse);
 						 } else {
 							maxpulse = (int) (1000*sys_.getExposureTime());
-				    		logarithmicJSlider.setMaximum((int) (1000*sys_.getExposureTime()));
+				    		logarithmicJSlider.setMaxWithin((int) (1000*sys_.getExposureTime()));
 				    		jTextField_maxpulse.setText(String.valueOf(1000*sys_.getExposureTime()));
 						}
 					} catch (Exception e) {
@@ -113,6 +113,9 @@ public class UVPulsePanel extends javax.swing.JPanel {
 		logarithmicJSlider.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {				
 				  System.out.println("[UV] mouse was released");
+				  int val = logarithmicJSlider.getValue();
+				  logarithmicJSlider.setValueWithin(val);
+				  
 				  try{
 					  jTextField_pulse.setText(String.valueOf(logarithmicJSlider.getValue()));
 					  sys_.setLaserPulseLength(MConfiguration.laserkeys[0], logarithmicJSlider.getValue());
@@ -121,6 +124,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
 				  }  
 			}});
 		logarithmicJSlider.setValue(sys_.getUVPulse()>0 ? (int)sys_.getUVPulse() : 1);
+		logarithmicJSlider.setMaximum((int) (1000*sys_.getExposureTime()));
 		
         jTextField_pulse.setText(Integer.toString((int) sys_.getUVPulse()));
         jTextField_pulse.addActionListener(new java.awt.event.ActionListener() {
@@ -136,19 +140,14 @@ public class UVPulsePanel extends javax.swing.JPanel {
 		   
 		    	 if(val>0){
 		    		 try {
-						if(val<maxpulse){
-							 logarithmicJSlider.setValue(val); 
-							 sys_.setLaserPulseLength(MConfiguration.laserkeys[0], val);
-						 } else {
-							 logarithmicJSlider.setValue(maxpulse); 
-							 sys_.setLaserPulseLength(MConfiguration.laserkeys[0], maxpulse);
-						 }
+		    			 logarithmicJSlider.setValueWithin(val); 
+		    			 sys_.setLaserPulseLength(MConfiguration.laserkeys[0], logarithmicJSlider.getValue());
 					} catch (Exception e) {
 						sys_.writeToLog("Exception when setting UV pulse to "+val);
 					}
 		    	 }else{
 		    		try {
-		    			logarithmicJSlider.setValue(1);
+		    			logarithmicJSlider.setValueWithin(1);
 		    			sys_.setLaserPulseLength(MConfiguration.laserkeys[0], 0);
 					} catch (Exception e) {
 						sys_.writeToLog("Exception when setting UV pulse to 0");
@@ -163,7 +162,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
             }
 
             @Override
-            public void focusLost(FocusEvent e) {
+            public void focusLost(FocusEvent ex) {
 				 System.out.println("[UV] action was performed");
 	        	 int val = 0; 
 	        	 String s = jTextField_pulse.getText();
@@ -175,21 +174,16 @@ public class UVPulsePanel extends javax.swing.JPanel {
 		   
 		    	 if(val>0){
 		    		 try {
-						if(val<maxpulse){
-							 logarithmicJSlider.setValue(val); 
-							 sys_.setLaserPulseLength(MConfiguration.laserkeys[0], val);
-						 } else {
-							 logarithmicJSlider.setValue(maxpulse); 
-							 sys_.setLaserPulseLength(MConfiguration.laserkeys[0], maxpulse);
-						 }
-					} catch (Exception ex) {
+		    			 logarithmicJSlider.setValueWithin(val); 
+		    			 sys_.setLaserPulseLength(MConfiguration.laserkeys[0], logarithmicJSlider.getValue());
+					} catch (Exception e) {
 						sys_.writeToLog("Exception when setting UV pulse to "+val);
 					}
 		    	 }else{
 		    		try {
-		    			logarithmicJSlider.setValue(1);
+		    			logarithmicJSlider.setValueWithin(1);
 		    			sys_.setLaserPulseLength(MConfiguration.laserkeys[0], 0);
-					} catch (Exception ex) {
+					} catch (Exception e) {
 						sys_.writeToLog("Exception when setting UV pulse to 0");
 					}
 		    	 }

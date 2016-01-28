@@ -102,7 +102,7 @@ public class FocusPanel extends javax.swing.JPanel {
 
 
 
-        //////////////////////////////////////////////////////////////////////////////////////////////// Monitr
+        //////////////////////////////////////////////////////////////////////////////////////////////// Monitor
         //////////////////////////
         jToggleButton_monitorZ.setText("Monitor");
         jToggleButton_monitorZ.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -136,7 +136,7 @@ public class FocusPanel extends javax.swing.JPanel {
 /*
         javax.swing.GroupLayout jPanel_controlsLayout = new javax.swing.GroupLayout(jPanel_controls);
         jPanel_controls.setLayout(jPanel_controlsLayout);
-        jPanel_controlsLayout.setHorizontalGroup(
+        jPanel_controlsLayout.setHorizontalGroup( 
             jPanel_controlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_controlsLayout.createSequentialGroup()
                 .addContainerGap()

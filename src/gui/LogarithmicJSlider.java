@@ -17,6 +17,8 @@ import javax.swing.plaf.SliderUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicSliderUI;
 
+import micromanager.MConfiguration;
+
 /*
  * Edited by Raja.
  * LogarithmicJSlider.java is edited as JSlider API for vertical slider with Logarithmic features
@@ -28,6 +30,7 @@ public class LogarithmicJSlider extends JSlider {
 	 * 
 	 */
 	private static final long serialVersionUID = -1252749148757719750L;
+	private int maxwithin=MConfiguration.maxpulsedefault;
 
 	public LogarithmicJSlider(int orientation) {
         super(orientation);
@@ -64,7 +67,22 @@ public class LogarithmicJSlider extends JSlider {
         this.setUI(ui);
     }
 
-
+    public void setMaxWithin(int max){
+    	maxwithin = max;
+    }
+    
+    public int getMaxWithin(){
+    	return maxwithin;
+    }
+    
+    public void setValueWithin(int val){
+    	if(val<=maxwithin){
+    		this.setValue(val);
+    	} else {
+    		this.setValue(maxwithin);
+    	}
+    }
+    
 	public static class LogSliderUI extends BasicSliderUI {
 
         public LogSliderUI(JSlider b) {
@@ -100,7 +118,7 @@ public class LogarithmicJSlider extends JSlider {
 
 
         }
-
+        
         protected int yPositionForValue(int value){  
         	return yPositionForValue(value, trackRect.y, trackRect.height);
         }
@@ -131,7 +149,7 @@ public class LogarithmicJSlider extends JSlider {
             
         }
 
-        public int valueForYPosition(int yPos) {//Implement by raja to support vertical log sliders
+        public int valueForYPosition(int yPos) {//Implement by raja to support vertical log sliders 
             
             //return super.valueForYPosition(yPos);
             int value;
@@ -199,7 +217,6 @@ public class LogarithmicJSlider extends JSlider {
             return value;
             
         }
-        
 
         protected void scrollDueToClickInTrack(int direction) {
         	///// modify here for what happened when click, example:
