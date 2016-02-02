@@ -46,7 +46,7 @@ public class FocusPanel extends javax.swing.JPanel {
         jToggleButton_lockz = new javax.swing.JToggleButton();
         jToggleButton_monitorZ = new javax.swing.JToggleButton();
         jLabel_position = new javax.swing.JLabel();
-        jToggleButton_set0 = new javax.swing.JToggleButton();
+        jButton_set0 = new javax.swing.JButton();
         jTextField_0position = new javax.swing.JTextField();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Focus"));
@@ -121,9 +121,9 @@ public class FocusPanel extends javax.swing.JPanel {
 
         //////////////////////////////////////////////////////////////////////////////////////////////// 0 position
         //////////////////////////
-        jToggleButton_set0.setText("Set 0");
-        jToggleButton_set0.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_set0.addActionListener(new java.awt.event.ActionListener() {
+        jButton_set0.setText("Set 0");
+        jButton_set0.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jButton_set0.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	double val = sys_.getPIPosition();
             	gr.setZero(val);
@@ -179,7 +179,7 @@ public class FocusPanel extends javax.swing.JPanel {
                     .addGroup(jPanel_controlsLayout.createSequentialGroup()
                         .addGroup(jPanel_controlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jTextField_0position, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jToggleButton_set0, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
+                            .addComponent(jButton_set0, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
                         .addGap(0, 29, Short.MAX_VALUE))))
         );
         jPanel_controlsLayout.setVerticalGroup(
@@ -190,7 +190,7 @@ public class FocusPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_position, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jToggleButton_set0)
+                .addComponent(jButton_set0)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_0position, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -213,6 +213,6 @@ public class FocusPanel extends javax.swing.JPanel {
     private javax.swing.JToggleButton jToggleButton_lockz;
     private javax.swing.JToggleButton jToggleButton_monitorZ;
     private javax.swing.JTextField jTextField_0position;
-    private javax.swing.JToggleButton jToggleButton_set0;
+    private javax.swing.JButton jButton_set0;
     // End of variables declaration//GEN-END:variables
 }

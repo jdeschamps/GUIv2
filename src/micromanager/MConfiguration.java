@@ -95,6 +95,7 @@ public class MConfiguration {
 	public static int gaussianMaskSize = 3;
 	public static double gaussianMaskPrecision = 0.02;
 	public static int nmsMaskSize = 7;
+	public static double mindiffstagemoved = 2; //(um)
 	
 	
 	public int dT=10;
