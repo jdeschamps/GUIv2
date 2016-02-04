@@ -17,6 +17,9 @@ import java.awt.event.KeyEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 
+import configuration.DefaultIdentifiers;
+import view.ListenerFactory;
+import view.ListenerFactory.IntTextFieldListener;
 import micromanager.utils;
 import device.MSystem;
 
@@ -33,12 +36,12 @@ public class SingleLaserControl extends javax.swing.JPanel {
 	/**
 	 * 
 	 */
-	String label_;
-	Color color_;
-	MSystem sys_;
+	private String label_;
+	private Color color_;
+	private ListenerFactory factory_;
 	
-    public SingleLaserControl(MSystem sys, String label, Color color) {
-    	sys_ = sys;
+    public SingleLaserControl(ListenerFactory factory, String label, Color color) {
+    	factory_ = factory;
     	color_ = color;
     	label_ = label;
     	
@@ -49,7 +52,7 @@ public class SingleLaserControl extends javax.swing.JPanel {
 
         jToggleButton_laserOperation = new javax.swing.JToggleButton();
         jTextField_userInput = new javax.swing.JTextField();
-        jToggleButton_userperc = new javax.swing.JToggleButton();
+        jToggleButton_userperc = new CustomValueToggle(50);
         jToggleButton_100perc = new javax.swing.JToggleButton();
         jToggleButton_20perc = new javax.swing.JToggleButton();
         jToggleButton_1perc = new javax.swing.JToggleButton();
@@ -64,127 +67,35 @@ public class SingleLaserControl extends javax.swing.JPanel {
         jToggleButton_laserOperation.setSelectedIcon(new ImageIcon("on.png"));
         jToggleButton_laserOperation.setDisabledIcon(new ImageIcon("off.png"));
         
-        jToggleButton_laserOperation.addItemListener(new ItemListener(){
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange()==ItemEvent.SELECTED){
-					sys_.setLaserOperation(label_, 1);
-				} else if(e.getStateChange()==ItemEvent.DESELECTED){
-					sys_.setLaserOperation(label_, 0);
-				}
-			}
-        });
-        if(sys_.getLaserOperation(label_)==1){
-        	jToggleButton_laserOperation.setSelected(true);
-        } else {
-        	jToggleButton_laserOperation.setSelected(false);
-        }
+        jToggleButton_laserOperation.addItemListener(factory_.createJToggleButtonListener(label_, DefaultIdentifiers.id_laser_operation));
         
         jTextField_userInput.setText("50");
-        /*jTextField_userInput.addKeyListener(new KeyAdapter(){        	
-        	@Override
-        	public void keyReleased(KeyEvent ke) {
-        	    String typed = jTextField_userInput.getText();
-        	    if(!utils.isNumeric(typed)) {
-        	        return;
-        	    }  
-        	    int val = Integer.parseInt(typed);
-        	    if(val<=100){
-	        	    jToggleButton_userperc.setText(typed+"%");
-	        	    if(jToggleButton_userperc.isSelected()){
-	        	    	sys_.setLaserPowerPerc(label_, val);
-	        	    }
-        	    }
-        	}
-        	}); */
-        jTextField_userInput.addFocusListener(new FocusListener() {
-			@Override
-			public void focusGained(FocusEvent arg0) {}
-			@Override
-			public void focusLost(FocusEvent arg0) {
-	       	    String typed = jTextField_userInput.getText();
-        	    if(!utils.isNumeric(typed)) {
-        	        return;
-        	    }  
-        	    int val = Integer.parseInt(typed);
-        	    if(val<=100){
-	        	    jToggleButton_userperc.setText(typed+"%");
-	        	    if(jToggleButton_userperc.isSelected()){
-	        	    	sys_.setLaserPowerPerc(label_, val);
-	        	    }
-        	    }
-        	}
-         });
-        jTextField_userInput.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-	       	    String typed = jTextField_userInput.getText();
-        	    if(!utils.isNumeric(typed)) {
-        	        return;
-        	    }  
-        	    int val = Integer.parseInt(typed);
-        	    if(val<=100){
-	        	    jToggleButton_userperc.setText(typed+"%");
-	        	    if(jToggleButton_userperc.isSelected()){
-	        	    	sys_.setLaserPowerPerc(label_, val);
-	        	    }
-        	    }
-        	}
-        });
         
-        jToggleButton_userperc.setText("50%");
+		IntTextFieldListener listener_powerperc = factory_.createIntTextFieldListener(label_, DefaultIdentifiers.id_laser_userpowerperc, jTextField_userInput);
+        jTextField_userInput.addFocusListener(listener_powerperc);
+        jTextField_userInput.addActionListener(listener_powerperc);
+        
         jToggleButton_userperc.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_userperc.addItemListener(new ItemListener(){
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange()==ItemEvent.SELECTED){
-        	    	sys_.setLaserPowerPerc(label_, Integer.parseInt(jTextField_userInput.getText()));
-				}
-			}
-        });
+        jToggleButton_userperc.addActionListener(factory_.createCustomToggleButtonListener(label_, DefaultIdentifiers.id_laser_powerperc,jToggleButton_userperc));
 
         jToggleButton_100perc.setText("100%");
         jToggleButton_100perc.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_100perc.addItemListener(new ItemListener(){
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange()==ItemEvent.SELECTED){
-    				sys_.setLaserPowerPerc(label_,100);
-    			}
-			}
-        });
+        jToggleButton_100perc.addItemListener(factory_.createJToggleButtonValueListener(label_, DefaultIdentifiers.id_laser_powerperc,100));
 
         jToggleButton_20perc.setText("20%");
         jToggleButton_20perc.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_20perc.addItemListener(new ItemListener(){
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange()==ItemEvent.SELECTED){
-    				sys_.setLaserPowerPerc(label_,20);
-    			}
-			}
-        });
+        jToggleButton_20perc.addItemListener(factory_.createJToggleButtonValueListener(label_, DefaultIdentifiers.id_laser_powerperc,20));
 
         jToggleButton_1perc.setText("1%");
         jToggleButton_1perc.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_1perc.addItemListener(new ItemListener(){
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange()==ItemEvent.SELECTED){
-    				sys_.setLaserPowerPerc(label_,1);
-    			}
-			}
-        });
+        jToggleButton_1perc.addItemListener(factory_.createJToggleButtonValueListener(label_, DefaultIdentifiers.id_laser_powerperc,1));
 
-        ButtonGroup group=new ButtonGroup();
+        group = new ButtonGroup();
         group.add(jToggleButton_userperc);
         group.add(jToggleButton_100perc);
         group.add(jToggleButton_20perc);
         group.add(jToggleButton_1perc);
-        
-        jToggleButton_100perc.setSelected(true);
-        sys_.setLaserPowerPerc(label_, 100);
-        
+                    
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -225,6 +136,7 @@ public class SingleLaserControl extends javax.swing.JPanel {
     private javax.swing.JToggleButton jToggleButton_1perc;
     private javax.swing.JToggleButton jToggleButton_20perc;
     private javax.swing.JToggleButton jToggleButton_laserOperation;
-    private javax.swing.JToggleButton jToggleButton_userperc;
+    private CustomValueToggle jToggleButton_userperc;
+    private javax.swing.ButtonGroup group;
     // End of variables declaration//GEN-END:variables
 }

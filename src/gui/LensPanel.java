@@ -6,13 +6,16 @@ package gui;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import micromanager.MConfiguration;
+
+import view.ListenerFactory;
+import configuration.DefaultIdentifiers;
+import configuration.MConfiguration;
 import device.MSystem;
 
 
 /**
  *
- * @author Ries
+ * @author Deschamps
  */
 public class LensPanel extends javax.swing.JPanel {
 
@@ -20,12 +23,13 @@ public class LensPanel extends javax.swing.JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	MSystem sys_;
-	String bpflabel_ = MConfiguration.servokeys[1];
-	String astiglabel_ = MConfiguration.servokeys[2];
+	private ListenerFactory factory_;																			///////// keep???
+	private MConfiguration config_;
 	
-	public LensPanel(MSystem sys) {
-    	sys_ = sys;
+	public LensPanel(ListenerFactory factory, MConfiguration config) {
+		factory_ = factory;
+		config_ = config;
+		
         initComponents();
     }
 
@@ -36,39 +40,13 @@ public class LensPanel extends javax.swing.JPanel {
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Control"));
 
-        jToggleButton_bfp.setText(bpflabel_);
+        jToggleButton_bfp.setText(config_.getLensLabel(DefaultIdentifiers.id_bfp));
         jToggleButton_bfp.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_bfp.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent e){
-				if(e.getStateChange()==ItemEvent.SELECTED){
-					sys_.setServoState(bpflabel_, MConfiguration.bfpPosition);						//// maybe here have a different tab for this
-				}else if(e.getStateChange()==ItemEvent.DESELECTED){
-					sys_.setServoState(bpflabel_, 0);
-				}
-            }
-        });
-        if(sys_.getServoState(bpflabel_)==1){
-        	jToggleButton_bfp.setSelected(true);
-        } else {
-        	jToggleButton_bfp.setSelected(false);
-        }
+        jToggleButton_bfp.addItemListener(factory_.createJToggleButtonListener(DefaultIdentifiers.id_bfp, DefaultIdentifiers.id_lens_position));
         
-        jToggleButton_3DA.setText(astiglabel_);
+        jToggleButton_3DA.setText(config_.getLensLabel(DefaultIdentifiers.id_3da));
         jToggleButton_3DA.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_3DA.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent e){
-				if(e.getStateChange()==ItemEvent.SELECTED){
-					sys_.setServoState(astiglabel_, 1);		
-				}else if(e.getStateChange()==ItemEvent.DESELECTED){
-					sys_.setServoState(astiglabel_, 0);		
-				}
-            }
-        });
-        if(sys_.getServoState(astiglabel_)==1){
-        	jToggleButton_3DA.setSelected(true);
-        } else {
-        	jToggleButton_3DA.setSelected(false);
-        }
+        jToggleButton_3DA.addItemListener(factory_.createJToggleButtonListener(DefaultIdentifiers.id_3da, DefaultIdentifiers.id_lens_position));
         
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

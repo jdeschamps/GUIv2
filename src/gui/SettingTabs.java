@@ -4,9 +4,11 @@
  */
 package gui;
 
-import micromanager.MConfiguration;
+import configuration.DefaultIdentifiers;
+import configuration.MConfiguration;
 import threader.CommonThreader;
 import threader.UVThreader;
+import view.ListenerFactory;
 import device.MSystem;
 
 /**
@@ -19,34 +21,31 @@ public class SettingTabs extends javax.swing.JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 744836798730047169L;
-	MSystem sys_;
-	CommonThreader th_;
-	MConfiguration config_;
-	MainFrame parent_;
+	private ListenerFactory factory_;
+	private MConfiguration config_;
 	
-    public SettingTabs(MSystem sys, CommonThreader th, MainFrame parent, MConfiguration config) {
-    	sys_ = sys;
-    	th_ = th;
+    public SettingTabs(ListenerFactory factory, MConfiguration config) {
+    	factory_ = factory;
     	config_ = config;
-    	parent_ = parent;
+    	
         initComponents();
     }
 
     private void initComponents() {
 
         jTabbedPane_QPD = new javax.swing.JTabbedPane();
-        qPDPanel = new QPDTab(sys_,th_);
-        activationPanel = new ActivationTab(sys_,config_, parent_);
-        laserParamTab = new LaserTab(sys_, config_);
-        controlPanel = new LensPanel(sys_);
+        qPDPanel = new QPDTab(factory_,config_);
+        activationPanel = new ActivationTab(factory_,config_);
+        laserParamTab = new LaserTab(factory_,config_);
+        controlPanel = new LensPanel(factory_,config_);
 
         setMaximumSize(new java.awt.Dimension(462, 240));
         setMinimumSize(new java.awt.Dimension(440, 240));
         setPreferredSize(new java.awt.Dimension(462, 240));
 
-        jTabbedPane_QPD.addTab("QPD", qPDPanel);
-        jTabbedPane_QPD.addTab("Activation", activationPanel);
-        jTabbedPane_QPD.addTab("Lasers", laserParamTab);
+        jTabbedPane_QPD.addTab(DefaultIdentifiers.id_tab_qpd, qPDPanel);
+        jTabbedPane_QPD.addTab(DefaultIdentifiers.id_tab_activation, activationPanel);
+        jTabbedPane_QPD.addTab(DefaultIdentifiers.id_tab_laser, laserParamTab);
 
         controlPanel.setBorder(null);
 

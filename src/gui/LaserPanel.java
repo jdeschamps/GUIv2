@@ -4,8 +4,9 @@
  */
 package gui;
 
+import configuration.MConfiguration;
+import view.ListenerFactory;
 import device.MSystem;
-import micromanager.MConfiguration;
 
 /**
  *
@@ -17,18 +18,21 @@ public class LaserPanel extends javax.swing.JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -994102071852952181L;
-	MSystem sys_;
+	private ListenerFactory factory_;
+	private MConfiguration config_;
 
-    public LaserPanel(MSystem sys) {
-    	sys_ = sys;
+    public LaserPanel(ListenerFactory factory, MConfiguration config) {
+    	factory_ = factory;
+    	config_ = config;
+    	
         initComponents();
     }
     
     private void initComponents() {
-        laserControl1 = new SingleLaserControl(sys_,MConfiguration.laserkeys[0],MConfiguration.uv);
-        laserControl2 = new SingleLaserControl(sys_,MConfiguration.laserkeys[1],MConfiguration.blue);
-        laserControl3 = new SingleLaserControl(sys_,MConfiguration.laserkeys[3],MConfiguration.green);
-        laserControl4 = new SingleLaserControl(sys_,MConfiguration.laserkeys[2],MConfiguration.red);
+        laserControl1 = new SingleLaserControl(factory_,config_.getLaserKeys(0),config_.getLaserColor(0));																			/////// here numbers problem for the lasers
+        laserControl2 = new SingleLaserControl(factory_,config_.getLaserKeys(1),config_.getLaserColor(1));
+        laserControl3 = new SingleLaserControl(factory_,config_.getLaserKeys(2),config_.getLaserColor(2));						/////////// problem also with the laser identifiers
+        laserControl4 = new SingleLaserControl(factory_,config_.getLaserKeys(3),config_.getLaserColor(3));
 
         setLayout(new java.awt.GridBagLayout());
         add(laserControl1, new java.awt.GridBagConstraints());

@@ -16,7 +16,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import threader.CommonThreader;
-import micromanager.MConfiguration;
+import view.ListenerFactory;
+import view.ListenerFactory.DoubleTextFieldListener;
+import view.ListenerFactory.IntTextFieldListener;
+import configuration.DefaultIdentifiers;
+import configuration.MConfiguration;
 import micromanager.utils;
 import device.MSystem;
 
@@ -30,12 +34,13 @@ public class FocusPanel extends javax.swing.JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -5035259490968319272L;
-	MSystem sys_;
-	CommonThreader th_;
+	private ListenerFactory factory_;
+	private MConfiguration config_;
 	
-    public FocusPanel(MSystem sys, CommonThreader th) {
-    	sys_ = sys;
-    	th_ = th;
+    public FocusPanel(ListenerFactory factory, MConfiguration config) {
+    	factory_ = factory;
+    	config_ = config;
+    	
         initComponents();
     }
 
@@ -55,50 +60,20 @@ public class FocusPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(462, 168));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
         
-        gr = new TimeChart("position","time","position",MConfiguration.maxNPI,370,220,false);
+        gr = new TimeChart("position","time","position",config_.getGraphNumberPoints(DefaultIdentifiers.id_graph_pi),370,220,false);
         
         //////////////////////////////////////////////////////////////////////////////////////////////// Position
         //////////////////////////
-        jTextField_position.setText(String.valueOf(sys_.getPIPosition()));
-        jTextField_position.addFocusListener(new FocusListener() {
-			@Override
-			public void focusGained(FocusEvent arg0) {}
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				 String typed = jTextField_position.getText();
-	        	 if(!utils.isNumeric(typed)) {
-	        	    return;
-	        	 }
-	        	 sys_.setStagePosition(Integer.parseInt(typed));
-			}
-         });
-        jTextField_position.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				 String typed = jTextField_position.getText();
-	        	 if(!utils.isNumeric(typed)) {
-	        		 return;
-	        	 }
-	        	 sys_.setStagePosition(Integer.parseInt(typed));
-			}
-        });
+		DoubleTextFieldListener listener_maxpulse = factory_.createDoubleTextFieldListener(DefaultIdentifiers.id_objectivestage, DefaultIdentifiers.id_objectivestage_position, jTextField_position);
+        jTextField_position.addFocusListener(listener_maxpulse);
+        jTextField_position.addActionListener(listener_maxpulse);
         
 
         //////////////////////////////////////////////////////////////////////////////////////////////// Lock
         //////////////////////////
         jToggleButton_lockz.setText("Lock");
         jToggleButton_lockz.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_lockz.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent e){
-				if(e.getStateChange()==ItemEvent.SELECTED){
-					System.out.println("[GUI] Stage sensor 1");
-					sys_.setStageSensor(1);
-				}else if(e.getStateChange()==ItemEvent.DESELECTED){
-					System.out.println("[GUI] Stage sensor 0");
-					sys_.setStageSensor(0);
-				}
-            }
-        });
+        jToggleButton_lockz.addItemListener(factory_.createJToggleButtonListener(DefaultIdentifiers.id_objectivestage, DefaultIdentifiers.id_objectivestage_sensor));
 
 
 
@@ -106,15 +81,7 @@ public class FocusPanel extends javax.swing.JPanel {
         //////////////////////////
         jToggleButton_monitorZ.setText("Monitor");
         jToggleButton_monitorZ.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jToggleButton_monitorZ.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent e){
-				if(e.getStateChange()==ItemEvent.SELECTED){
-					th_.startUpdater("PI");
-				}else if(e.getStateChange()==ItemEvent.DESELECTED){
-					th_.stopUpdater("PI");
-				}
-			}
-        });
+        jToggleButton_monitorZ.addItemListener(factory_.createJToggleButtonListener(DefaultIdentifiers.id_task, DefaultIdentifiers.id_task_monitorz));
 
         jLabel_position.setText("Position:");
         
@@ -123,13 +90,7 @@ public class FocusPanel extends javax.swing.JPanel {
         //////////////////////////
         jButton_set0.setText("Set 0");
         jButton_set0.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jButton_set0.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	double val = sys_.getPIPosition();
-            	gr.setZero(val);
-            	jTextField_0position.setText(String.valueOf(val));
-            }
-        });
+        jButton_set0.addActionListener(factory_.createJButtonListener(DefaultIdentifiers.id_objectivestage, DefaultIdentifiers.id_objectivestage_0position));
 
         jTextField_0position.setText("0");
         jTextField_0position.setEditable(false);

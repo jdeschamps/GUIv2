@@ -1,33 +1,26 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package gui;
 
+import configuration.MConfiguration;
+import view.ListenerFactory;
 import device.MSystem;
 
-/**
- *
- * @author Ries
- */
 public class ControlPanel extends javax.swing.JPanel {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4396117339591756836L;
-	MSystem sys_;
+	private ListenerFactory factory_;
+	private MConfiguration config_;
 	
-    public ControlPanel(MSystem sys) {
-    	sys_ = sys;
+    public ControlPanel(ListenerFactory factory, MConfiguration config) {
+    	factory_ = factory;
+    	config_ = config;
+    	
         initComponents();
     }
 
     private void initComponents() {
-
-        uvPulsePanel = new UVPulsePanel(sys_);
-        laserPanel = new LaserPanel(sys_);
-        filterPanel = new FilterPanel(sys_);
+        uvPulsePanel = new UVPulsePanel(factory_, config_);
+        laserPanel = new LaserPanel(factory_, config_);
+        filterPanel = new FilterPanel(factory_, config_);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

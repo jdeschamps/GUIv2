@@ -1,55 +1,41 @@
 package micromanager;
 
 import gui.MainFrame;
+
 import javax.swing.SwingUtilities;
+
 import mmcorej.CMMCore;
+
 import org.micromanager.api.ScriptInterface;
+
+import controller.Controller;
 import device.MSystem;
 import test.PluginTest;
 
 
 public class GUIv2 implements org.micromanager.api.MMPlugin{
-   public static String menuName = "GUIv2.9b";
+   public static String menuName = "GUIv3.1";
    public static String tooltipDescription = "control interface";
-   private ScriptInterface gui_;            
+   private ScriptInterface scriptinterface_;            
    private CMMCore core_;
    private Log log_;
-   private MSystem sys_;
-   //private PluginTest pt_;
-   private MainFrame frame;
-   private MConfiguration config_;
+   private Controller controller_;
+   
    
    public void dispose() {
 	   
-	   log_.closeLog();
    }
 
 
    public void setApp(ScriptInterface app) {
-      gui_ = app;
-      core_ = gui_.getMMCore();
-      log_ = new Log();
-      log_.writeToLog("-------------  New session  ----------------");
-      
-      //pt_ = new PluginTest(log_,sys_);
+	   scriptinterface_ = app;
+	   core_ = scriptinterface_.getMMCore();											
+	   controller_ = new Controller(scriptinterface_);
    }
 
 
    public void show() {
-	   
-      SwingUtilities.invokeLater(new Runnable()								/// this is the right way to do it
-       {
-           @Override
-           public void run()
-           {
-        	   config_ = new MConfiguration();
-        	   sys_ = new MSystem(core_,log_,config_);
-        	   frame = new MainFrame(sys_, log_,config_);
-           }
-       }); 
-	   
-	   //pt_.run();
-	   //dispose();
+	   controller_.initialize();
    }
 
 
@@ -69,7 +55,7 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
 
 
    public String getVersion() {
-      return "2.0";
+      return "3.1";
    }
 
 

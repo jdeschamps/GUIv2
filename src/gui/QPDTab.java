@@ -15,28 +15,32 @@ import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import micromanager.MConfiguration;
+import configuration.DefaultIdentifiers;
+import configuration.MConfiguration;
 import micromanager.utils;
 import threader.CommonThreader;
+import view.ListenerFactory;
+import view.ListenerFactory.DoubleTextFieldListener;
+import view.ListenerFactory.IntTextFieldListener;
 import device.MSystem;
 
 
 public class QPDTab extends javax.swing.JPanel {
 
 	private static final long serialVersionUID = -3185947669212669882L;
-	MSystem sys_;
-	CommonThreader th_;
-	double largesteps, smallsteps;
+	private ListenerFactory factory_;
+	private MConfiguration configuration_;
 	
-    public QPDTab(MSystem sys, CommonThreader th) {
-    	sys_ = sys;
-    	th_ = th;
+    public QPDTab(ListenerFactory factory, MConfiguration configuration) {
+    	factory_ = factory;
+    	configuration_ = configuration;
+    	
         initComponents();
     }
               
     private void initComponents() {
 
-        gr3 = new Chart("tot","X","Y",MConfiguration.maxNQPD[2],270,270);
+        gr3 = new Chart("tot","X","Y",configuration_.getGraphNumberPoints(DefaultIdentifiers.id_graph_qpd),270,270);
 
         jProgressBar = new javax.swing.JProgressBar();
         jToggleButton_monitor = new javax.swing.JToggleButton();
@@ -54,15 +58,7 @@ public class QPDTab extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(390, 212));
 
         jToggleButton_monitor.setText("Monitor");
-        jToggleButton_monitor.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent e){
-				if(e.getStateChange()==ItemEvent.SELECTED){
-					th_.startUpdater("QPD");
-				}else if(e.getStateChange()==ItemEvent.DESELECTED){
-					th_.stopUpdater("QPD");
-				}
-            }
-        });
+        jToggleButton_monitor.addItemListener(factory_.createJToggleButtonListener(DefaultIdentifiers.id_task, DefaultIdentifiers.id_task_monitorqpd));
         jProgressBar.setOrientation(1);
         jProgressBar.setMaximum(700);
         jProgressBar.setMinimum(0);
@@ -71,84 +67,31 @@ public class QPDTab extends javax.swing.JPanel {
         jPanel_graph.add(gr3.getChart());
         
         ///////////////////////////////////////////////////////////////////////////////////////////////// focus buttons and textfield
-        jTextField_small.setText(String.valueOf(MConfiguration.defaultSmallSteps));
-        smallsteps = MConfiguration.defaultSmallSteps;
-        jTextField_small.addFocusListener(new FocusListener() {
-			@Override
-			public void focusGained(FocusEvent arg0) {}
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				 String typed = jTextField_small.getText();
-	        	 if(utils.isNumeric(typed)) {
-	        		 smallsteps = Double.parseDouble(typed);
-	        	 }
-			}
-         });
-        jTextField_small.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				 String typed = jTextField_small.getText();
-	        	 if(utils.isNumeric(typed)) {
-	        		 smallsteps = Double.parseDouble(typed);
-	        	 }
-			}
+		DoubleTextFieldListener listener_smallsteps = factory_.createDoubleTextFieldListener(DefaultIdentifiers.id_objectivestage, DefaultIdentifiers.id_objectivestage_smallstep, jTextField_small);
+        jTextField_small.setText(configuration_.getDefaultSmallSteps());
+        jTextField_small.addFocusListener(listener_smallsteps);
+        jTextField_small.addActionListener(listener_smallsteps);
 
-        });
-
-        jTextField_large.setText(String.valueOf(MConfiguration.defaultLargeSteps));
-        largesteps = MConfiguration.defaultLargeSteps;
-        jTextField_large.addFocusListener(new FocusListener() {
-			@Override
-			public void focusGained(FocusEvent arg0) {}
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				 String typed = jTextField_large.getText();
-	        	 if(utils.isNumeric(typed)) {
-	        		 largesteps = Double.parseDouble(typed);
-	        	 }
-			}
-         });
-        jTextField_large.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				 String typed = jTextField_large.getText();
-	        	 if(utils.isNumeric(typed)) {
-	        		 largesteps = Double.parseDouble(typed);
-	        	 }
-			}
-        });
+		DoubleTextFieldListener listener_largesteps = factory_.createDoubleTextFieldListener(DefaultIdentifiers.id_objectivestage, DefaultIdentifiers.id_objectivestage_largestep, jTextField_large);
+        jTextField_large.setText(configuration_.getDefaultLargeSteps());
+        jTextField_large.addFocusListener(listener_largesteps);
+        jTextField_large.addActionListener(listener_largesteps);
 
         jLabel_small.setText(">");
 
         jLabel_large.setText(">>");
 
         jButton_upsmall.setText("^");
-        jButton_upsmall.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	jButton_upsmallActionPerformed(evt);
-            }
-        });
+        jButton_upsmall.addActionListener(factory_.createJButtonListener(DefaultIdentifiers.id_objectivestage, DefaultIdentifiers.id_objectivestage_position));												////// here have trouble, does not comply
 
         jButton_uplarge.setText("^^");
-        jButton_uplarge.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	jButton_uplargeActionPerformed(evt);
-            }
-        });
+        jButton_uplarge.addActionListener(factory_.createJButtonListener(DefaultIdentifiers.id_objectivestage, DefaultIdentifiers.id_objectivestage_position));
 
         jButton_downsmall.setText("v");
-        jButton_downsmall.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	jButton_downsmallActionPerformed(evt);
-            }
-        });
+        jButton_downsmall.addActionListener(factory_.createJButtonListener(DefaultIdentifiers.id_objectivestage, DefaultIdentifiers.id_objectivestage_position));
 
         jButton_downlarge.setText("vv");
-        jButton_downlarge.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	jButton_downlargeActionPerformed(evt);
-            }
-        });
+        jButton_downlarge.addActionListener(factory_.createJButtonListener(DefaultIdentifiers.id_objectivestage, DefaultIdentifiers.id_objectivestage_position));
         
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////// layouts
         javax.swing.GroupLayout jPanel_2DgraphLayout = new javax.swing.GroupLayout(jPanel_2Dgraph);
@@ -228,28 +171,6 @@ public class QPDTab extends javax.swing.JPanel {
     }// </editor-fold>                        
 
 
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    //// action handler                                      
-    private void jButton_uplargeActionPerformed(java.awt.event.ActionEvent evt) {                                                
-    	double currpos = sys_.getPIPosition();
-    	sys_.setStagePosition(currpos+largesteps);
-    }  
-    
-    private void jButton_upsmallActionPerformed(java.awt.event.ActionEvent evt) {                                                
-    	double currpos = sys_.getPIPosition();
-    	sys_.setStagePosition(currpos+smallsteps);                                              
-
-    }  
-    
-    private void jButton_downlargeActionPerformed(java.awt.event.ActionEvent evt) {                                                  
-    	double currpos = sys_.getPIPosition();
-    	sys_.setStagePosition(currpos-largesteps);                                            
-    }  
-
-    private void jButton_downsmallActionPerformed(java.awt.event.ActionEvent evt) {                                                 
-    	double currpos = sys_.getPIPosition();
-    	sys_.setStagePosition(currpos-smallsteps);                                             
-    }  
     /////////////////////////////////////////////////////////////////////////////////////////////
     ///// variable declaration
     public Chart gr3;
