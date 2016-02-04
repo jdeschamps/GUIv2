@@ -32,6 +32,7 @@ public class UVautomator extends Updater{
 	ImageProcessor ip_;
 	boolean cutoffinit_ = false;
 	double cutoff_;
+	boolean restart_ = false;
 	
 	// Constants
 	double min = 0.4;
@@ -69,14 +70,25 @@ public class UVautomator extends Updater{
 		
 		writer.println("------------------------ new measure");
 		
-		N_ = getN(writer);
-		newpulse_ = getNewPulse(writer);
+		if(!restart_){
+			N_ = getN(writer);
+			newpulse_ = getNewPulse(writer);
 		
-		output_[0] = N_;
-		output_[1] = newpulse_;
-		output_[2] = cutoff_;
-		update();
-		
+			output_[0] = N_;
+			output_[1] = newpulse_;
+			output_[2] = cutoff_;
+			update();
+		} else if(restart_){
+			restart_ = false;
+			N_ = 0;
+			pulse_ = min;
+			prevpulse_ = min;
+			newpulse_ = 0;
+			output_[0] = 0;
+			output_[1] = 0;
+			output_[2] = cutoff_;
+			update();
+		}
 		writer.close();
 	}
 
@@ -210,5 +222,9 @@ public class UVautomator extends Updater{
 				writer.println("---[UV]--- couldn't set laser pulse");
 			}
 		}
+	}
+	
+	public void restart() {
+		restart_ = true;
 	}
 }

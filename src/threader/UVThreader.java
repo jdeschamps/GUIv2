@@ -12,6 +12,8 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
+import org.micromanager.api.ScriptInterface;
+
 import device.MSystem;
 import micromanager.MConfiguration;
 import micromanager.Log;
@@ -23,6 +25,8 @@ public class UVThreader {
 	MainFrame frame_;
 	
 	UVautomator uva_;
+	AcqMonitor acqm_;
+	ScriptInterface gui_;
 	
 	UIupdater task;
 	boolean initialized_ = false;
@@ -34,13 +38,15 @@ public class UVThreader {
 		frame_ = mainFrame;
 	}
 	
-	public UVThreader(MSystem sys, Log log, MainFrame frame){
+	public UVThreader(ScriptInterface gui, MSystem sys, Log log, MainFrame frame){
 		sys_ = sys;
 		log_ = log;
 		frame_ = frame;
+		gui_ = gui;
 	}
 
 	private void initialize() {
+		acqm_ = new AcqMonitor(sys_.getLaser(MConfiguration.laserkeys[0]), gui_);
 		uva_ = new UVautomator(sys_.getLaser(MConfiguration.laserkeys[0]), sys_, log_, frame_.getActivateTab());
 		initialized_ = true;
 		
@@ -74,6 +80,7 @@ public class UVThreader {
 		if(isInitialized()){
 			running_ = false;
 			uva_.stop();
+			acqm_.stop();
 		}
 	}
 
@@ -83,6 +90,7 @@ public class UVThreader {
 		}
 		if(key.equals("UV")){
 			uva_.start();
+			acqm_.start();
 		} else {
 			return;
 		}
@@ -91,6 +99,7 @@ public class UVThreader {
 	public void stopUpdater(String key){
 		if(key.equals("UV")){
 			uva_.stop();
+			acqm_.stop();
 		}
 		//if(!pim_.isRunning() && !qpdm_.isRunning() && !uva_.isRunning()){
 		//}
@@ -100,7 +109,7 @@ public class UVThreader {
 	////// it does not use propertychange which should be much better, investigate
 	public class UIupdater extends SwingWorker<Integer,Double[]>{
 		
-		Double[] resultUV;
+		Double[] resultUV, resultacq;
 		TimeChart uvg;
 		gui.LogarithmicJSlider uvlgs;
 		JTextField uvjtf, uvcutoff;
@@ -109,6 +118,7 @@ public class UVThreader {
 		
 		public UIupdater(){
 			resultUV = new Double[4];
+			resultacq = new Double[4];
 
 			uvg = frame_.getNGraph();
 			uvlgs = frame_.getUVSlider();
@@ -124,15 +134,23 @@ public class UVThreader {
 			while(running_ && !isCancelled()){
 				if(uva_.isRunning()){
 					System.out.println("[UV] refresh UV");
-					uva_.refresh();
-					System.out.println("[UV] UV refreshed");
-
-					resultUV[0] = 2.;
-					resultUV[1] = uva_.getOutput(0);	// N
-					resultUV[2] = uva_.getOutput(1);	// pulse
-					resultUV[3] = uva_.getOutput(2);	// cutoff
-					publish(resultUV);
-					System.out.println("[UV] published results");
+					acqm_.refresh();
+						
+						
+					if(acqm_.getOutput(2)==0){
+						uva_.refresh();
+						System.out.println("[UV] UV refreshed");
+	
+						resultUV[0] = 2.;
+						resultUV[1] = uva_.getOutput(0);	// N
+						resultUV[2] = uva_.getOutput(1);	// pulse
+						resultUV[3] = uva_.getOutput(2);	// cutoff
+						publish(resultUV);
+						System.out.println("[UV] published results");
+					} else {
+						uva_.restart();
+					}
+					
 				}
 				counter++;			
 				

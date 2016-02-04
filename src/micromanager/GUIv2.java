@@ -9,7 +9,7 @@ import test.PluginTest;
 
 
 public class GUIv2 implements org.micromanager.api.MMPlugin{
-   public static String menuName = "GUIv2.9b";
+   public static String menuName = "GUIv2.11b";
    public static String tooltipDescription = "control interface";
    private ScriptInterface gui_;            
    private CMMCore core_;
@@ -44,7 +44,7 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
            {
         	   config_ = new MConfiguration();
         	   sys_ = new MSystem(core_,log_,config_);
-        	   frame = new MainFrame(sys_, log_,config_);
+        	   frame = new MainFrame(gui_, sys_, log_,config_);
            }
        }); 
 	   

@@ -18,6 +18,8 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+import org.micromanager.api.ScriptInterface;
+
 import threader.CommonThreader;
 import threader.UVThreader;
 import micromanager.Log;
@@ -41,11 +43,13 @@ public class MainFrame extends javax.swing.JFrame {
 	UVThreader uv_;
 	Log log_;
 	MConfiguration config_;
+	ScriptInterface gui_;
 
-    public MainFrame(MSystem sys, Log log, MConfiguration config) {
+    public MainFrame(ScriptInterface gui, MSystem sys, Log log, MConfiguration config) {
     	sys_ = sys;
     	log_ = log;
     	config_ = config;
+    	gui_ = gui;
     	
     	//th_ = new Threader(this);
         th_ = new CommonThreader(sys_, log_, this);
@@ -109,7 +113,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     public UVThreader getnewUVThreader(){
-    	uv_ = new UVThreader(sys_, log_, this);
+    	uv_ = new UVThreader(gui_, sys_, log_, this);
     	return uv_;
     }
     
