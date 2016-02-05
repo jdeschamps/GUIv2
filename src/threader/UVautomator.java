@@ -37,7 +37,6 @@ public class UVautomator extends Updater{
 	// Constants
 	double min = 0.4;
 	
-	PrintWriter writer;
 	
 	public UVautomator(Device d, MSystem sys, Log log, ActivationTab activationTab) {
 		super(d, 3);
@@ -55,24 +54,12 @@ public class UVautomator extends Updater{
 
 	@Override
 	public void refresh() {
-		try {
-			writer = new PrintWriter(new FileWriter(MConfiguration.logUVpath, true));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		
-		writer.println("------------------------ new measure");
 		
 		if(!restart_){
-			N_ = getN(writer);
-			newpulse_ = getNewPulse(writer);
+			N_ = getN();
+			newpulse_ = getNewPulse();
 		
 			output_[0] = N_;
 			output_[1] = newpulse_;
@@ -89,10 +76,9 @@ public class UVautomator extends Updater{
 			output_[2] = cutoff_;
 			update();
 		}
-		writer.close();
 	}
 
-	public int getN(PrintWriter writer) { 
+	public int getN() { 
 		
 		if(core_.isSequenceRunning() && core_.getBytesPerPixel() == 2){
 			
@@ -136,7 +122,6 @@ public class UVautomator extends Updater{
 				tempcutoff = imp3.getStatistics().mean+pane_.getThreshold()*imp3.getStatistics().stdDev;
 			} catch(Exception e){
 				tempcutoff = cutoff_;
-				writer.println("---[UV]--- problem when calculating tempcutoff");
 			}
 			
 			if( pane_.isAutoCutoffOn() || pane_.isCutoffNeeded()){
@@ -149,12 +134,12 @@ public class UVautomator extends Updater{
 			}
 
 			ip_ = NMSuppr.run(imp3, MConfiguration.nmsMaskSize, cutoff_);
-
+/*
 			writer.println("[UV] temporary cutoff: "+tempcutoff);
 			writer.println("[UV] is auto cutoff: "+pane_.isAutoCutoffOn());
 			writer.println("[UV] is get cutoff: "+pane_.isCutoffNeeded());
 			writer.println("[UV] kept cutoff: "+cutoff_);
-			
+	*/		
 			return NMSuppr.getN();
 		}
 		return 0;
@@ -164,16 +149,16 @@ public class UVautomator extends Updater{
 		return ip_;
 	}
 
-	public int getNewPulse(PrintWriter writer){			// code should be cleaned, variables are not used properly
+	public int getNewPulse(){			// code should be cleaned, variables are not used properly
 		double N = (double) N_;
 		double N0 = pane_.getN();
 		double temppulse=0;
 
-		writer.println("[UV] calculated N: "+N);
-		writer.println("[UV] requested N: "+N0);
+		//writer.println("[UV] calculated N: "+N);
+		//writer.println("[UV] requested N: "+N0);
 		
 		pulse_ = sys_.getUVPulse(); 
-		writer.println("[UV] current pule: "+pulse_);
+		//writer.println("[UV] current pule: "+pulse_);
 
 		if(pane_.isUVselected()){			
 			if(prevpulse_ < min){
@@ -181,7 +166,7 @@ public class UVautomator extends Updater{
 			} else {
 				pulse_ = prevpulse_;	// avoid getting stuck between 0 and 1 (otherwise newp=0.4+0.4*1.99*coeff < 1 unless coeff ~> 0.7 which is not good for higher values), but now it is not bounded t0 <1, keep or change????
 			}
-			writer.println("[UV] used pulse: "+pulse_);
+			//writer.println("[UV] used pulse: "+pulse_);
 
 			// calculate new pulse
 			if(N0 != 0){
@@ -189,7 +174,7 @@ public class UVautomator extends Updater{
 			} else {
 				return 0;
 			}
-			writer.println("[UV] temporary pulse: "+temppulse);
+			//writer.println("[UV] temporary pulse: "+temppulse);
 
 			if(temppulse < min){
 				temppulse = min;
@@ -202,13 +187,13 @@ public class UVautomator extends Updater{
 			}
 
 			prevpulse_ = temppulse;
-			writer.println("[UV] calculated pulse: "+prevpulse_);
+		//	writer.println("[UV] calculated pulse: "+prevpulse_);
 
 		} else {
 			prevpulse_ = pulse_;
 		}
 		
-		writer.println("[UV] returned pulse: "+(int) Math.floor(prevpulse_));
+	//	writer.println("[UV] returned pulse: "+(int) Math.floor(prevpulse_));
 		
 		return (int) Math.floor(prevpulse_);
 	}
@@ -219,7 +204,6 @@ public class UVautomator extends Updater{
 			try{
 				((Laser) device_).setPulseLength((int) this.getOutput(1));
 			} catch (Exception e){
-				writer.println("---[UV]--- couldn't set laser pulse");
 			}
 		}
 	}

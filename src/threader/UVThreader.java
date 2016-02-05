@@ -3,6 +3,11 @@ package threader;
 import graph.TimeChart;
 import gui.MainFrame;
 
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -133,21 +138,26 @@ public class UVThreader {
 			//int NMScounter = 0;
 			while(running_ && !isCancelled()){
 				if(uva_.isRunning()){
-					System.out.println("[UV] refresh UV");
+					//System.out.println("[UV] refresh UV");
 					acqm_.refresh();
 						
 						
 					if(acqm_.getOutput(2)==0){
 						uva_.refresh();
-						System.out.println("[UV] UV refreshed");
-	
+						//System.out.println("[UV] UV refreshed");
+					
+						
 						resultUV[0] = 2.;
 						resultUV[1] = uva_.getOutput(0);	// N
 						resultUV[2] = uva_.getOutput(1);	// pulse
 						resultUV[3] = uva_.getOutput(2);	// cutoff
+						
+
+						
 						publish(resultUV);
-						System.out.println("[UV] published results");
+						//System.out.println("[UV] published results");
 					} else {
+
 						uva_.restart();
 					}
 					
@@ -157,51 +167,51 @@ public class UVThreader {
 				if(counter==10000){
 					counter = 0;
 				}
-				System.out.println("[UV] sleep");
+				//System.out.println("[UV] sleep");
 				Thread.sleep((long) Math.floor(sys_.getExposureTime()));
-				System.out.println("[UV] end sleeping");
+				//System.out.println("[UV] end sleeping");
 			}
 			return 1;
 		}
 		
 		@Override
 		protected void process(List<Double[]> chunks) {
-			//System.out.println("Chunk size: "+chunks.size());
+			////System.out.println("Chunk size: "+chunks.size());
 			for(Double[] result : chunks){
-				//System.out.println("In evt: "+result[0]+" "+result[1]);
+				////System.out.println("In evt: "+result[0]+" "+result[1]);
 				switch(result[0].intValue()){
 				case 2:	// UV 															////// very unnecessary now
-					System.out.println("[UV] will update the GUI");
+					//System.out.println("[UV] will update the GUI");
 					int currpulse = sys_.getUVPulse();
-					System.out.println("[UV] got current pulse");
+					//System.out.println("[UV] got current pulse");
 						
 					// Refresh the graph
-					System.out.println("[UV] will refresh graph with new point: "+result[1]);
-					System.out.println("[UV] will refresh graph with new point (int value): "+result[1].intValue());
+					//System.out.println("[UV] will refresh graph with new point: "+result[1]);
+					//System.out.println("[UV] will refresh graph with new point (int value): "+result[1].intValue());
 					uvg.addPoint(result[1]);
-					System.out.println("[UV] refresh graph with new point");
+					//System.out.println("[UV] refresh graph with new point");
 					
 					// Maximum of the sliders   																										/// having that every round is maybe not so great since exposure won't really change during activation
 					int max = (int) (1000*sys_.getExposureTime());
-					System.out.println("[UV] max pulse: "+max);
+					//System.out.println("[UV] max pulse: "+max);
 					uvjsld.setMaximum(max);
 					uvlgs.setMaximum(max);
 					  
 					// Update UV
-					System.out.println("[UV] update UV");
+					//System.out.println("[UV] update UV");
 
 					if(sys_.isCameraAcquiring() && frame_.isUVChecked()){
-						System.out.println("[UV] camera is acquiring, UV is checked and result is different than current value");
-						System.out.println("[UV] result: "+result[2].intValue()+" and current: "+currpulse);
+						//System.out.println("[UV] camera is acquiring, UV is checked and result is different than current value");
+						//System.out.println("[UV] result: "+result[2].intValue()+" and current: "+currpulse);
 
 						int res = result[2].intValue();
 						if(res > 0){			
-							System.out.println("[UV] 0<result");
+							//System.out.println("[UV] 0<result");
 							uvlgs.setValueWithin(res);
 							uvjsld.setValue(uvlgs.getValue());
 							uvjtf.setText(String.valueOf(uvlgs.getValue()));
 						}  else{
-							System.out.println("[UV] 0>result");
+							//System.out.println("[UV] 0>result");
 							uvlgs.setValueWithin(1);
 							uvjsld.setValue(0);
 							uvjtf.setText(String.valueOf(0));
@@ -210,16 +220,16 @@ public class UVThreader {
 					  
 					// Cutoff
 					if(frame_.isNewCutOff()){
-						System.out.println("[UV] we asked for new cutoff");
+						//System.out.println("[UV] we asked for new cutoff");
 						
 						uvcutoff.setText(Double.toString(round(result[3],2)));
 						frame_.setRequestOff();
-						System.out.println("[UV] request off");
+						//System.out.println("[UV] request off");
 					}
 					  
 					// Update NMS frame
 					if(frame_.isNMSChecked()){
-						System.out.println("[UV] NMS is checked");
+						//System.out.println("[UV] NMS is checked");
 
 						NMScounter++;
 						if(NMScounter % 10 == 0){
@@ -229,7 +239,7 @@ public class UVThreader {
 							NMScounter = 0;
 						}
 					}
-					System.out.println("[UV] done");
+					//System.out.println("[UV] done");
 
 					break;
 				}

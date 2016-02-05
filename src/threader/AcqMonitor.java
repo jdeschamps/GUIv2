@@ -25,22 +25,6 @@ public class AcqMonitor extends Updater{
 		super(d, 3);
 		gui_ = gui;
 		core_ = gui_.getMMCore();
-		
-		PrintWriter writer;
-		try {
-		   writer = new PrintWriter(new FileWriter("Log_acq_monitor.txt", true));
-		   writer.println("----- Start");
-		   writer.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-		      e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-		  e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public boolean isAcqRunning(){
@@ -76,14 +60,14 @@ public class AcqMonitor extends Updater{
 	public boolean hasXYPositionChanged(){
 		double xn, yn;
 		try {
-			xn = core_.getXPosition("DXYStage");
+			xn = core_.getXPosition("SmaractXY");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
 		try {
-			yn = core_.getYPosition("DXYStage");
+			yn = core_.getYPosition("SmaractXY");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,22 +78,7 @@ public class AcqMonitor extends Updater{
 			x_ = xn;
 			y_ = yn;
 			
-			PrintWriter writer;
-			try {
-			   writer = new PrintWriter(new FileWriter("Log_acq_monitor.txt", true));
-			   writer.println("found change");
-			   writer.close();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-			      e.printStackTrace();
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-			  e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+		
 			return true;
 		}
 
