@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JComboBox;
 
+import utils.Bool2DecConverter;
 import device.MSystem;
 import micromanager.MConfiguration;
 
@@ -55,6 +56,8 @@ public class SingleLaserParam extends javax.swing.JPanel {
         jLabel_maxpower = new javax.swing.JLabel();
         jTextField_maxpower = new javax.swing.JTextField();
         jSlider_pulse = new javax.swing.JSlider();
+        jLabel_sequence = new javax.swing.JLabel();
+        jTextField_sequence = new javax.swing.JTextField();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, label_, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, color_));
 
@@ -124,11 +127,21 @@ public class SingleLaserParam extends javax.swing.JPanel {
         	public void keyReleased(KeyEvent ke) {
         	    String typed = ((javax.swing.JTextField) ke.getSource()).getText();
         	    if(!typed.matches("\\d+")) {
-        	        return;
+        	        return; 
         	    }
         	    sys_.setLaserMaxPower(Integer.parseInt(typed));
         	}
         });    
+        
+        jLabel_sequence.setText("Sequence:");
+
+        jTextField_sequence.setText("1111111111111111");
+        jTextField_sequence.setMargin(new java.awt.Insets(2, 2, 2, 1));
+        jTextField_sequence.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	int val = Bool2DecConverter.getDecimal16bits(jTextField_sequence.getText());
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -148,7 +161,12 @@ public class SingleLaserParam extends javax.swing.JPanel {
                             .addComponent(jTextField_maxpower, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jSlider_pulse, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addComponent(jSlider_pulse, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel_sequence, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_sequence, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -161,12 +179,16 @@ public class SingleLaserParam extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_pulse)
                     .addComponent(jTextField_pulse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSlider_pulse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_maxpower)
                     .addComponent(jTextField_maxpower, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_sequence)
+                    .addComponent(jTextField_sequence, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -179,5 +201,7 @@ public class SingleLaserParam extends javax.swing.JPanel {
     public javax.swing.JSlider jSlider_pulse;
     private javax.swing.JTextField jTextField_maxpower;
     private javax.swing.JTextField jTextField_pulse;
+    private javax.swing.JTextField jTextField_sequence;
+    private javax.swing.JLabel jLabel_sequence;
     // End of variables declaration//GEN-END:variables
 }

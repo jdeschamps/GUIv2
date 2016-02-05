@@ -43,7 +43,7 @@ public class GUIv2 implements org.micromanager.api.MMPlugin{
            public void run()
            {
         	   config_ = new MConfiguration();
-        	   sys_ = new MSystem(core_,log_,config_);
+        	   sys_ = new MSystem(gui_, core_,log_,config_);
         	   frame = new MainFrame(gui_, sys_, log_,config_);
            }
        }); 

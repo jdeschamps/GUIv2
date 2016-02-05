@@ -11,8 +11,8 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JSlider;
 
+import utils.utils;
 import micromanager.MConfiguration;
-import micromanager.utils;
 import device.MSystem;
 
 /**

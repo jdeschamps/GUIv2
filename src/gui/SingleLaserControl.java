@@ -17,7 +17,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 
-import micromanager.utils;
+import utils.utils;
 import device.MSystem;
 
 /**

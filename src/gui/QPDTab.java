@@ -16,8 +16,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import micromanager.MConfiguration;
-import micromanager.utils;
 import threader.CommonThreader;
+import utils.utils;
 import device.MSystem;
 
 
@@ -164,9 +164,11 @@ public class QPDTab extends javax.swing.JPanel {
         jPanel_2DgraphLayout.setVerticalGroup(
             jPanel_2DgraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel_graph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_2DgraphLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
-
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -221,7 +223,7 @@ public class QPDTab extends javax.swing.JPanel {
                         .addComponent(jButton_downsmall)
                         .addGap(2, 2, 2)
                         .addComponent(jButton_downlarge)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                         .addComponent(jToggleButton_monitor)))
                 .addContainerGap())
         );

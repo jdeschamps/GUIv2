@@ -16,8 +16,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import threader.CommonThreader;
+import utils.utils;
 import micromanager.MConfiguration;
-import micromanager.utils;
 import device.MSystem;
 
 /**

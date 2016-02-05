@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import org.micromanager.api.ScriptInterface;
+
 import micromanager.MConfiguration;
 import micromanager.Log;
 import mmcorej.CMMCore;
@@ -23,12 +25,11 @@ public class MSystem {
 	StrVector devices_;
 	StrVector devicesAbsent_;
 	int numDevices_ = 9;
+	ScriptInterface app_;
 	
-	public MSystem(){
-		// empty to test
-	}
 	
-	public MSystem(CMMCore core, Log log, MConfiguration config){
+	public MSystem(ScriptInterface app, CMMCore core, Log log, MConfiguration config){
+		app_ = app;
 		core_ = core;
 		log_ = log;
 		config_ = config;
@@ -38,6 +39,10 @@ public class MSystem {
 		detectDevices();
 		initializeDevices();
 		areDevicesAvailable();
+	}
+	
+	public ScriptInterface getApp(){
+		return app_;
 	}
 	
 	private void detectDevices(){

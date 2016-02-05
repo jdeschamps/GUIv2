@@ -16,22 +16,24 @@ public class AcqMonitor extends Updater{
 	private boolean acqrunning_ = false;
 	private boolean acqended_ = false;
 	private boolean acqstarted_ = false;
+	private boolean camstoped_ = false;
+	private boolean camrunning_ = false;
 	private double x_=0, y_=0;
-	private ScriptInterface gui_;
+	private ScriptInterface app_;
 	private CMMCore core_;
 	private double mindiff = 5;
 	
-	public AcqMonitor(Device d, ScriptInterface gui){
+	public AcqMonitor(Device d, ScriptInterface app){
 		super(d, 3);
-		gui_ = gui;
-		core_ = gui_.getMMCore();
+		app_ = app;
+		core_ = app_.getMMCore();
 	}
 
 	public boolean isAcqRunning(){
-		return gui_.isAcquisitionRunning();
+		return app_.isAcquisitionRunning();
 	}
 	
-	public boolean checkAcqStatus(){
+	public void checkAcqStatus(){
 		boolean b = isAcqRunning();
 		if(b==true && acqrunning_==false){
 			acqstarted_ = true;
@@ -39,6 +41,29 @@ public class AcqMonitor extends Updater{
 			acqended_ = true;
 		}
 		acqrunning_ = b;
+	}
+
+	public boolean isAcqPaused(){
+		return app_.isPaused();
+	}
+	
+	public boolean isCameraRunning(){
+		return core_.isSequenceRunning();
+	}
+	
+	public void checkCaneraStatus(){
+		boolean b = isCameraRunning();
+		if(b==false && acqrunning_==true){
+			camstoped_ = true;
+		}
+		camrunning_ = b;
+	}
+	
+	public boolean hasCameraStopedAcquiring(){
+		if(camstoped_){
+			camstoped_ = false;
+			return true;
+		}
 		return false;
 	}
 	
@@ -90,9 +115,20 @@ public class AcqMonitor extends Updater{
 
 	@Override
 	public void refresh() {
+		// Acq paused 
 		output_[0] = boolToInt(hasAcqStarted());
 		output_[1] = boolToInt(hasAcqEnded());
-		output_[2] = boolToInt(hasXYPositionChanged());
+		output_[2] = boolToInt(isAcqPaused());
+		
+		// Sequence stoped running 
+		//output_[0] = boolToInt(hasAcqStarted());
+		//output_[1] = boolToInt(hasAcqEnded());
+		//output_[2] = boolToInt(hasCameraStopedAcquiring());
+		
+		// XYStage moved
+		//output_[0] = boolToInt(hasAcqStarted());
+		//output_[1] = boolToInt(hasAcqEnded());
+		//output_[2] = boolToInt(hasXYPositionChanged());
 	}
 
 	@Override

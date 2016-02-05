@@ -3,6 +3,9 @@ package micromanager;
 import java.awt.Color;
 import java.io.File;
 
+import utils.txtReader;
+import utils.txtWriter;
+
 public class MConfiguration {
 	
 	public static final String configpath = "GUIConfiguration.txt";

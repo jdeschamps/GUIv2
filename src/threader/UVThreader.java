@@ -157,7 +157,6 @@ public class UVThreader {
 						publish(resultUV);
 						//System.out.println("[UV] published results");
 					} else {
-
 						uva_.restart();
 					}
 					
@@ -255,4 +254,7 @@ public class UVThreader {
 	    return bd.doubleValue();
 	}
 
+	public void restartUV(){
+		uva_.restart();
+	}
 }
