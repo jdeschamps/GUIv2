@@ -1,11 +1,5 @@
 package threader;
 
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-
 import org.micromanager.api.ScriptInterface;
 
 import device.Device;
@@ -18,6 +12,7 @@ public class AcqMonitor extends Updater{
 	private boolean acqstarted_ = false;
 	private boolean camstoped_ = false;
 	private boolean camrunning_ = false;
+	private boolean acquiring_=false;
 	private double x_=0, y_=0;
 	private ScriptInterface app_;
 	private CMMCore core_;
@@ -66,10 +61,13 @@ public class AcqMonitor extends Updater{
 		}
 		return false;
 	}
-	
+	public boolean isAcquiring(){
+		return acquiring_;
+	}
 	public boolean hasAcqStarted(){
 		if(acqstarted_){
 			acqstarted_ = false;
+			acquiring_ = true;
 			return true;
 		}
 		return false;
@@ -77,6 +75,7 @@ public class AcqMonitor extends Updater{
 	public boolean hasAcqEnded(){
 		if(acqended_){
 			acqended_ = false;
+			acquiring_ = false;
 			return true;
 		}
 		return false;
@@ -116,8 +115,11 @@ public class AcqMonitor extends Updater{
 	@Override
 	public void refresh() {
 		// Acq paused 
+		checkAcqStatus();
+		hasAcqStarted();
+		hasAcqEnded();
 		output_[0] = boolToInt(hasAcqStarted());
-		output_[1] = boolToInt(hasAcqEnded());
+		output_[1] = boolToInt(isAcquiring());
 		output_[2] = boolToInt(isAcqPaused());
 		
 		// Sequence stoped running 

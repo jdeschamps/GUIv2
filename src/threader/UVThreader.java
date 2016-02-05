@@ -23,7 +23,7 @@ import device.MSystem;
 import micromanager.MConfiguration;
 import micromanager.Log;
 
-public class UVThreader {
+public class UVThreader implements Runnable {
 	
 	MSystem sys_;
 	Log log_;
@@ -36,6 +36,7 @@ public class UVThreader {
 	UIupdater task;
 	boolean initialized_ = false;
 	boolean running_ = false;
+	boolean restart_ = false;
 	int counter=0;
 	DecimalFormat df;
 	
@@ -51,7 +52,7 @@ public class UVThreader {
 	}
 
 	private void initialize() {
-		acqm_ = new AcqMonitor(sys_.getLaser(MConfiguration.laserkeys[0]), gui_);
+		//acqm_ = new AcqMonitor(sys_.getLaser(MConfiguration.laserkeys[0]), gui_);
 		uva_ = new UVautomator(sys_.getLaser(MConfiguration.laserkeys[0]), sys_, log_, frame_.getActivateTab());
 		initialized_ = true;
 		
@@ -71,21 +72,21 @@ public class UVThreader {
 		return initialized_;
 	}
 	
-	public void run(){
+	public void runTask(){
 		task = new UIupdater();
 		task.execute();               					////////////////////// not proper, change
 	}
 	
 	public void start(){
 		running_ = true;
-		run();
+		runTask();
 	}
 	
 	public void stop(){
 		if(isInitialized()){
 			running_ = false;
 			uva_.stop();
-			acqm_.stop();
+			//acqm_.stop();
 		}
 	}
 
@@ -95,7 +96,7 @@ public class UVThreader {
 		}
 		if(key.equals("UV")){
 			uva_.start();
-			acqm_.start();
+			//acqm_.start();
 		} else {
 			return;
 		}
@@ -104,7 +105,7 @@ public class UVThreader {
 	public void stopUpdater(String key){
 		if(key.equals("UV")){
 			uva_.stop();
-			acqm_.stop();
+			//acqm_.stop();
 		}
 		//if(!pim_.isRunning() && !qpdm_.isRunning() && !uva_.isRunning()){
 		//}
@@ -139,10 +140,12 @@ public class UVThreader {
 			while(running_ && !isCancelled()){
 				if(uva_.isRunning()){
 					//System.out.println("[UV] refresh UV");
-					acqm_.refresh();
+					/*acqm_.refresh();
+					System.out.println("---------------------------------------------------------"+acqm_.getOutput(2));
 						
-						
-					if(acqm_.getOutput(2)==0){
+					if(acqm_.getOutput(2)==1 && acqm_.getOutput(1)==1){
+						uva_.restart();
+					}else {
 						uva_.refresh();
 						//System.out.println("[UV] UV refreshed");
 					
@@ -156,10 +159,19 @@ public class UVThreader {
 						
 						publish(resultUV);
 						//System.out.println("[UV] published results");
-					} else {
+					}*/
+					uva_.refresh();
+					
+					if(restart_){
+						restart_ = false;
 						uva_.restart();
 					}
 					
+					resultUV[0] = 2.;
+					resultUV[1] = uva_.getOutput(0);	// N
+					resultUV[2] = uva_.getOutput(1);	// pulse
+					resultUV[3] = uva_.getOutput(2);	// cutoff
+					publish(resultUV);
 				}
 				counter++;			
 				
@@ -255,6 +267,11 @@ public class UVThreader {
 	}
 
 	public void restartUV(){
-		uva_.restart();
+		restart_ = true;
+	}
+
+	@Override
+	public void run() {
+		restartUV();
 	}
 }

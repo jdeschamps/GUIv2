@@ -91,10 +91,10 @@ public class FocusPanel extends javax.swing.JPanel {
         jToggleButton_lockz.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e){
 				if(e.getStateChange()==ItemEvent.SELECTED){
-					System.out.println("[GUI] Stage sensor 1");
+					//System.out.println("[GUI] Stage sensor 1");
 					sys_.setStageSensor(1);
 				}else if(e.getStateChange()==ItemEvent.DESELECTED){
-					System.out.println("[GUI] Stage sensor 0");
+					//System.out.println("[GUI] Stage sensor 0");
 					sys_.setStageSensor(0);
 				}
             }

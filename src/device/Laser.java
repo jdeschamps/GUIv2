@@ -44,10 +44,10 @@ public class Laser extends Device{
 
 	public void setOperation(int val){	
 		if(val==1){
-			System.out.println("[GUI] set laser operation on");
+			//System.out.println("[GUI] set laser operation on");
 			setProperty(operation_.getPropertyName(),"On");										/// maybe modify directly the object
 		} else if(val==0){
-			System.out.println("[GUI] set laser operation off");
+			//System.out.println("[GUI] set laser operation off");
 			setProperty(operation_.getPropertyName(),"Off");				
 		} else {
 			log_.writeToLog(label_+" : Invalid operation requested ("+val+")");

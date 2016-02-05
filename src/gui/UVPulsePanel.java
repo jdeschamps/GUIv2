@@ -45,7 +45,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
 		jTextField_maxpulse.setText(String.valueOf(MConfiguration.maxpulsedefault));
 		jTextField_maxpulse.addActionListener(new java.awt.event.ActionListener() {
 	         public void actionPerformed(java.awt.event.ActionEvent evt) {
-				 System.out.println("[UV] max action was performed");
+				 //System.out.println("[UV] max action was performed");
 		      	 
 		    	 String s = jTextField_maxpulse.getText();
 		    	 if(!utils.isNumeric(s)){
@@ -78,7 +78,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
 
            @Override
            public void focusLost(FocusEvent ex) {
-				 System.out.println("[UV] max action was performed");
+				 //System.out.println("[UV] max action was performed");
 		      	 
 		    	 String s = jTextField_maxpulse.getText();
 		    	 if(!utils.isNumeric(s)){
@@ -112,7 +112,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
 		logarithmicJSlider.setMinorTickSpacing(10);
 		logarithmicJSlider.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {				
-				  System.out.println("[UV] mouse was released");
+				  //System.out.println("[UV] mouse was released");
 				  int val = logarithmicJSlider.getValue();
 				  logarithmicJSlider.setValueWithin(val);
 				  
@@ -129,7 +129,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
         jTextField_pulse.setText(Integer.toString((int) sys_.getUVPulse()));
         jTextField_pulse.addActionListener(new java.awt.event.ActionListener() {
 	         public void actionPerformed(java.awt.event.ActionEvent evt) {
-				 System.out.println("[UV] action was performed");
+				 //System.out.println("[UV] action was performed");
 	        	 int val = 0; 
 	        	 String s = jTextField_pulse.getText();
 	        	 if(!utils.isNumeric(s)){
@@ -163,7 +163,7 @@ public class UVPulsePanel extends javax.swing.JPanel {
 
             @Override
             public void focusLost(FocusEvent ex) {
-				 System.out.println("[UV] action was performed");
+				 //System.out.println("[UV] action was performed");
 	        	 int val = 0; 
 	        	 String s = jTextField_pulse.getText();
 	        	 if(!utils.isNumeric(s)){

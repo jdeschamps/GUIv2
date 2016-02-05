@@ -71,7 +71,7 @@ public class SingleLaserParam extends javax.swing.JPanel {
 	    	}
         });
         jComboBox_behaviour.setSelectedIndex(defaultBehaviour_);
-        System.out.println("Behaviour selected for "+label_+" "+defaultBehaviour_);
+       //System.out.println("Behaviour selected for "+label_+" "+defaultBehaviour_);
 
         jLabel_pulse.setText("Pulse length :");
 
@@ -100,7 +100,7 @@ public class SingleLaserParam extends javax.swing.JPanel {
         jSlider_pulse.setMaximum(MConfiguration.mojomaxpulse);
         jSlider_pulse.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
-				  System.out.println("[UV] mouse was released");
+				 //System.out.println("[UV] mouse was released");
 
 					int max  = 1000*sys_.getExposureTime() < MConfiguration.mojomaxpulse ? (int) (1000*sys_.getExposureTime()) : MConfiguration.mojomaxpulse;
 					jSlider_pulse.setMaximum(max);

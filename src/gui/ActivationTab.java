@@ -63,7 +63,6 @@ public class ActivationTab extends javax.swing.JPanel {
         initComponents();
 
 		uv_ = parent_.getnewUVThreader();
-		uvr_ = new UVRestarter(uv_);
     }
 
     /**
@@ -104,10 +103,11 @@ public class ActivationTab extends javax.swing.JPanel {
 			public void itemStateChanged(ItemEvent evt) {
 				if(jCheckBox_activate.isSelected()){
 					checkedUV = true;
-					//sys_.getApp().attachRunnable(300, -1, -1, -1, uvr_); ///////////////////////////////////////////////////////////////////////////////////// test
+
+					sys_.getApp().attachRunnable(34998, -1, -1, -1, uv_); ///////////////////////////////////////////////////////////////////////////////////// test
 				} else {
 					checkedUV = false;
-					//sys_.getApp().clearRunnables();
+					sys_.getApp().clearRunnables();
 				}
 			}
         });
@@ -330,8 +330,8 @@ public class ActivationTab extends javax.swing.JPanel {
 				}else if(e.getStateChange()==ItemEvent.DESELECTED){
 					uv_.stopUpdater("UV");
 					uv_ = parent_.getnewUVThreader();
-					uvr_.setUVThreader(uv_);
 					activate = false;
+					jCheckBox_activate.setSelected(false);
 				}
             }
         });

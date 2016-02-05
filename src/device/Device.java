@@ -48,7 +48,7 @@ public abstract class Device {
 	}
 	
 	public boolean setProperty(String property, int val){
-		System.out.println("[GUI] set property "+property+" "+val);
+		//System.out.println("[GUI] set property "+property+" "+val);
 		for(InputDeviceProperty p:properties_){
 			if(p.getPropertyName().equals(property)){
 				if(p.isEditable()){
@@ -60,7 +60,7 @@ public abstract class Device {
 	}	
 
 	public boolean setProperty(String property, double val){
-		System.out.println("[GUI] set property "+property+" "+val);
+		//System.out.println("[GUI] set property "+property+" "+val);
 		for(InputDeviceProperty p:properties_){
 			if(p.getPropertyName().equals(property)){
 				if(p.isEditable()){
@@ -72,7 +72,7 @@ public abstract class Device {
 	}
 
 	public boolean setProperty(String property, String val){
-		System.out.println("[GUI] set property "+property+" "+val);
+		//System.out.println("[GUI] set property "+property+" "+val);
 		for(InputDeviceProperty p:properties_){
 			if(p.getPropertyName().equals(property)){
 				if(p.isEditable()){
@@ -84,7 +84,7 @@ public abstract class Device {
 	}
 	
 	public double getProperty(String property){
-		System.out.println("[GUI] get property "+property);
+		//System.out.println("[GUI] get property "+property);
 		for(InputDeviceProperty p:properties_){
 			if(p.getPropertyName().equals(property)){
 				double val = p.getValue();	

@@ -43,7 +43,7 @@ public class Log {
 	
 	public void writeToLog(String s){
 		if(enabled){
-			w.println(new java.util.Date()+" [GUI] "+s+"\r\n");
+			//w.println(new java.util.Date()+" [GUI] "+s+"\r\n");
 		}
 	}
 	
