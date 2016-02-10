@@ -1,10 +1,5 @@
 package threader;
 
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 
 import gui.ActivationTab;
 import ij.ImagePlus;
@@ -91,7 +86,7 @@ public class UVautomator extends Updater{
 			ImagePlus imp, imp2;
 			ImageCalculator calcul = new ImageCalculator(); 
 			ImagePlus imp3;
-			GaussianBlur gau = new GaussianBlur();;
+			GaussianBlur gau = new GaussianBlur();
 			NMS NMSuppr = new NMS();
 		   	 
 			width = (int) core_.getImageWidth();
