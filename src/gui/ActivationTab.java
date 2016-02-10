@@ -148,17 +148,18 @@ public class ActivationTab extends javax.swing.JPanel {
         jToggleButton_framereset.setMargin(new java.awt.Insets(2, 2, 2, 2));
         jToggleButton_framereset.addItemListener(new java.awt.event.ItemListener() {
 			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange()==ItemEvent.SELECTED){
+			public void itemStateChanged(ItemEvent evt) {
+				if(jCheckBox_activate.isSelected()){
 					sys_.getApp().attachRunnable(framereset_, -1, -1, -1, uv_); ///////////////////////////////////////////////////////////////////////////////////// test
 					System.out.println("Attach with frame "+framereset_);
-				}else if(e.getStateChange()==ItemEvent.DESELECTED){
+
+				} else {
 					sys_.getApp().clearRunnables();
 					System.out.println("Clear");
+
 				}
 			}
         });
-        
         
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Text Fields first part
         /////////////////////////////////////////////////////////////////////////////////////////////// sdcoeff
