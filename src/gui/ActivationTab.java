@@ -149,7 +149,7 @@ public class ActivationTab extends javax.swing.JPanel {
         jToggleButton_framereset.addItemListener(new java.awt.event.ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent evt) {
-				if(jCheckBox_activate.isSelected()){
+				if(jToggleButton_framereset.isSelected()){
 					sys_.getApp().attachRunnable(framereset_, -1, -1, -1, uv_); ///////////////////////////////////////////////////////////////////////////////////// test
 					System.out.println("Attach with frame "+framereset_);
 
