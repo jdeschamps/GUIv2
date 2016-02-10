@@ -53,9 +53,10 @@ public class UVautomator extends Updater{
 	}
 
 	@Override
-	public void refresh() {
-
-		
+	public void refresh() {	
+		if(!sys_.isCameraAcquiring()){
+			restart_ = true;
+		}
 		
 		if(!restart_){
 			N_ = getN();
@@ -70,16 +71,16 @@ public class UVautomator extends Updater{
 			N_ = 0;
 			pulse_ = min;
 			prevpulse_ = min;
+			cutoff_ = 0;
 			newpulse_ = 0;
 			output_[0] = 0;
 			output_[1] = 0;
-			output_[2] = cutoff_;
+			output_[2] = 0;
 			update();
 		}
 	}
 
 	public int getN() { 
-		
 		if(core_.isSequenceRunning() && core_.getBytesPerPixel() == 2){
 			
 			int width, height;
@@ -160,7 +161,7 @@ public class UVautomator extends Updater{
 		pulse_ = sys_.getUVPulse(); 
 		//writer.println("[UV] current pule: "+pulse_);
 
-		if(pane_.isUVselected()){			
+		if(sys_.isCameraAcquiring() && pane_.isUVselected()){			
 			if(prevpulse_ < min){
 				pulse_ = min;			
 			} else {
