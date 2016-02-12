@@ -17,11 +17,16 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
+import org.micromanager.api.MultiStagePosition;
+import org.micromanager.api.PositionList;
 import org.micromanager.api.ScriptInterface;
+import org.micromanager.api.SequenceSettings;
+import org.micromanager.utils.MMScriptException;
 
 import device.MSystem;
 import micromanager.MConfiguration;
 import micromanager.Log;
+import mmcorej.CMMCore;
 
 public class UVThreader implements Runnable {
 	
@@ -30,7 +35,6 @@ public class UVThreader implements Runnable {
 	MainFrame frame_;
 	
 	UVautomator uva_;
-	AcqMonitor acqm_;
 	ScriptInterface gui_;
 	
 	UIupdater task;

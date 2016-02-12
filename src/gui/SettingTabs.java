@@ -39,6 +39,7 @@ public class SettingTabs extends javax.swing.JPanel {
         activationPanel = new ActivationTab(sys_,config_, parent_);
         laserParamTab = new LaserTab(sys_, config_);
         controlPanel = new LensPanel(sys_);
+        acqTab = new gui.AcqTab(parent_);
 
         setMaximumSize(new java.awt.Dimension(462, 240));
         setMinimumSize(new java.awt.Dimension(440, 240));
@@ -47,6 +48,7 @@ public class SettingTabs extends javax.swing.JPanel {
         jTabbedPane_QPD.addTab("QPD", qPDPanel);
         jTabbedPane_QPD.addTab("Activation", activationPanel);
         jTabbedPane_QPD.addTab("Lasers", laserParamTab);
+        jTabbedPane_QPD.addTab("Acquisition", acqTab);
 
         controlPanel.setBorder(null);
 
@@ -77,6 +79,7 @@ public class SettingTabs extends javax.swing.JPanel {
     private LensPanel controlPanel;
     private javax.swing.JTabbedPane jTabbedPane_QPD;
     public LaserTab laserParamTab;
-    public QPDTab qPDPanel;
+    public QPDTab qPDPanel;              
+    public AcqTab acqTab;
     // End of variables declaration//GEN-END:variables
 }

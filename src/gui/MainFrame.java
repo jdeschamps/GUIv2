@@ -22,6 +22,7 @@ import org.micromanager.api.ScriptInterface;
 
 import threader.CommonThreader;
 import threader.UVThreader;
+import utils.StringText;
 import micromanager.Log;
 import micromanager.MConfiguration;
 import mmcorej.CMMCore;
@@ -55,6 +56,10 @@ public class MainFrame extends javax.swing.JFrame {
         th_ = new CommonThreader(sys_, log_, this);
 
     	initComponents();
+    }
+    
+    public ScriptInterface getApp(){
+    	return gui_;
     }
 
     private void initComponents() {
@@ -108,12 +113,32 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents 
 
     ////////////////////////////////////////////////// Interface with Threader
+    public StringText getAcqString(){
+    	return tabs.acqTab.text;
+    }
+    
+    public boolean isUVMaxReached(){
+    	boolean b = getUVSlider().getValue() == getMaxPulse();	
+		System.out.println("Get value slider: "+getUVSlider().getValue());
+		System.out.println("Get maxpulse: "+getMaxPulse());
+
+    	return b;
+    }
+    
+    public JProgressBar getAcqProgressBar(){
+    	return tabs.acqTab.jProgressBar_progress;
+    }
+    
     public TimeChart getFocusGraph(){
     	return focusPanel.gr;
     }
     
     public UVThreader getnewUVThreader(){
     	uv_ = new UVThreader(gui_, sys_, log_, this);
+    	return uv_;
+    }
+    
+    public UVThreader getcurrentThreader(){
     	return uv_;
     }
     
