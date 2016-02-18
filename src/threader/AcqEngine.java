@@ -91,7 +91,7 @@ public class AcqEngine{
     			numPosition = poslist.getNumberOfPositions();
     			MultiStagePosition currPos = poslist.getPosition(0);
     			
-    			String xystage = currPos.getDefaultXYStage();
+    			String xystage = "SmaractXY";//currPos.getDefaultXYStage();						////////////////////////////////////////////////////////////////////////////
                 
     			// from other plugin
     			//gui_.setImageSavingFormat(org.micromanager.acquisition.TaggedImageStorageMultipageTiff.class);
@@ -116,6 +116,8 @@ public class AcqEngine{
     				
         			currPos = poslist.getPosition(i);
         			core.setXYPosition(xystage, currPos.get(0).x, currPos.get(0).y);
+        			Thread.sleep(sleepTime_*1000);
+
         		
         			app.setAcquisitionSettings(seq);
         			
@@ -140,7 +142,6 @@ public class AcqEngine{
         				break;
         			}
         			
-        			Thread.sleep(sleepTime_*1000);
     			}
     			
     			result[1] = (double) 100;
