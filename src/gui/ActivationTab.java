@@ -42,7 +42,7 @@ public class ActivationTab extends javax.swing.JPanel {
 	boolean checkedNMS = false, checkedUV = false;
 	DecimalFormat df;
 
-	int dT_;
+	int dT_ = 1;
 	double N0_, uvcoeff_, stdcoeff_;
 	int framereset_=39984;
 	
@@ -90,6 +90,8 @@ public class ActivationTab extends javax.swing.JPanel {
         jButton_clear = new javax.swing.JButton();
         jTextField_framereset = new javax.swing.JTextField();
         jToggleButton_framereset = new javax.swing.JToggleButton();
+        jLabel_dt = new javax.swing.JLabel();
+        jTextField_dt = new javax.swing.JTextField();
 
 
         setPreferredSize(new java.awt.Dimension(390, 212));
@@ -232,8 +234,29 @@ public class ActivationTab extends javax.swing.JPanel {
 			}
         });
         
-     
-
+        /////////////////////////////////////////////////////////////////////////////////////////////// dT
+        jLabel_dt.setText("dT:");
+        jTextField_dt.setText("1");
+        jTextField_dt.addFocusListener(new FocusListener() {
+   			@Override
+   			public void focusGained(FocusEvent arg0) {}
+   			@Override
+   			public void focusLost(FocusEvent arg0) {
+   				String s = jTextField_dt.getText();
+   		    	if(utils.isNumeric(s)){
+   		    		dT_ = Integer.parseInt(s);
+   		    	}
+   			}
+            });
+        jTextField_dt.addActionListener(new ActionListener() {
+   			@Override
+   			public void actionPerformed(ActionEvent e) {
+   				String s = jTextField_dt.getText();
+   		    	if(utils.isNumeric(s)){
+   		    		dT_ = Integer.parseInt(s);
+   		    	}
+   			}
+           });
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// JButton first part
         jButton_GetN.setText("Get N");
         jButton_GetN.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -257,19 +280,25 @@ public class ActivationTab extends javax.swing.JPanel {
                 .addGroup(jPanel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_leftLayout.createSequentialGroup()
                         .addGroup(jPanel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField_uvcoeff)
-                                .addComponent(jLabel_stdcoeff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel_uvcoeff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField_stdcoeff)
-                                .addComponent(jButton_GetN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jCheckBox_activate)
-                            .addComponent(jTextField_framereset, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_N, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(12, Short.MAX_VALUE))
+                            .addGroup(jPanel_leftLayout.createSequentialGroup()
+                                .addGroup(jPanel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTextField_uvcoeff)
+                                        .addComponent(jLabel_stdcoeff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel_uvcoeff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jTextField_stdcoeff)
+                                        .addComponent(jButton_GetN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jCheckBox_activate)
+                                    .addComponent(jTextField_framereset, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField_N, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 2, Short.MAX_VALUE))
+                            .addComponent(jToggleButton_framereset, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(jPanel_leftLayout.createSequentialGroup()
-                        .addComponent(jToggleButton_framereset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(11, 11, 11))))
+                        .addGroup(jPanel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel_dt)
+                            .addComponent(jTextField_dt, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel_leftLayout.setVerticalGroup(
             jPanel_leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,19 +307,23 @@ public class ActivationTab extends javax.swing.JPanel {
                 .addComponent(jLabel_stdcoeff)
                 .addGap(2, 2, 2)
                 .addComponent(jTextField_stdcoeff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel_uvcoeff)
                 .addGap(1, 1, 1)
                 .addComponent(jTextField_uvcoeff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_dt)
+                .addGap(1, 1, 1)
+                .addComponent(jTextField_dt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_GetN)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_N, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jToggleButton_framereset)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_framereset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(jCheckBox_activate))
         );
         add(jPanel_left, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 280));
@@ -491,6 +524,10 @@ public class ActivationTab extends javax.swing.JPanel {
     	return N0_;
     }
 
+    public double getdT(){
+    	return dT_;
+    }
+
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -518,5 +555,7 @@ public class ActivationTab extends javax.swing.JPanel {
     private javax.swing.JToggleButton jToggleButton_autocutoff;
     private javax.swing.JToggleButton jToggleButton_framereset;
     private javax.swing.JTextField jTextField_framereset;
+    private javax.swing.JTextField jTextField_dt;
+    private javax.swing.JLabel jLabel_dt;
     // End of variables declaration//GEN-END:variables
 }

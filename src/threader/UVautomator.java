@@ -19,7 +19,7 @@ import device.MSystem;
 public class UVautomator extends Updater{
 
 	int N_, newpulse_,maxpulse_;
-	double pulse_, prevpulse_;
+	double pulse_, prevpulse_, avparam_;
 	MSystem sys_;
 	CMMCore core_;
 	Log log_;
@@ -123,7 +123,8 @@ public class UVautomator extends Updater{
 			}
 			
 			if( pane_.isAutoCutoffOn() || pane_.isCutoffNeeded()){
-				cutoff_ = tempcutoff;
+				avparam_ = 1/((double)pane_.getdT());
+				cutoff_ = (1-avparam_)*cutoff_+tempcutoff*avparam_;
 			} else {
 				cutoff_ = pane_.getCutoff();
 				if(cutoff_ == 0){
