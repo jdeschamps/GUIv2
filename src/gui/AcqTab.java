@@ -62,7 +62,7 @@ public class AcqTab extends javax.swing.JPanel {
 
         jTextField_numframes.setText("50000");
 
-        jLabel_waittime.setText("Waiting time (ms)");
+        jLabel_waittime.setText("Waiting time (s)");
 
         jTextField_waittime.setText("0");
 

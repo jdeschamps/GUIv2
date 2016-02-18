@@ -163,13 +163,13 @@ public class UVThreader implements Runnable {
 						
 						publish(resultUV);
 						//System.out.println("[UV] published results");
-					}*/
-					uva_.refresh();
-					
+					}*/					
 					if(restart_){
 						restart_ = false;
 						uva_.restart();
 					}
+					
+					uva_.refresh();
 					
 					resultUV[0] = 2.;
 					resultUV[1] = uva_.getOutput(0);	// N

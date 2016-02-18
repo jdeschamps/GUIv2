@@ -5,6 +5,7 @@ import gui.MainFrame;
 import java.util.List;
 
 import javax.swing.JProgressBar;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 import org.micromanager.api.MultiStagePosition;
@@ -21,7 +22,7 @@ public class AcqEngine{
 	UVThreader uv;
 	ScriptInterface app;
 	AcqRunner t;
-	
+		
 	public AcqEngine(MainFrame parent){
 		parent_ = parent;
 		this.app = parent_.getApp();
@@ -43,6 +44,7 @@ public class AcqEngine{
 		private int sleepTime_;
 		private boolean stopmaxUV_;
 		private String individualname;
+		private int numPosition;
 		
 		private boolean stop_ = false;
 
@@ -59,7 +61,7 @@ public class AcqEngine{
 
 		public void stop(){
 			stop_ = true;
-			app.closeAllAcquisitions();
+			closeCurrAcq();
 		}
 		
 		public void closeCurrAcq(){
@@ -86,11 +88,13 @@ public class AcqEngine{
     			app.clearMessageWindow();
     			
     			PositionList poslist = app.getPositionList();
-    			int numPosition = poslist.getNumberOfPositions();
+    			numPosition = poslist.getNumberOfPositions();
     			MultiStagePosition currPos = poslist.getPosition(0);
     			
     			String xystage = currPos.getDefaultXYStage();
-    			
+                
+    			// from other plugin
+    			//gui_.setImageSavingFormat(org.micromanager.acquisition.TaggedImageStorageMultipageTiff.class);
     			
     			// create acquisition and set options
     			SequenceSettings seq = new SequenceSettings();
@@ -101,13 +105,14 @@ public class AcqEngine{
     			seq.timeFirst = true;
     			seq.usePositionList = false;
 
-    			result[0] = (double) numPosition;
+    			result[0] = (double) 0;
     			result[1] = (double) 0;
     			publish(result);
     			
+    			System.out.println("EDT? "+SwingUtilities.isEventDispatchThread());
     			
     			for(int i=0;i<numPosition;i++){
-    				result[0] = (double) i;
+    				result[0] = (double) i+1;
     				
         			currPos = poslist.getPosition(i);
         			core.setXYPosition(xystage, currPos.get(0).x, currPos.get(0).y);
@@ -116,19 +121,26 @@ public class AcqEngine{
         			
         			individualname = i+"_"+acqname_;
         			
-  					app.runAcquisition(individualname,path_);
-        			
-        			if(stop_){
-        				break;
+        			try{
+        				//app.refreshGUI();
+        				String s  = app.runAcquisition(individualname,path_);
+        				app.closeAcquisitionWindow(s);
+        			} catch (MMScriptException e) {
+        				
         			}
-        			
-        			result[1] = (double) (Math.floor(100*i/numPosition));
-        					
+        		
+        			result[1] = (double) (Math.floor(100*(i+1)/numPosition));		
+        			     
         			uv.restartUV();
         			
         			publish(result);
+        			        			
+        			if(stop_){
+        				stop_ = false;
+        				break;
+        			}
         			
-        			Thread.sleep(sleepTime_);
+        			Thread.sleep(sleepTime_*1000);
     			}
     			
     			result[1] = (double) 100;
@@ -147,9 +159,14 @@ public class AcqEngine{
 		@Override
 		protected void process(List<Double[]> chunks) {
 			for(Double[] result : chunks){
-				System.out.println("Publish: "+result[0]+" "+result[1]);
-
-				if(result[1].intValue()==100){
+    			//System.out.println("EDT? "+SwingUtilities.isEventDispatchThread());
+				
+    			pb.setValue(result[1].intValue());
+    			st.addFinishedExperiments(result[0].intValue());
+    			
+    			if(result[1].intValue()==0) {
+    				st.setAcquiring(numPosition);
+    			}else if(result[1].intValue()==100){
 					st.setDone();
 				}
 			}

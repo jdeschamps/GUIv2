@@ -204,7 +204,17 @@ public class UVautomator extends Updater{
 		}
 	}
 	
+	public void resetPulse() {
+		if(pane_.isUVselected()){
+			try{
+				((Laser) device_).setPulseLength(0);
+			} catch (Exception e){
+			}
+		}
+	}
+	
 	public void restart() {
 		restart_ = true;
+		resetPulse();
 	}
 }
