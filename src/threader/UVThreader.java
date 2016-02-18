@@ -163,7 +163,10 @@ public class UVThreader implements Runnable {
 						
 						publish(resultUV);
 						//System.out.println("[UV] published results");
-					}*/					
+					}*/			
+					
+					uva_.setMaxPulse(uvlgs.getMaxWithin());
+					
 					if(restart_){
 						restart_ = false;
 						uva_.restart();

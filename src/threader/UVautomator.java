@@ -18,7 +18,7 @@ import device.MSystem;
 
 public class UVautomator extends Updater{
 
-	int N_, newpulse_;
+	int N_, newpulse_,maxpulse_;
 	double pulse_, prevpulse_;
 	MSystem sys_;
 	CMMCore core_;
@@ -45,6 +45,8 @@ public class UVautomator extends Updater{
 		if(!d.getLabel().equals(MConfiguration.laserlabel[0])){
 			// exception!
 		}
+		
+		maxpulse_ = (int) (sys_.getExposureTime()*1000);
 	}
 
 	@Override
@@ -189,6 +191,10 @@ public class UVautomator extends Updater{
 			prevpulse_ = pulse_;
 		}
 		
+		if(prevpulse_ > maxpulse_){
+			prevpulse_ = maxpulse_;
+		}
+		
 	//	writer.println("[UV] returned pulse: "+(int) Math.floor(prevpulse_));
 		
 		return (int) Math.floor(prevpulse_);
@@ -216,5 +222,9 @@ public class UVautomator extends Updater{
 	public void restart() {
 		restart_ = true;
 		resetPulse();
+	}
+	
+	public void setMaxPulse(int maxpulse){
+		maxpulse_ = maxpulse;
 	}
 }
