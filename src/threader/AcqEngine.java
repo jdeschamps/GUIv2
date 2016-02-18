@@ -14,6 +14,7 @@ import org.micromanager.api.ScriptInterface;
 import org.micromanager.api.SequenceSettings;
 import org.micromanager.utils.MMScriptException;
 
+import device.MSystem;
 import utils.StringText;
 import mmcorej.CMMCore;
 
@@ -22,9 +23,11 @@ public class AcqEngine{
 	UVThreader uv;
 	ScriptInterface app;
 	AcqRunner t;
+	MSystem sys_;
 		
-	public AcqEngine(MainFrame parent){
+	public AcqEngine(MainFrame parent, MSystem sys){
 		parent_ = parent;
+		sys_ = sys;
 		this.app = parent_.getApp();
 	}
 	
@@ -41,10 +44,11 @@ public class AcqEngine{
 		private int numFrames_;
 		private String path_;
 		private String acqname_;
+		private String individualname;
 		private int sleepTime_;
 		private boolean stopmaxUV_;
-		private String individualname;
 		private int numPosition;
+		private String currAcq;
 		
 		private boolean stop_ = false;
 
@@ -66,7 +70,7 @@ public class AcqEngine{
 		
 		public void closeCurrAcq(){
 			try {
-				app.closeAcquisition(individualname);
+				app.closeAcquisition(currAcq);
 			} catch (MMScriptException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -76,6 +80,7 @@ public class AcqEngine{
 		@Override
 		protected Integer doInBackground() throws Exception {
 			Double[] result = new Double[2];
+			
 			uv = parent_.getcurrentThreader();
 			st = parent_.getAcqString();
 			pb = parent_.getAcqProgressBar();
@@ -91,7 +96,7 @@ public class AcqEngine{
     			numPosition = poslist.getNumberOfPositions();
     			MultiStagePosition currPos = poslist.getPosition(0);
     			
-    			String xystage = "SmaractXY";//currPos.getDefaultXYStage();						////////////////////////////////////////////////////////////////////////////
+    			String xystage = app.getXYStageName();						////////////////////////////////////////////////////////////////////////////
                 
     			// from other plugin
     			//gui_.setImageSavingFormat(org.micromanager.acquisition.TaggedImageStorageMultipageTiff.class);
@@ -118,17 +123,34 @@ public class AcqEngine{
         			core.setXYPosition(xystage, currPos.get(0).x, currPos.get(0).y);
         			Thread.sleep(sleepTime_*1000);
 
-        		
         			app.setAcquisitionSettings(seq);
         			
         			individualname = i+"_"+acqname_;
-        			
+
+    				//app.refreshGUI();
+    		//		Thread t = new Thread() {
+        			//		    public void run() {
+        			//	try {
+					currAcq  = app.runAcquisition(individualname,path_);
+								//	} catch (MMScriptException e) {
+								//	e.printStackTrace();
+								//	}
+								//  }  
+								//		};
+								//	t.start();
+    		/*		
+    				while(t.isAlive()){
+            			Thread.sleep(500);
+    					if(uv.isUVatMax()){
+    						closeCurrAcq();
+    						t.interrupt();
+    					}
+    				}
+    			*/	
         			try{
-        				//app.refreshGUI();
-        				String s  = app.runAcquisition(individualname,path_);
-        				app.closeAcquisitionWindow(s);
+        				app.closeAcquisitionWindow(currAcq);
         			} catch (MMScriptException e) {
-        				
+        				System.out.println("Cannot close");
         			}
         		
         			result[1] = (double) (Math.floor(100*(i+1)/numPosition));		

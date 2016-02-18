@@ -20,7 +20,6 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import micromanager.MConfiguration;
-import threader.UVRestarter;
 import threader.UVThreader;
 import utils.utils;
 import device.MSystem;
@@ -42,7 +41,6 @@ public class ActivationTab extends javax.swing.JPanel {
 	ImagePlus im_;
 	boolean checkedNMS = false, checkedUV = false;
 	DecimalFormat df;
-	UVRestarter uvr_;
 
 	int dT_;
 	double N0_, uvcoeff_, stdcoeff_;

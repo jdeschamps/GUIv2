@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
+import device.MSystem;
 import threader.AcqEngine;
 import utils.StringText;
 
@@ -14,9 +15,9 @@ public class AcqTab extends javax.swing.JPanel {
     /**
      * Creates new form AcqTab
      */
-    public AcqTab(MainFrame parent) {
+    public AcqTab(MainFrame parent, MSystem sys) {
     	parent_ = parent;
-    	acq = new AcqEngine(parent_);
+    	acq = new AcqEngine(parent_, sys);
         initComponents();
     }
 

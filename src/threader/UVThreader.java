@@ -281,4 +281,8 @@ public class UVThreader implements Runnable {
 	public void run() {
 		restartUV();
 	}
+	
+	public boolean isUVatMax(){
+		return frame_.getUVSlider().getValue() == frame_.getUVSlider().getMaxWithin();
+	}
 }

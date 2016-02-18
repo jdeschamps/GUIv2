@@ -39,7 +39,7 @@ public class SettingTabs extends javax.swing.JPanel {
         activationPanel = new ActivationTab(sys_,config_, parent_);
         laserParamTab = new LaserTab(sys_, config_);
         controlPanel = new LensPanel(sys_);
-        acqTab = new gui.AcqTab(parent_);
+        acqTab = new gui.AcqTab(parent_, sys_);
 
         setMaximumSize(new java.awt.Dimension(462, 240));
         setMinimumSize(new java.awt.Dimension(440, 240));
