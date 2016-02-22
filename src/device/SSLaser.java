@@ -12,6 +12,7 @@ public class SSLaser extends Device{
 	DeviceProperty behaviour_;
 	DeviceProperty pulse_;
 	DeviceProperty powerMax_;
+	DeviceProperty sequence_;
 	
 	
 	public SSLaser(String label, String controllerLabel1, String controllerLabel2, CMMCore core, Log log, boolean isLoaded){
@@ -27,12 +28,14 @@ public class SSLaser extends Device{
 		powerMax_ = new DeviceProperty(label_, MConfiguration.coboltproplabel[1], 0, 300,core_,log_,false, !detected_);
 		behaviour_ = new DeviceProperty(controllerLabel1_, MConfiguration.getLaserMojoProp(label_)[0], 0, 4,core_,log_,false, !detected_);
 		pulse_ = new DeviceProperty(controllerLabel1_, MConfiguration.getLaserMojoProp(label_)[1], 0, MConfiguration.mojomaxpulse,core_,log_,false, !detected_);
+		sequence_ = new DeviceProperty(controllerLabel1_, MConfiguration.getLaserMojoProp(label_)[2], 0, MConfiguration.mojomaxpulse,core_,log_,false, !detected_);
 
 		properties_.add(operation_);
 		properties_.add(powerPerc_);
 		properties_.add(powerMax_);
 		properties_.add(behaviour_);
 		properties_.add(pulse_);
+		add(sequence_);
 	}
 
 	public String getcontrollerLabel1(){
@@ -85,6 +88,13 @@ public class SSLaser extends Device{
 		}
 	}
 
+	public void setSequence(int d){
+		if(d>=sequence_.getMinValue() && d<=sequence_.getMaxValue()){
+			setProperty(sequence_.getPropertyName(),d);
+		} else {
+			log_.writeToLog(label_+" : Invalid sequence  requested ("+d+")");
+		}
+	}
 	public int getOperation(){									
 		return (int) getProperty(operation_.getPropertyName());									
 	}
@@ -104,7 +114,10 @@ public class SSLaser extends Device{
 	public double getPulseLength(){									
 		return getProperty(pulse_.getPropertyName());									
 	}
-	
+
+	public int getSequence(){									
+		return (int) getProperty(sequence_.getPropertyName());									
+	} 
 
 	@Override
 	public String getType() {

@@ -26,10 +26,10 @@ public class MConfiguration {
 	//public static final String[] ardproplabel = {"Behavior","Pulse length (us)"}; 
 	//public static final String[] ardlaserlabel = {"A405","A488","A638","A561"};  
 	//public static final int ardlasermaxpulse = 65535;
-	public static final String[] mojolaser1prop = {"Mode1","Duration1"};
-	public static final String[] mojolaser2prop = {"Mode2","Duration2"};
-	public static final String[] mojolaser3prop = {"Mode3","Duration3"};
-	public static final String[] mojolaser4prop = {"Mode4","Duration4"};
+	public static final String[] mojolaser1prop = {"Mode1","Duration1","Sequence1"};
+	public static final String[] mojolaser2prop = {"Mode2","Duration2","Sequence2"};
+	public static final String[] mojolaser3prop = {"Mode3","Duration3","Sequence3"};
+	public static final String[] mojolaser4prop = {"Mode4","Duration4","Sequence4"};
 	public static final String mojolabel = "Mojo-LaserSwitch";
 	public static final int mojomaxpulse = 65535;
 	

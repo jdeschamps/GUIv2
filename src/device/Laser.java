@@ -11,6 +11,7 @@ public class Laser extends Device{
 	DeviceProperty operation_;
 	DeviceProperty behaviour_;
 	DeviceProperty pulse_;
+	DeviceProperty sequence_;
 	double lowering_factor;
 	
 	public Laser(String label, String sublabel, CMMCore core, Log log, boolean isLoaded){
@@ -31,11 +32,13 @@ public class Laser extends Device{
 		powerPerc_ = new DeviceProperty(label_, MConfiguration.luxxproplabel[1], 0, 100,core_,log_,false, !detected_);
 		behaviour_ = new DeviceProperty(controllerLabel_, MConfiguration.getLaserMojoProp(label_)[0], 0, 4,core_,log_,false, !detected_);
 		pulse_ = new DeviceProperty(controllerLabel_, MConfiguration.getLaserMojoProp(label_)[1], 0, MConfiguration.mojomaxpulse,core_,log_,false, !detected_);
+		sequence_ = new DeviceProperty(controllerLabel_, MConfiguration.getLaserMojoProp(label_)[2], 0, MConfiguration.mojomaxpulse,core_,log_,false, !detected_);
 
 		add(operation_);
 		add(powerPerc_);
 		add(behaviour_);
 		add(pulse_);
+		add(sequence_);
 	}
 
 	public String getArduinoLabel(){
@@ -69,12 +72,20 @@ public class Laser extends Device{
 			log_.writeToLog(label_+" : Invalid behaviour requested ("+val+")");
 		}
 	}
-	
+
 	public void setPulseLength(int d){
 		if(d>=pulse_.getMinValue() && d<=pulse_.getMaxValue()){
 			setProperty(pulse_.getPropertyName(),d);
 		} else {
 			log_.writeToLog(label_+" : Invalid pulse length  requested ("+d+")");
+		}
+	}
+	
+	public void setSequence(int d){
+		if(d>=sequence_.getMinValue() && d<=sequence_.getMaxValue()){
+			setProperty(sequence_.getPropertyName(),d);
+		} else {
+			log_.writeToLog(label_+" : Invalid sequence  requested ("+d+")");
 		}
 	}
 	
@@ -89,9 +100,13 @@ public class Laser extends Device{
 	public int getBehaviour(){									
 		return (int) getProperty(behaviour_.getPropertyName());									
 	}
-	
+
 	public int getPulseLength(){									
 		return (int) getProperty(pulse_.getPropertyName());									
+	} 
+
+	public int getSequence(){									
+		return (int) getProperty(sequence_.getPropertyName());									
 	} 
 	
 

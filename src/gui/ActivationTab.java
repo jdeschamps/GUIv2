@@ -121,7 +121,7 @@ public class ActivationTab extends javax.swing.JPanel {
 			public void focusLost(FocusEvent arg0) {
 				String s = jTextField_framereset.getText();
 	    		try{
-	    			framereset_ = Integer.parseInt(s);
+	    			framereset_ = Integer.parseInt(s);  
 	    			System.out.println(framereset_);
 
 	    		} catch(Exception ex){

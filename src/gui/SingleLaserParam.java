@@ -139,7 +139,13 @@ public class SingleLaserParam extends javax.swing.JPanel {
         jTextField_sequence.setMargin(new java.awt.Insets(2, 2, 2, 1));
         jTextField_sequence.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	String s = jTextField_sequence.getText();
+            	if(s.length()>16){
+            		jTextField_sequence.setText("1111111111111111");
+            		return;
+            	}
             	int val = Bool2DecConverter.getDecimal16bits(jTextField_sequence.getText());
+            	sys_.setLaserSequence(label_, val);
             }
         });
 

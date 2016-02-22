@@ -325,6 +325,18 @@ public class MSystem {
 			l638_.setPulseLength(val);
 		} 
 	}
+	
+	public void setLaserSequence(String name, int val){
+		if(name.equals(MConfiguration.laserkeys[0])){
+			l405_.setSequence(val);
+		} else if(name.equals(MConfiguration.laserkeys[1])){
+			l488_.setSequence(val);
+		} else if(name.equals(MConfiguration.laserkeys[3])){			
+			l561_.setSequence(val);
+		} else if(name.equals(MConfiguration.laserkeys[2])){
+			l638_.setSequence(val);
+		} 
+	}
 
 	public int getLaserOperation(String name){
 		if(name.equals(MConfiguration.laserkeys[0])){
