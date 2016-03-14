@@ -140,6 +140,8 @@ public class SingleLaserParam extends javax.swing.JPanel {
         jTextField_sequence.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	String s = jTextField_sequence.getText();
+            	//System.out.println(s);
+            	//System.out.println(s.length());
             	if(s.length()>16){
             		jTextField_sequence.setText("1111111111111111");
             		return;

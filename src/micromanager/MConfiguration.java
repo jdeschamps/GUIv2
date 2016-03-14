@@ -94,7 +94,7 @@ public class MConfiguration {
 	//////////////////////////////////////////////
 	//// Misc parameters
 	public double UVcoeff=0.8, SDcoeff=1.5;
-	public static int timeDistanceBckgd = 20;
+	public static int timeDistanceBckgd = 16;
 	public static int gaussianMaskSize = 3;
 	public static double gaussianMaskPrecision = 0.02;
 	public static int nmsMaskSize = 7;
