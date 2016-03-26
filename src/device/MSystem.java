@@ -135,6 +135,14 @@ public class MSystem {
 		return val;
 	}
 	
+	public void setExposureTime(int val){
+		try {
+			core_.setExposure(val);
+		} catch (Exception e) {
+			log_.writeToLog("Error: unable to get exposure time.");
+		}
+	}
+	
 	public CMMCore getCore(){
 		return core_;
 	}
@@ -270,6 +278,19 @@ public class MSystem {
 		return d;
 	}
 	
+	public String[] getLaserList(){
+		String[] s = new String[5];
+		s[0] = "None";
+		for(int i=0;i<s.length-1;i++){
+			s[i+1] = MConfiguration.laserkeys[i];
+		}
+		return s;
+	}	
+
+	public String[] getLaserModeList(){		
+		return MConfiguration.laserbehaviourlabel;
+	}
+	
 	public int getUVPulse(){
 		if(l405_ != null){
 			return l405_.getPulseLength();
@@ -362,5 +383,31 @@ public class MSystem {
 	///////////////////////////////////////
 	public void writeToLog(String s){
 		log_.writeToLog(s);
+	}
+
+	public void turnoffLasers() {
+		l405_.setOperation(0);
+		l488_.setOperation(0);
+		l561_.setOperation(0);
+		l638_.setOperation(0);
+	}
+
+	public void setAstig(int i) {
+		astig_.setState(i);
+	}
+
+	public void setFilter(int filterNumber) {
+		fw_.setState(filterNumber);		
+	}
+
+	public void setLaserState(String label, int mode, int powerPerc, int pulseLength) {
+		setLaserOperation(label,1);
+		setLaserBehaviour(label,mode);
+		setLaserPowerPerc(label,powerPerc);
+		setLaserPulseLength(label,pulseLength);
+	}
+
+	public void setBFP(int i) {
+		bfp_.setState(i);
 	}
 }
