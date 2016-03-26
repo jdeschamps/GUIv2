@@ -72,6 +72,7 @@ public class AcqEngine{
 			acqname_ = acqname;
 			sleepTime_ = sleepTime;
 			stopmaxUV_ = stopmaxUV_;
+			advanced = false;
 		}
 		
 		public AcqRunner(ArrayList<Acquisition> acqlist, String path, String acqname, int sleepTime, boolean stopmaxUV){
@@ -80,6 +81,7 @@ public class AcqEngine{
 			acqname_ = acqname;
 			sleepTime_ = sleepTime;
 			stopmaxUV_ = stopmaxUV_;
+			advanced = true;
 		}
 
 		public void stop(){
@@ -99,12 +101,15 @@ public class AcqEngine{
 		@Override
 		protected Integer doInBackground() throws Exception {
 			if(advanced){
+				System.out.println("Run advanced");
 				runAdvanced();
 			} else {
+				System.out.println("Run normal");
 				runSingleBatch();
 			}
 			return 0;
 		}
+		
 		protected void runAdvanced(){
 			if(acqlist.size()>=1){
 				Double[] result = new Double[2];
@@ -129,10 +134,9 @@ public class AcqEngine{
 	    			result[0] = (double) 0;
 	    			result[1] = (double) 0;
 	    			publish(result);
-	    			
-	    			System.out.println("EDT? "+SwingUtilities.isEventDispatchThread());
-	    			
+	    				    			
 	    			for(int i=0;i<numPosition;i++){
+	    				System.out.println("Position number "+i);
 	    				result[0] = (double) i+1;
 	    				
 	        			currPos = poslist.getPosition(i);
@@ -140,6 +144,7 @@ public class AcqEngine{
 	        			Thread.sleep(sleepTime_*1000);
 	        			
 	    				for(int k=0;k<acqlist.size();k++){
+		    				System.out.println("Acquisition number "+k);
 		    				
 	    					// set acquisition settings
 		        			app.setAcquisitionSettings(acqlist.get(k).getAcquisitionSettings());
@@ -149,9 +154,12 @@ public class AcqEngine{
 		        			
 		        			// if none then leave, otherwise configure system
 		        			if(acqlist.get(k).getAcqTypeName().equals("None")){
+		        				System.out.println("None");
 		        				break;
 		        			} else {
 		        				acqlist.get(k).setUpSystem(sys_);
+		        				System.out.println("Wait");
+			        			Thread.sleep(acqlist.get(k).getWaitingTime()*1000);
 		        			}
 		        			
 		        			// run acq

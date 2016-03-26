@@ -165,20 +165,25 @@ public class Acquisition {
 	}
 	
 	public SequenceSettings getAcquisitionSettings(){
+		System.out.println("Get acquisition settings");
+
 		return seq;
 	}
 	
 	public void setUpSystem(MSystem sys){
+		System.out.println("----------set up system");
 		sys.turnoffLasers();
 		sys.setAstig(0);
 		sys.setBFP(0);
 		sys.setFilter(filterNumber);
 		sys.setExposureTime(exposuretime);
 		
-		for(int i=0;i<laserlist.size();i++){
-			sys.setLaserState(laserlist.get(0).getLabel(),laserlist.get(0).getMode(),laserlist.get(0).getPowerPerc(),laserlist.get(0).getPulseLength());
+		if(laserlist.size()>0){
+			for(int i=0;i<laserlist.size();i++){
+				sys.setLaserState(laserlist.get(0).getLabel(),laserlist.get(0).getMode(),laserlist.get(0).getPowerPerc(),laserlist.get(0).getPulseLength());
+			}
 		}
-		
+			
 		switch(acqType){
 		case BFPSNAP:
 			sys.setBFP(1);
@@ -190,7 +195,8 @@ public class Acquisition {
 			break;
 		}
 	}
-	public void endAcqSystem(MSystem sys){		
+	public void endAcqSystem(MSystem sys){	
+		System.out.println("----------end system");	
 		switch(acqType){
 		case BFPSNAP:
 			sys.setBFP(0);

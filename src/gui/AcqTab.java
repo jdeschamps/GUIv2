@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -97,6 +98,16 @@ public class AcqTab extends javax.swing.JPanel {
         jCheckBox_stopMaxUV.setText("Stop on max UV");
 
         jCheckBox_advanced.setText("Advanced acquisition");
+        jCheckBox_advanced.addItemListener(new java.awt.event.ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent evt) {
+				if(jCheckBox_advanced.isSelected()){
+					advancedacq = true;
+				} else {
+					advancedacq = false;
+				}
+			}
+        });
 
         javax.swing.GroupLayout jPanel_settingsLayout = new javax.swing.GroupLayout(jPanel_settings);
         jPanel_settings.setLayout(jPanel_settingsLayout);
@@ -262,7 +273,7 @@ public class AcqTab extends javax.swing.JPanel {
 
     public void setAcqList(ArrayList<Acquisition> acqlist){
     	advancedacq = true;
-    	System.out.println(acqlist.toString());
+    	System.out.println("Got acquisitions, n: "+acqlist.size());
     	this.acqlist = acqlist;
     }
     

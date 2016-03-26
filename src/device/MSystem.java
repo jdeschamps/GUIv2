@@ -386,6 +386,7 @@ public class MSystem {
 	}
 
 	public void turnoffLasers() {
+		System.out.println("Turnoff lasers");
 		l405_.setOperation(0);
 		l488_.setOperation(0);
 		l561_.setOperation(0);
@@ -393,14 +394,17 @@ public class MSystem {
 	}
 
 	public void setAstig(int i) {
+		System.out.println("Set Astig: "+i);
 		astig_.setState(i);
 	}
 
 	public void setFilter(int filterNumber) {
+		System.out.println("Set filter: "+filterNumber);
 		fw_.setState(filterNumber);		
 	}
 
 	public void setLaserState(String label, int mode, int powerPerc, int pulseLength) {
+		System.out.println("Set laserState: "+label+" "+mode+" "+powerPerc);
 		setLaserOperation(label,1);
 		setLaserBehaviour(label,mode);
 		setLaserPowerPerc(label,powerPerc);
@@ -408,6 +412,7 @@ public class MSystem {
 	}
 
 	public void setBFP(int i) {
+		System.out.println("Set BFP: "+i);
 		bfp_.setState(i);
 	}
 }

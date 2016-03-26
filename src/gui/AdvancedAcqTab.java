@@ -132,7 +132,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
         ////////////////////////////////////////////////////////////////////////////////////////////
         jScrollPane1.setViewportView(jTable_lasers);
 
-        jLabel_waittime.setText("Waiting time (ms):");
+        jLabel_waittime.setText("Waiting time (s):");
 
         jLabel_exposuretime.setText("Exposure time (ms):");
         
