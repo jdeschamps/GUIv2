@@ -188,6 +188,14 @@ public class MainFrame extends javax.swing.JFrame {
     public boolean isUVChecked(){
     	return tabs.activationPanel.isUVselected();
     }
+
+    public void UVChecked(boolean b){
+    	if(b){
+    		tabs.activationPanel.checkUV();
+    	} else {
+    		tabs.activationPanel.uncheckUV();
+    	}
+    }
     
     public void setNMSImageProcessor(ImageProcessor ipn){
     	tabs.activationPanel.setImageProcessor(ipn);

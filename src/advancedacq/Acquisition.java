@@ -34,6 +34,7 @@ public class Acquisition {
 	private int exposuretime=0;
 	private int waitingtime;
 	private boolean activation=false;
+	private boolean astigmatism=false;
 	private ArrayList<LaserSettings> laserlist;
 	
 	public Acquisition(){
@@ -44,23 +45,28 @@ public class Acquisition {
 		return "Acquisition: "+numFrames+" "+filterNumber+" "+exposuretime+", Lasers: "+laserlist.size()+" "+laserlist.get(0).getLabel();
 	}
 
-	public Acquisition(acqtype op, ArrayList<LaserSettings> laserlist, int filter, int exposuretime, int numFrames, int waitingtime, String path){
+	public Acquisition(acqtype op, ArrayList<LaserSettings> laserlist, int filter, int exposuretime, int numFrames, int waitingtime, boolean astigmatism, boolean activation, String path){
 		this.numFrames = numFrames;
 		this.path = path;
 		this.filterNumber = filter;
 		this.exposuretime = exposuretime;
 		this.waitingtime = waitingtime;
 		this.laserlist = laserlist;
+		this.activation = activation;
+		this.astigmatism = astigmatism;
+		
 		setOperator(op);
 	}
 
-	public Acquisition(String acq, ArrayList<LaserSettings> laserlist, int filter, int exposuretime, int numFrames, int waitingtime, String path){
+	public Acquisition(String acq, ArrayList<LaserSettings> laserlist, int filter, int exposuretime, int numFrames, int waitingtime, boolean astigmatism, boolean activation, String path){
 		this.numFrames = numFrames;
 		this.path = path;
 		this.filterNumber = filter;
 		this.exposuretime = exposuretime;
 		this.waitingtime = waitingtime;
 		this.laserlist = laserlist;
+		this.activation = activation;
+		this.astigmatism = astigmatism;
 		
 		if(acq.equals(acqtype.BFPSNAP.name)){
 			setOperator(acqtype.BFPSNAP);
@@ -112,9 +118,12 @@ public class Acquisition {
 	public int getFilterNumber(){
 		return filterNumber;
 	}
-	
+
 	public boolean getActivation(){
 		return activation;
+	}
+	public boolean getAstigmatism(){
+		return astigmatism;
 	}
 	
 	private void setSequenceSettings(){
@@ -173,7 +182,7 @@ public class Acquisition {
 	public void setUpSystem(MSystem sys){
 		System.out.println("----------set up system");
 		sys.turnoffLasers();
-		sys.setAstig(0);
+		sys.setAstig(astigmatism==true ? 1:0);
 		sys.setBFP(0);
 		sys.setFilter(filterNumber);
 		sys.setExposureTime(exposuretime);
@@ -195,7 +204,9 @@ public class Acquisition {
 			break;
 		}
 	}
-	public void endAcqSystem(MSystem sys){	
+	public void endAcqSystem(MSystem sys){
+		sys.setAstig(0);
+		
 		System.out.println("----------end system");	
 		switch(acqType){
 		case BFPSNAP:

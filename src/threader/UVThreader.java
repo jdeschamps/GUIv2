@@ -276,7 +276,7 @@ public class UVThreader implements Runnable {
 	public void restartUV(){
 		restart_ = true;
 	}
-
+	
 	@Override
 	public void run() {
 		restartUV();

@@ -528,7 +528,15 @@ public class ActivationTab extends javax.swing.JPanel {
     	return dT_;
     }
 
+    public void checkUV(){
+    	jCheckBox_activate.setSelected(true);
+    	checkedUV = true;
+    }
     
+    public void uncheckUV(){
+    	jCheckBox_activate.setSelected(false);
+    	checkedUV = false;
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public double cutoff;																/// from config file

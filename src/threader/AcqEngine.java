@@ -148,6 +148,7 @@ public class AcqEngine{
 		    				
 	    					// set acquisition settings
 		        			app.setAcquisitionSettings(acqlist.get(k).getAcquisitionSettings());
+		        			parent_.UVChecked(acqlist.get(k).getActivation());
 		        			
 		        			// acq name
 		        			individualname = i+"_"+acqname_+"_"+acqlist.get(k).getAcqTypeName();

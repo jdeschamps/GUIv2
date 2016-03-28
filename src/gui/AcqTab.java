@@ -15,6 +15,7 @@ import threader.AcqEngine;
 import utils.StringText;
 
 
+@SuppressWarnings("serial")
 public class AcqTab extends javax.swing.JPanel {
 
 	MainFrame parent_;
@@ -130,7 +131,7 @@ public class AcqTab extends javax.swing.JPanel {
                     .addGroup(jPanel_settingsLayout.createSequentialGroup()
                         .addComponent(jLabel_waittime)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField_waittime, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField_waittime, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel_settingsLayout.createSequentialGroup()
                         .addGroup(jPanel_settingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCheckBox_advanced)
