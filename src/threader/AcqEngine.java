@@ -192,10 +192,10 @@ public class AcqEngine{
 		        			t.start();
 		        			
 		    				while(t.isAlive()){
-		            			Thread.sleep(500);
+		            			Thread.sleep(1000);
 		    					if(uv.isUVatMax() && stopmaxUV_){				/// if UV is at max or stop has been requested
 		    						closeCurrAcq();
-		    						t.interrupt();
+		    						//t.interrupt();
 		    					}
 		    				}
 							
