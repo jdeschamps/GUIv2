@@ -2,13 +2,19 @@ package threader;
 
 import gui.MainFrame;
 
+import java.awt.Frame;
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
+import org.micromanager.acquisition.AcquisitionEngine;
+import org.micromanager.api.IAcquisitionEngine2010;
 import org.micromanager.api.MultiStagePosition;
 import org.micromanager.api.PositionList;
 import org.micromanager.api.ScriptInterface;
@@ -71,7 +77,7 @@ public class AcqEngine{
 			path_ = path;
 			acqname_ = acqname;
 			sleepTime_ = sleepTime;
-			stopmaxUV_ = stopmaxUV_;
+			this.stopmaxUV_ = stopmaxUV;
 			advanced = false;
 		}
 		
@@ -80,7 +86,7 @@ public class AcqEngine{
 			path_ = path;
 			acqname_ = acqname;
 			sleepTime_ = sleepTime;
-			stopmaxUV_ = stopmaxUV_;
+			this.stopmaxUV_ = stopmaxUV;
 			advanced = true;
 		}
 
@@ -90,12 +96,9 @@ public class AcqEngine{
 		}
 		
 		public void closeCurrAcq(){
-			try {
-				app.closeAcquisition(currAcq);
-			} catch (MMScriptException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			//app.closeAcquisition(currAcq);
+			IAcquisitionEngine2010 aq =  app.getAcquisitionEngine2010();
+			aq.stop();
 		}
 		
 		@Override
@@ -164,8 +167,25 @@ public class AcqEngine{
 		        			}
 		        			
 		        			// run acq
-							currAcq  = app.runAcquisition(individualname,path_);
-	
+		        			Thread t = new Thread() {
+		        				public void run() {
+		        					try {
+		        						currAcq  = app.runAcquisition(individualname,path_);
+		        					} catch (MMScriptException e) {
+		        						e.printStackTrace();
+		        					}
+		        				}  
+		        			};
+		        			t.start();
+		        			
+		    				while(t.isAlive()){
+		            			Thread.sleep(500);
+		    					if((uv.isUVatMax() && stopmaxUV_) || stop_){				/// if UV is at max or stop has been requested
+		    						closeCurrAcq();
+		    						t.interrupt();
+		    					}
+		    				}
+							
 							// close acq window
 		        			try{
 		        				app.closeAcquisitionWindow(currAcq);
@@ -254,25 +274,26 @@ public class AcqEngine{
         			individualname = i+"_"+acqname_;
 
     				//app.refreshGUI();
-    		//		Thread t = new Thread() {
-        			//		    public void run() {
-        			//	try {
-					currAcq  = app.runAcquisition(individualname,path_);
-								//	} catch (MMScriptException e) {
-								//	e.printStackTrace();
-								//	}
-								//  }  
-								//		};
-								//	t.start();
-    		/*		
+        			Thread t = new Thread() {
+        				public void run() {
+        					try {
+        						currAcq  = app.runAcquisition(individualname,path_);
+        					} catch (MMScriptException e) {
+        						e.printStackTrace();
+        					}
+        				}  
+        			};
+        			t.start();
+    		
     				while(t.isAlive()){
             			Thread.sleep(500);
-    					if(uv.isUVatMax()){
+    					if((uv.isUVatMax() && stopmaxUV_) || stop_){				/// if UV is at max or stop has been requested
     						closeCurrAcq();
     						t.interrupt();
     					}
     				}
-    			*/	
+
+    				
         			try{
         				app.closeAcquisitionWindow(currAcq);
         			} catch (MMScriptException e) {
@@ -285,9 +306,9 @@ public class AcqEngine{
         			
         			publish(result);
         			        			
-        			if(stop_){
+        			if(stop_){			// stop requested, the whole acquisition stops
         				stop_ = false;
-        				break;
+        				//break;
         			}
         			
     			}
