@@ -103,8 +103,10 @@ public class AcqTab extends javax.swing.JPanel {
 			@Override
 			public void itemStateChanged(ItemEvent evt) {
 				if(jCheckBox_advanced.isSelected()){
+					jTextField_numframes.setEnabled(false);
 					advancedacq = true;
 				} else {
+					jTextField_numframes.setEnabled(true);
 					advancedacq = false;
 				}
 			}

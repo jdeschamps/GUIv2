@@ -1,10 +1,14 @@
 package gui;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -63,7 +67,20 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
 
         jLabel_acqtype.setText("Acquisition type:");
 
+
+        jSpinner_numframes.setModel(new SpinnerNumberModel(50000, 0, 1000000, 1));
         jComboBox_acqtype.setModel(new javax.swing.DefaultComboBoxModel(acq.getAcqType()));
+        jComboBox_acqtype.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e){
+	    		if(jComboBox_acqtype.getSelectedIndex()==0){
+	    			jSpinner_numframes.setEnabled(true);
+	    			jSpinner_numframes.setValue(50000);
+	    		} else {
+	    			jSpinner_numframes.setValue(1);
+	    			jSpinner_numframes.setEnabled(false);
+	    		}
+	    	}
+	    });
 
         jCheckBox_activation.setText("Activation on");
         jCheckBox_activation.setSelected(true);
@@ -130,9 +147,9 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
 
         jLabel_exposuretime.setText("Exposure time (ms):");
         
-        jSpinner_waitingtime.setValue(0);
-        jSpinner_exposure.setValue(((Double)sys_.getExposureTime()).intValue());
-        jSpinner_numframes.setValue(50000);
+        jSpinner_waitingtime.setModel(new SpinnerNumberModel(0, 0, 10000, 1));
+        
+        jSpinner_exposure.setModel(new SpinnerNumberModel(((Double)sys_.getExposureTime()).intValue(), 0, 200, 1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
