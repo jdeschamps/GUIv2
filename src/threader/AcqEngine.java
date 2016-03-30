@@ -4,6 +4,11 @@ import gui.MainFrame;
 
 import java.awt.Frame;
 import java.awt.Window;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -240,6 +245,10 @@ public class AcqEngine{
 			pb = parent_.getAcqProgressBar();
 			
     		try {
+
+    			PrintWriter writer;
+    			writer = new PrintWriter(new FileWriter("Acq-test.txt", true));
+    			   
     			CMMCore core = app.getMMCore();
     			
     			// clear all previous acquisitions
@@ -273,13 +282,23 @@ public class AcqEngine{
     			for(int i=0;i<numPosition;i++){
     				result[0] = (double) i+1;
     				
+    				writer.println("---------------- exp "+i);
+    				
         			currPos = poslist.getPosition(i);
         			core.setXYPosition(xystage, currPos.get(0).x, currPos.get(0).y);
+
+    				writer.println("---Set position "+currPos.get(0).x+" "+ currPos.get(0).y);
+        			
         			Thread.sleep(sleepTime_*1000);
 
+    				writer.println("---Sleep "+currPos.get(0).x+" "+ currPos.get(0).y);
+        			
         			app.setAcquisitionSettings(seq);
         			
         			individualname = i+"_"+acqname_;
+
+        			writer.println("---Name "+individualname);
+
 
     				//app.refreshGUI();
         			Thread t = new Thread() {
@@ -292,30 +311,42 @@ public class AcqEngine{
         				}  
         			};
         			t.start();
-    		
+        			
+        			writer.println("---Start");
+
     				while(t.isAlive()){
             			Thread.sleep(500);
     					if(uv.isUVatMax() && stopmaxUV_){				/// if UV is at max or stop has been requested
+
+    	        			writer.println("----------Closing");
     						closeCurrAcq();
-    						t.interrupt();
+    						//t.interrupt();
+    					} else {
+    	        			writer.println("---Waiting");
     					}
     				}
 
     				
         			try{
         				app.closeAcquisitionWindow(currAcq);
+	        			writer.println("---Closed window");
+
         			} catch (MMScriptException e) {
         				System.out.println("Cannot close");
         			}
         		
         			result[1] = (double) (Math.floor(100*(i+1)/numPosition));		
-        			     
+        			   
         			uv.restartUV();
-        			
+        			writer.println("---Restart UV");
+
         			publish(result);
+        			writer.println("---Publish");
+
         			        			
         			if(stop_){			// stop requested, the whole acquisition stops
         				stop_ = false;
+            			writer.println("---Stop all");
         				break;
         			}
         			
@@ -323,14 +354,17 @@ public class AcqEngine{
     			
     			result[1] = (double) 100;
     			publish(result);
-    			
-    			
+    			writer.println("------------End");
+
+    			writer.close();
     		} catch (MMScriptException e) {
     			e.printStackTrace();
     		} catch (Exception e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
+    		
+
 		}
 		
 		@Override
