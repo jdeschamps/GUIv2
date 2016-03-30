@@ -280,6 +280,14 @@ public class UVThreader implements Runnable {
 	@Override
 	public void run() {
 		restartUV();
+		while(frame_.getUVSlider().getValue()!=0 || sys_.getUVPulse()!=0){
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public boolean isUVatMax(){

@@ -295,7 +295,7 @@ public class MSystem {
 		if(l405_ != null){
 			return l405_.getPulseLength();
 		}
-		return 0;
+		return -1;
 	}
 	
 	public void setLaserOperation(String name, int val){
@@ -379,6 +379,7 @@ public class MSystem {
 	public void setLaserMaxPower(int val){
 		l561_.setMaxPower(val);
 	}
+	
 	
 	///////////////////////////////////////
 	public void writeToLog(String s){
