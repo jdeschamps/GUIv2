@@ -291,6 +291,10 @@ public class UVThreader implements Runnable {
 	}
 	
 	public boolean isUVatMax(){
+		System.out.println("---- is Uv max?");
+		System.out.println("---- slider: "+frame_.getUVSlider().getValue());
+		System.out.println("---- slidermax: "+frame_.getUVSlider().getMaxWithin());
+		System.out.println("---- "+(frame_.getUVSlider().getValue() == frame_.getUVSlider().getMaxWithin()));
 		return frame_.getUVSlider().getValue() == frame_.getUVSlider().getMaxWithin();
 	}
 }

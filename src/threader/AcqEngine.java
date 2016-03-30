@@ -315,7 +315,8 @@ public class AcqEngine{
         			writer.println("---Start");
 
     				while(t.isAlive()){
-            			Thread.sleep(500);
+            			Thread.sleep(1000);
+            			System.out.println("----ahaha");
     					if(uv.isUVatMax() && stopmaxUV_){				/// if UV is at max or stop has been requested
 
     	        			writer.println("----------Closing");
