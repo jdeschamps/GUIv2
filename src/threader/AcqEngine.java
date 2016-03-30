@@ -308,7 +308,7 @@ public class AcqEngine{
         			        			
         			if(stop_){			// stop requested, the whole acquisition stops
         				stop_ = false;
-        				//break;
+        				break;
         			}
         			
     			}
