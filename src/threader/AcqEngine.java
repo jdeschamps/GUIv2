@@ -99,6 +99,14 @@ public class AcqEngine{
 			//app.closeAcquisition(currAcq);
 			IAcquisitionEngine2010 aq =  app.getAcquisitionEngine2010();
 			aq.stop();
+			while(!aq.isFinished()){
+    			try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		@Override
@@ -180,7 +188,7 @@ public class AcqEngine{
 		        			
 		    				while(t.isAlive()){
 		            			Thread.sleep(500);
-		    					if((uv.isUVatMax() && stopmaxUV_) || stop_){				/// if UV is at max or stop has been requested
+		    					if(uv.isUVatMax() && stopmaxUV_){				/// if UV is at max or stop has been requested
 		    						closeCurrAcq();
 		    						t.interrupt();
 		    					}
@@ -287,7 +295,7 @@ public class AcqEngine{
     		
     				while(t.isAlive()){
             			Thread.sleep(500);
-    					if((uv.isUVatMax() && stopmaxUV_) || stop_){				/// if UV is at max or stop has been requested
+    					if(uv.isUVatMax() && stopmaxUV_){				/// if UV is at max or stop has been requested
     						closeCurrAcq();
     						t.interrupt();
     					}
