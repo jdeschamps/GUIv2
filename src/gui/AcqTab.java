@@ -102,7 +102,7 @@ public class AcqTab extends javax.swing.JPanel {
         jCheckBox_stopMaxUV.addItemListener(new java.awt.event.ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent evt) {
-				if(jCheckBox_advanced.isSelected()){
+				if(jCheckBox_stopMaxUV.isSelected()){
 					jTextField_UVwaittime.setEnabled(true);
 				} else {
 					jTextField_UVwaittime.setEnabled(false);
