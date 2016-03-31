@@ -48,7 +48,12 @@ public class DeviceProperty extends InputDeviceProperty{
 
 					core_.setProperty(device_, property_, val);
 					currentvalue_ = val;
-					//System.out.println("[GUI] value set to "+currentvalue_);
+					System.out.println("------");
+
+					System.out.println("[GUI] Value of"+device_+" "+property_+" set to "+currentvalue_);
+					String t = 	core_.getProperty(device_, property_);
+
+					System.out.println("[GUI] Verification of"+device_+" "+property_+" set to "+t);
 
 					return true;
 					
