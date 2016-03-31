@@ -44,13 +44,13 @@ public class AcqEngine{
 		this.app = parent_.getApp();
 	}
 
-	public void runAcq(int numFrames, String path, String acqname, int sleepTime, boolean stopmaxUV){
-		t = new AcqRunner( numFrames,  path,  acqname,  sleepTime, stopmaxUV);
+	public void runAcq(int numFrames, String path, String acqname, int sleepTime,int Uvsleeptime, boolean stopmaxUV){
+		t = new AcqRunner( numFrames,  path,  acqname,  sleepTime, Uvsleeptime, stopmaxUV);
         t.execute();
 	}
 
-	public void runAcqList(ArrayList<Acquisition> acqlist, String path, String acqname, int sleepTime, boolean stopmaxUV){
-		t = new AcqRunner( acqlist,  path,  acqname,  sleepTime, stopmaxUV);
+	public void runAcqList(ArrayList<Acquisition> acqlist, String path, String acqname, int sleepTime,int Uvsleeptime, boolean stopmaxUV){
+		t = new AcqRunner( acqlist,  path,  acqname,  sleepTime, Uvsleeptime, stopmaxUV);
         t.execute();
 	}
 		
@@ -63,7 +63,7 @@ public class AcqEngine{
 		private String path_;
 		private String acqname_;
 		private String individualname;
-		private int sleepTime_;
+		private int sleepTime_, UVsleepTime_;
 		private boolean stopmaxUV_;
 		private int numPosition;
 		private String currAcq;
@@ -77,20 +77,22 @@ public class AcqEngine{
 		
 		private ArrayList<Acquisition> acqlist;
 
-		public AcqRunner(int numFrames, String path, String acqname, int sleepTime, boolean stopmaxUV){
+		public AcqRunner(int numFrames, String path, String acqname, int sleepTime, int Uvsleeptime, boolean stopmaxUV){
 			numFrames_ = numFrames;
 			path_ = path;
 			acqname_ = acqname;
 			sleepTime_ = sleepTime;
+			UVsleepTime_ = Uvsleeptime;
 			this.stopmaxUV_ = stopmaxUV;
 			advanced = false;
 		}
 		
-		public AcqRunner(ArrayList<Acquisition> acqlist, String path, String acqname, int sleepTime, boolean stopmaxUV){
+		public AcqRunner(ArrayList<Acquisition> acqlist, String path, String acqname, int sleepTime, int Uvsleeptime, boolean stopmaxUV){
 			this.acqlist = acqlist;
 			path_ = path;
 			acqname_ = acqname;
 			sleepTime_ = sleepTime;
+			UVsleepTime_ = Uvsleeptime;
 			this.stopmaxUV_ = stopmaxUV;
 			advanced = true;
 		}
@@ -196,6 +198,7 @@ public class AcqEngine{
 		    				while(t.isAlive()){
 		            			Thread.sleep(1000);
 		    					if(uv.isUVatMax() && stopmaxUV_){				/// if UV is at max or stop has been requested
+			            			Thread.sleep(UVsleepTime_);
 		    						closeCurrAcq();
 		    						//t.interrupt();
 		    					}
@@ -324,10 +327,8 @@ public class AcqEngine{
 
     				while(t.isAlive()){
             			Thread.sleep(1000);
-            			System.out.println("----ahaha");
     					if(uv.isUVatMax() && stopmaxUV_){				/// if UV is at max or stop has been requested
-
-    	        			writer.println("----------Closing");
+	            			Thread.sleep(UVsleepTime_);
     						closeCurrAcq();
     						//t.interrupt();
     					} else {

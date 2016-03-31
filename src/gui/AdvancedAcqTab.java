@@ -75,9 +75,13 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
 	    		if(jComboBox_acqtype.getSelectedIndex()==0){
 	    			jSpinner_numframes.setEnabled(true);
 	    			jSpinner_numframes.setValue(50000);
+	    			jCheckBox_activation.setEnabled(true);
+	    			jCheckBox_activation.setSelected(true);
 	    		} else {
 	    			jSpinner_numframes.setValue(1);
 	    			jSpinner_numframes.setEnabled(false);
+	    			jCheckBox_activation.setEnabled(false);
+	    			jCheckBox_activation.setSelected(false);
 	    		}
 	    	}
 	    });

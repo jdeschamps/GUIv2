@@ -275,12 +275,20 @@ public class UVThreader implements Runnable {
 
 	public void restartUV(){
 		restart_ = true;
+		while(frame_.getUVSlider().getValue()!=0 && sys_.getUVPulse()!=0){
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	@Override
 	public void run() {
 		restartUV();
-		while(frame_.getUVSlider().getValue()!=0 || sys_.getUVPulse()!=0){
+		while(frame_.getUVSlider().getValue()!=0 && sys_.getUVPulse()!=0){
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
@@ -291,10 +299,6 @@ public class UVThreader implements Runnable {
 	}
 	
 	public boolean isUVatMax(){
-		System.out.println("---- is Uv max?");
-		System.out.println("---- slider: "+frame_.getUVSlider().getValue());
-		System.out.println("---- slidermax: "+frame_.getUVSlider().getMaxWithin());
-		System.out.println("---- "+(frame_.getUVSlider().getValue() == frame_.getUVSlider().getMaxWithin()));
-		return frame_.getUVSlider().getValue() == frame_.getUVSlider().getMaxWithin();
+		return sys_.getUVPulse() == frame_.getUVSlider().getMaxWithin();
 	}
 }
