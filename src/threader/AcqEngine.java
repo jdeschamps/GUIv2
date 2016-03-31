@@ -128,6 +128,8 @@ public class AcqEngine{
 		
 		protected void runAdvanced(){
 			if(acqlist.size()>=1){
+				boolean stoploop = false;
+				
 				Double[] result = new Double[2];
 				
 				uv = parent_.getcurrentThreader();
@@ -195,7 +197,7 @@ public class AcqEngine{
 		            			Thread.sleep(500);
 		    					if(uv.isUVatMax() && stopmaxUV_){				/// if UV is at max or stop has been requested
 		    						closeCurrAcq();
-		    						t.interrupt();
+		    						//t.interrupt();
 		    					}
 		    				}
 							
@@ -205,28 +207,34 @@ public class AcqEngine{
 		        			} catch (MMScriptException e) {
 		        				System.out.println("Cannot close");
 		        			}
-		        		
-		        			// show progress
-		        			result[1] = (double) (Math.floor(100*(i+1)/numPosition));		
 		        			     
 		        			// restart uv
 		        			uv.restartUV();
 		        			
 		        			// end acq settings
 	        				acqlist.get(k).endAcqSystem(sys_);
-		        			
-		        			publish(result);
-		        			        			
+		        					        			        			
 		        			if(stop_){
 		        				stop_ = false;
+		        				stoploop = true;
 		        				break;
 		        			}
 		        			
 		    			}
+	    				
+	        			// show progress
+	        			result[1] = (double) (Math.floor(100*(i+1)/numPosition));	
+	        			publish(result);
+	    				
+	    				if(stoploop){
+	        				stoploop = false;
+	    					break;
+	    				}
 		    			
-		    			result[1] = (double) 100;
-		    			publish(result);
 	    			}
+	    			
+	    			result[1] = (double) 100;
+	    			publish(result);
 	    			
 	    		} catch (MMScriptException e) {
 	    			e.printStackTrace();
