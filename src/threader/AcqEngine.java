@@ -198,7 +198,7 @@ public class AcqEngine{
 		    				while(t.isAlive()){
 		            			Thread.sleep(1000);
 		    					if(uv.isUVatMax() && stopmaxUV_){				/// if UV is at max or stop has been requested
-			            			Thread.sleep(UVsleepTime_);
+			            			Thread.sleep(UVsleepTime_*1000);
 		    						closeCurrAcq();
 		    						//t.interrupt();
 		    					}
@@ -328,7 +328,7 @@ public class AcqEngine{
     				while(t.isAlive()){
             			Thread.sleep(1000);
     					if(uv.isUVatMax() && stopmaxUV_){				/// if UV is at max or stop has been requested
-	            			Thread.sleep(UVsleepTime_);
+	            			Thread.sleep(UVsleepTime_*1000);
     						closeCurrAcq();
     						//t.interrupt();
     					} else {
