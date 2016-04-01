@@ -94,45 +94,52 @@ public class UVautomator extends Updater{
 			width = (int) core_.getImageWidth();
 			height = (int) core_.getImageHeight(); 
 			
-			try {
-				tagged1 = core_.getLastTaggedImage();
-				tagged2 = core_.getNBeforeLastTaggedImage(MConfiguration.timeDistanceBckgd);
-			} catch (Exception e) {
-				log_.writeToLog("---[UV]--- Couldn't get tagged images");
-			}		
-
-			ip = new ShortProcessor(width, height);
-			ip2 = new ShortProcessor(width, height);
-		
-			ip.setPixels(tagged1.pix);
-			ip2.setPixels(tagged2.pix);
-
-			imp = new ImagePlus("", ip);
-			imp2 = new ImagePlus("", ip2);
+			int  buffsize = core_.getImageBufferSize();
+			System.out.println("[buffer] buffer size is: "+buffsize);
 			
-			// Subtraction
-			imp3 = calcul.run("Substract create", imp, imp2);
+			if(buffsize>MConfiguration.timeDistanceBckgd){
+				try {
+					tagged1 = core_.getLastTaggedImage();
+					tagged2 = core_.getNBeforeLastTaggedImage(MConfiguration.timeDistanceBckgd);
+				} catch (Exception e) {
+					log_.writeToLog("---[UV]--- Couldn't get tagged images");
+				}		
+				
+				ip = new ShortProcessor(width, height);
+				ip2 = new ShortProcessor(width, height);
 			
-			// Gaussian filter
-			gau.blurGaussian(imp3.getProcessor(), MConfiguration.gaussianMaskSize,  MConfiguration.gaussianMaskSize,  MConfiguration.gaussianMaskPrecision);
+				ip.setPixels(tagged1.pix);
+				ip2.setPixels(tagged2.pix);
 
-			try{
-				tempcutoff = imp3.getStatistics().mean+pane_.getThreshold()*imp3.getStatistics().stdDev;
-			} catch(Exception e){
-				tempcutoff = cutoff_;
-			}
-			
-			if( pane_.isAutoCutoffOn() || pane_.isCutoffNeeded()){
-				avparam_ = 1/((double)pane_.getdT());
-				cutoff_ = (1-avparam_)*cutoff_+tempcutoff*avparam_;
-			} else {
-				cutoff_ = pane_.getCutoff();
-				if(cutoff_ == 0){
-					cutoff_ = tempcutoff;
+				imp = new ImagePlus("", ip);
+				imp2 = new ImagePlus("", ip2);
+				
+				// Subtraction
+				imp3 = calcul.run("Substract create", imp, imp2);
+				
+				// Gaussian filter
+				gau.blurGaussian(imp3.getProcessor(), MConfiguration.gaussianMaskSize,  MConfiguration.gaussianMaskSize,  MConfiguration.gaussianMaskPrecision);
+
+				try{
+					tempcutoff = imp3.getStatistics().mean+pane_.getThreshold()*imp3.getStatistics().stdDev;
+				} catch(Exception e){
+					tempcutoff = cutoff_;
 				}
-			}
+				
+				if( pane_.isAutoCutoffOn() || pane_.isCutoffNeeded()){
+					avparam_ = 1/((double)pane_.getdT());
+					cutoff_ = (1-avparam_)*cutoff_+tempcutoff*avparam_;
+				} else {
+					cutoff_ = pane_.getCutoff();
+					if(cutoff_ == 0){
+						cutoff_ = tempcutoff;
+					}
+				}
+				ip_ = NMSuppr.run(imp3, MConfiguration.nmsMaskSize, cutoff_);
 
-			ip_ = NMSuppr.run(imp3, MConfiguration.nmsMaskSize, cutoff_);
+			} else {
+				return 0;
+			}
 /*
 			writer.println("[UV] temporary cutoff: "+tempcutoff);
 			writer.println("[UV] is auto cutoff: "+pane_.isAutoCutoffOn());
