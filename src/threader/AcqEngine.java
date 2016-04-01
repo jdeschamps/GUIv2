@@ -44,13 +44,13 @@ public class AcqEngine{
 		this.app = parent_.getApp();
 	}
 
-	public void runAcq(int numFrames, String path, String acqname, int sleepTime,int Uvsleeptime, boolean stopmaxUV){
-		t = new AcqRunner( numFrames,  path,  acqname,  sleepTime, Uvsleeptime, stopmaxUV);
+	public void runAcq(int numFrames, String path, String acqname, int sleepTime,int Uvsleeptime, boolean stopmaxUV,int numPos,boolean useNumpos){
+		t = new AcqRunner( numFrames,  path,  acqname,  sleepTime, Uvsleeptime, stopmaxUV,numPos,useNumpos);
         t.execute();
 	}
 
-	public void runAcqList(ArrayList<Acquisition> acqlist, String path, String acqname, int sleepTime,int Uvsleeptime, boolean stopmaxUV){
-		t = new AcqRunner( acqlist,  path,  acqname,  sleepTime, Uvsleeptime, stopmaxUV);
+	public void runAcqList(ArrayList<Acquisition> acqlist, String path, String acqname, int sleepTime,int Uvsleeptime, boolean stopmaxUV,int numPos,boolean useNumpos){
+		t = new AcqRunner( acqlist,  path,  acqname,  sleepTime, Uvsleeptime, stopmaxUV,numPos,useNumpos);
         t.execute();
 	}
 		
@@ -63,8 +63,8 @@ public class AcqEngine{
 		private String path_;
 		private String acqname_;
 		private String individualname;
-		private int sleepTime_, UVsleepTime_;
-		private boolean stopmaxUV_;
+		private int sleepTime_, UVsleepTime_, numPos_;
+		private boolean stopmaxUV_,useNumpos_;
 		private int numPosition;
 		private String currAcq;
 		
@@ -77,23 +77,27 @@ public class AcqEngine{
 		
 		private ArrayList<Acquisition> acqlist;
 
-		public AcqRunner(int numFrames, String path, String acqname, int sleepTime, int Uvsleeptime, boolean stopmaxUV){
+		public AcqRunner(int numFrames, String path, String acqname, int sleepTime, int Uvsleeptime, boolean stopmaxUV,int numPos,boolean useNumpos){
 			numFrames_ = numFrames;
 			path_ = path;
 			acqname_ = acqname;
 			sleepTime_ = sleepTime;
 			UVsleepTime_ = Uvsleeptime;
 			this.stopmaxUV_ = stopmaxUV;
+			useNumpos_ = useNumpos;
+			numPos_ = numPos;
 			advanced = false;
 		}
 		
-		public AcqRunner(ArrayList<Acquisition> acqlist, String path, String acqname, int sleepTime, int Uvsleeptime, boolean stopmaxUV){
+		public AcqRunner(ArrayList<Acquisition> acqlist, String path, String acqname, int sleepTime, int Uvsleeptime, boolean stopmaxUV,int numPos,boolean useNumpos){
 			this.acqlist = acqlist;
 			path_ = path;
 			acqname_ = acqname;
 			sleepTime_ = sleepTime;
 			UVsleepTime_ = Uvsleeptime;
 			this.stopmaxUV_ = stopmaxUV;
+			useNumpos_ = useNumpos;
+			numPos_ = numPos;
 			advanced = true;
 		}
 
@@ -154,7 +158,13 @@ public class AcqEngine{
 	    			result[0] = (double) 0;
 	    			result[1] = (double) 0;
 	    			publish(result);
-	    				    			
+	    			
+	    			if(useNumpos_){
+	    				if(numPos_<numPosition){
+	    					numPosition = numPos_;
+	    				}
+	    			}
+	    			
 	    			for(int i=0;i<numPosition;i++){
 	    				System.out.println("Position number "+i);
 	    				result[0] = (double) i+1;
@@ -219,7 +229,7 @@ public class AcqEngine{
 		        					        			        			
 		        			if(stop_){
 		        				stop_ = false;
-		        				stoploop = true;
+		        				stoploop = true; // one case use a "outer:" before the big loop and do "break outer;"
 		        				break;
 		        			}
 		        			
@@ -230,7 +240,7 @@ public class AcqEngine{
 	        			publish(result);
 	    				
 	    				if(stoploop){
-	        				stoploop = false;
+	        				stoploop = false; 
 	    					break;
 	    				}
 		    			
@@ -288,7 +298,11 @@ public class AcqEngine{
     			result[1] = (double) 0;
     			publish(result);
     			
-    			System.out.println("EDT? "+SwingUtilities.isEventDispatchThread());
+    			if(useNumpos_){
+    				if(numPos_<numPosition){
+    					numPosition = numPos_;
+    				}
+    			}
     			
     			for(int i=0;i<numPosition;i++){
     				result[0] = (double) i+1;

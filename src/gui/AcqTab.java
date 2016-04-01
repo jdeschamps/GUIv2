@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 
 import advancedacq.Acquisition;
 import device.MSystem;
@@ -63,7 +64,9 @@ public class AcqTab extends javax.swing.JPanel {
         jCheckBox_advanced = new javax.swing.JCheckBox();
         jLabel_UVwaittime = new javax.swing.JLabel();
         jTextField_UVwaittime = new javax.swing.JTextField();
-
+        jCheckBox_usenumberpos = new javax.swing.JCheckBox();
+        jLabel_numberofpos = new javax.swing.JLabel();
+        jSpinner_numberofpose=  new javax.swing.JSpinner();
 
         jLabel_path.setText("Path");
 
@@ -129,6 +132,23 @@ public class AcqTab extends javax.swing.JPanel {
         jTextField_UVwaittime.setText("0");
         jTextField_UVwaittime.setEnabled(false);
 
+
+        jLabel_numberofpos.setText("Number of positions:");
+        
+        jSpinner_numberofpose.setModel(new SpinnerNumberModel(1, 0, 10000, 1));
+        jSpinner_numberofpose.setEnabled(false);
+
+        jCheckBox_usenumberpos.addItemListener(new java.awt.event.ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent evt) {
+				if(jCheckBox_usenumberpos.isSelected()){
+					jSpinner_numberofpose.setEnabled(true);
+				} else {
+					jSpinner_numberofpose.setEnabled(false);
+				}
+			}
+        });
+        
         javax.swing.GroupLayout jPanel_settingsLayout = new javax.swing.GroupLayout(jPanel_settings);
         jPanel_settings.setLayout(jPanel_settingsLayout);
         jPanel_settingsLayout.setHorizontalGroup(
@@ -153,17 +173,23 @@ public class AcqTab extends javax.swing.JPanel {
                         .addComponent(jTextField_waittime, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel_settingsLayout.createSequentialGroup()
                         .addGroup(jPanel_settingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox_advanced)
                             .addComponent(jCheckBox_stopMaxUV)
                             .addGroup(jPanel_settingsLayout.createSequentialGroup()
                                 .addComponent(jButton_start)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton_stop)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel_settingsLayout.createSequentialGroup()
-                        .addComponent(jLabel_UVwaittime)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField_UVwaittime, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_settingsLayout.createSequentialGroup()
+                        .addGroup(jPanel_settingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel_UVwaittime)
+                            .addGroup(jPanel_settingsLayout.createSequentialGroup()
+                                .addComponent(jLabel_numberofpos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jCheckBox_usenumberpos)))
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel_settingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSpinner_numberofpose, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField_UVwaittime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel_settingsLayout.setVerticalGroup(
@@ -191,9 +217,13 @@ public class AcqTab extends javax.swing.JPanel {
                 .addGroup(jPanel_settingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_UVwaittime)
                     .addComponent(jTextField_UVwaittime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_settingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel_settingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jSpinner_numberofpose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel_numberofpos))
+                    .addComponent(jCheckBox_usenumberpos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jCheckBox_advanced)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBox_stopMaxUV)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel_settingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -201,6 +231,7 @@ public class AcqTab extends javax.swing.JPanel {
                     .addComponent(jButton_stop, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
 
 
         jScrollPane1.setViewportView(jTextPane_progress);
@@ -226,7 +257,9 @@ public class AcqTab extends javax.swing.JPanel {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jProgressBar_progress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel_displayLayout.createSequentialGroup()
-                        .addComponent(jButton_configAdvanced)
+                        .addGroup(jPanel_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jCheckBox_advanced)
+                            .addComponent(jButton_configAdvanced))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -237,7 +270,9 @@ public class AcqTab extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jProgressBar_progress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jCheckBox_advanced)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton_configAdvanced)
                 .addContainerGap())
         );
@@ -275,11 +310,11 @@ public class AcqTab extends javax.swing.JPanel {
     }                                               
 
     private void jButton_startActionPerformed(java.awt.event.ActionEvent evt) { 
-		int numFrames;
+		int numFrames, numPos;
 		String path;
 		String acqname;
 		int sleepTime,UVsleepTime;
-		boolean stopmaxUV;
+		boolean stopmaxUV, useNumpos;
 		
 		numFrames = Integer.parseInt(jTextField_numframes.getText());
 		path = jTextField_path.getText();
@@ -287,11 +322,13 @@ public class AcqTab extends javax.swing.JPanel {
 		sleepTime = Integer.parseInt(jTextField_waittime.getText());
 		UVsleepTime = Integer.parseInt(jTextField_UVwaittime.getText());
 		stopmaxUV = jCheckBox_stopMaxUV.isSelected();
+		useNumpos = jCheckBox_usenumberpos.isSelected();
+		numPos = (Integer) jSpinner_numberofpose.getValue();
 		
 		if(advancedacq){
-			acq.runAcqList(acqlist,path,acqname,sleepTime,UVsleepTime,stopmaxUV);
+			acq.runAcqList(acqlist,path,acqname,sleepTime,UVsleepTime,stopmaxUV,numPos,useNumpos);
 		} else {
-			acq.runAcq(numFrames,path,acqname,sleepTime,UVsleepTime,stopmaxUV);
+			acq.runAcq(numFrames,path,acqname,sleepTime,UVsleepTime,stopmaxUV,numPos,useNumpos);
 		}
     }                                             
 
@@ -348,5 +385,8 @@ public class AcqTab extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField_UVwaittime;
     private javax.swing.JLabel jLabel_UVwaittime;
     
+    private javax.swing.JCheckBox jCheckBox_usenumberpos;
+    private javax.swing.JLabel jLabel_numberofpos;
+    private javax.swing.JSpinner jSpinner_numberofpose;
     // End of variables declaration                   
 }
