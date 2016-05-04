@@ -41,9 +41,6 @@ public class Acquisition {
 		setOperator(acqType.NONE);
 	}
 	
-	public String toString(){
-		return "Acquisition: "+numFrames+" "+filterNumber+" "+exposuretime+", Lasers: "+laserlist.size()+" "+laserlist.get(0).getLabel();
-	}
 
 	public Acquisition(acqtype op, ArrayList<LaserSettings> laserlist, int filter, int exposuretime, int numFrames, int waitingtime, boolean astigmatism, boolean activation, String path){
 		this.numFrames = numFrames;
@@ -218,5 +215,26 @@ public class Acquisition {
 		default:
 			break;
 		}
+	}
+	
+	public String settingsToString(){
+		String s = "";
+
+		s += "Acquisition type: "+acqType.getName()+"\n";
+		s += "--- Number of frames: "+numFrames+"\n";
+		s += "--- Filter: "+filterNumber+"\n";
+		s += "--- Exposure: "+exposuretime+" ms"+"\n";
+		s += "--- Waiting time: "+waitingtime+" s"+"\n";
+		s += "--- Activation: "+activation+"\n";
+		s += "--- 3DA: "+astigmatism+"\n";
+
+		for(int i=0;i<laserlist.size();i++){
+			s += "----- Laser "+laserlist.get(i).getLabel()+"\n";
+			s += "------- mode: "+laserlist.get(i).getMode()+"\n";
+			s += "------- power(%): "+laserlist.get(i).getPowerPerc()+"\n";
+			s += "------- pulse(ms): "+laserlist.get(i).getPulseLength()+"\n";
+		}
+		
+		return s;
 	}
 }

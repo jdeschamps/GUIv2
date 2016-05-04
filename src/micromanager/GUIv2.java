@@ -9,7 +9,7 @@ import test.PluginTest;
 
 
 public class GUIv2 implements org.micromanager.api.MMPlugin{
-   public static String menuName = "GUIv2.18";
+   public static String menuName = "GUIv2.20";
    public static String tooltipDescription = "control interface";
    private ScriptInterface gui_;            
    private CMMCore core_;

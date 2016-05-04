@@ -4,6 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -339,7 +347,34 @@ public class AcqTab extends javax.swing.JPanel {
 
     public void setAcqList(ArrayList<Acquisition> acqlist){
     	advancedacq = true;
-    	System.out.println("Got acquisitions, n: "+acqlist.size());
+    	//System.out.println("Got acquisitions, n: "+acqlist.size());
+    	String s = "";
+    	
+       	for(int i=0;i<acqlist.size();i++){
+           	s += acqlist.get(i).settingsToString();
+       	}
+    	
+    	PrintWriter writer;
+    	try {
+    		DateFormat dateFormat = new SimpleDateFormat("MM-dd_HH-mm");
+    		Date date = new Date(0);
+    		
+    		writer = new PrintWriter(new FileWriter(getPath()+"/AdvancedAcq"+dateFormat.format(date)+".txt", true));
+	       	writer.println(s);
+	       	writer.close();
+    	} catch (FileNotFoundException e) {
+    		// TODO Auto-generated catch block
+    	      e.printStackTrace();
+    	} catch (UnsupportedEncodingException e) {
+    		// TODO Auto-generated catch block
+    	  e.printStackTrace();
+    	} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	text.add(s);
+    	
     	this.acqlist = acqlist;
     }
     
