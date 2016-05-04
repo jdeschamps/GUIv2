@@ -18,7 +18,7 @@ public class QPD extends Device{
 	private void createProperties() {
 		signalX_ = new InputDeviceProperty(label_, MConfiguration.qpdproplabel[2],core_,log_, !detected_);
 		signalY_ = new InputDeviceProperty(label_, MConfiguration.qpdproplabel[1],core_,log_, !detected_);
-		signalS_ = new InputDeviceProperty(label_, MConfiguration.qpdproplabel[1],core_,log_, !detected_);
+		signalS_ = new InputDeviceProperty(label_, MConfiguration.qpdproplabel[0],core_,log_, !detected_);
 
 		add(signalX_);
 		add(signalY_);
