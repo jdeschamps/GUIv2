@@ -356,12 +356,15 @@ public class AcqTab extends javax.swing.JPanel {
     	
     	PrintWriter writer;
     	try {
-    		DateFormat dateFormat = new SimpleDateFormat("MM-dd_HH-mm");
-    		Date date = new Date(0);
-    		
-    		writer = new PrintWriter(new FileWriter(getPath()+"/AdvancedAcq"+dateFormat.format(date)+".txt", true));
-	       	writer.println(s);
-	       	writer.close();
+    		if(getPath().length()>1){
+    			writer = new PrintWriter(new FileWriter(getPath()+"/AdvancedAcq"+".txt", true));
+    	       	writer.print(s);
+    	       	writer.close();
+    		} else {
+    			writer = new PrintWriter(new FileWriter("AdvancedAcq"+".txt", true));
+    	       	writer.print(s);
+    	       	writer.close();
+    		}
     	} catch (FileNotFoundException e) {
     		// TODO Auto-generated catch block
     	      e.printStackTrace();

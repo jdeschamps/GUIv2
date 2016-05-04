@@ -218,21 +218,21 @@ public class Acquisition {
 	}
 	
 	public String settingsToString(){
-		String s = "";
+		String s = "--------------------\r\n";
 
-		s += "Acquisition type: "+acqType.getName()+"\n";
-		s += "--- Number of frames: "+numFrames+"\n";
-		s += "--- Filter: "+filterNumber+"\n";
-		s += "--- Exposure: "+exposuretime+" ms"+"\n";
-		s += "--- Waiting time: "+waitingtime+" s"+"\n";
-		s += "--- Activation: "+activation+"\n";
-		s += "--- 3DA: "+astigmatism+"\n";
+		s += "Acquisition type: "+acqType.getName()+"\r\n";
+		s += "--- Number of frames: "+numFrames+"\r\n";
+		s += "--- Filter: "+filterNumber+"\r\n";
+		s += "--- Exposure: "+exposuretime+" ms"+"\r\n";
+		s += "--- Waiting time: "+waitingtime+" s"+"\r\n";
+		s += "--- Activation: "+activation+"\r\n";
+		s += "--- 3DA: "+astigmatism+"\r\n";
 
 		for(int i=0;i<laserlist.size();i++){
-			s += "----- Laser "+laserlist.get(i).getLabel()+"\n";
-			s += "------- mode: "+laserlist.get(i).getMode()+"\n";
-			s += "------- power(%): "+laserlist.get(i).getPowerPerc()+"\n";
-			s += "------- pulse(ms): "+laserlist.get(i).getPulseLength()+"\n";
+			s += "----- Laser "+laserlist.get(i).getLabel()+"\r\n";
+			s += "------- mode: "+laserlist.get(i).getMode()+"\r\n";
+			s += "------- power(%): "+laserlist.get(i).getPowerPerc()+"\r\n";
+			s += "------- pulse(ms): "+laserlist.get(i).getPulseLength()+"\r\n";
 		}
 		
 		return s;
