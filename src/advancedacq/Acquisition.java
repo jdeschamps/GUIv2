@@ -139,7 +139,7 @@ public class Acquisition {
 			seq.relativeZSlice = true;
 			ArrayList<Double> slice = new ArrayList<Double>();
 			Double z;
-			for(int i=0;i<4000/50;i++){
+			for(int i=0;i<=4000/50;i++){
 				z=-2+i*0.05;
 				slice.add(z);
 			}
