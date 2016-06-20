@@ -95,13 +95,13 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
         /// JTable
         jTable_lasers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, 100, 0},
-                {null, null, 100, 0},
-                {null, null, 100, 0},
-                {null, null, 100, 0}
+                {null, null, 100, 0, "1111111111111111"},
+                {null, null, 100, 0, "1111111111111111"},
+                {null, null, 100, 0, "1111111111111111"},
+                {null, null, 100, 0, "1111111111111111"}
             },
             new String [] {
-                "Laser", "Mode", "Power", "Pulse"
+                "Laser", "Mode", "Power", "Pulse", "Sequence"
             }
         ) {
             Class[] types = new Class [] {
@@ -162,38 +162,39 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel_numframes)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jSpinner_numframes, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel_acqtype)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox_acqtype, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel_filter)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox_filter, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jCheckBox_activation_3d)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCheckBox_activation))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jSpinner_exposure, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel_filter)
+                                    .addComponent(jLabel_numframes)
+                                    .addComponent(jLabel_acqtype))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jSpinner_numframes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBox_acqtype, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBox_filter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(222, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel_waittime)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                                .addComponent(jSpinner_waitingtime, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel_exposuretime))))
-                .addContainerGap())
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jCheckBox_activation_3d)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel_waittime)
+                                            .addComponent(jLabel_exposuretime))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jCheckBox_activation, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jSpinner_exposure, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(11, 11, 11)
+                                        .addComponent(jSpinner_waitingtime, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,6 +256,8 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
     	boolean activation = jCheckBox_activation.isSelected();
     	boolean astigmatism = jCheckBox_activation_3d.isSelected();
     	
+    	String sequence = "1111111111111111";
+    	
     	for(int i=0;i<jTable_lasers.getRowCount();i++){
     		String s = (String) jTable_lasers.getValueAt(i,0);
     		if(s == null){
@@ -264,8 +267,24 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
     			int val2 = posInStringList(sys_.getLaserModeList(),(String)jTable_lasers.getValueAt(i,1));
     			int val3 = (Integer) jTable_lasers.getValueAt(i,3);
     			int val4 = (Integer) jTable_lasers.getValueAt(i,2);
+
+    			String val5 = (String)jTable_lasers.getValueAt(i,4);
+    			//sanity check
+    			if(val5.length() != 16){
+    				val5 = sequence;
+    			}
+    			boolean b = false;
+    			for(int k=0;k<val5.length();k++){
+    				if(!val5.substring(k, k+1).equals("0") && !val5.substring(k, k+1).equals("0")){
+    					b = true;
+    					break;
+    				}
+    			}
+    			if(b){
+    				val5 = sequence;
+    			}
     			
-    			listlasers.add(new LaserSettings(val1,val2,val3,val4));
+    			listlasers.add(new LaserSettings(val1,val2,val3,val4,val5));
     		}
     	}
 

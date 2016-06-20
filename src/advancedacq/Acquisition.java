@@ -186,7 +186,7 @@ public class Acquisition {
 		
 		if(laserlist.size()>0){
 			for(int i=0;i<laserlist.size();i++){
-				sys.setLaserState(laserlist.get(i).getLabel(),laserlist.get(i).getMode(),laserlist.get(i).getPowerPerc(),laserlist.get(i).getPulseLength());
+				sys.setLaserState(laserlist.get(i).getLabel(),laserlist.get(i).getMode(),laserlist.get(i).getPowerPerc(),laserlist.get(i).getPulseLength(),laserlist.get(i).getSequence());
 			}
 		}
 			

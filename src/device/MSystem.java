@@ -404,12 +404,13 @@ public class MSystem {
 		fw_.setState(filterNumber);		
 	}
 
-	public void setLaserState(String label, int mode, int powerPerc, int pulseLength) {
+	public void setLaserState(String label, int mode, int powerPerc, int pulseLength, int sequence) {
 		System.out.println("Set laserState: "+label+" "+mode+" "+powerPerc);
 		setLaserOperation(label,1);
 		setLaserBehaviour(label,mode);
 		setLaserPowerPerc(label,powerPerc);
 		setLaserPulseLength(label,pulseLength);
+		setLaserSequence(label,sequence);
 	}
 
 	public void setBFP(int i) {
