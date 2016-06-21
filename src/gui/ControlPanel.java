@@ -4,6 +4,8 @@
  */
 package gui;
 
+import javax.swing.JPanel;
+
 import device.MSystem;
 
 /**

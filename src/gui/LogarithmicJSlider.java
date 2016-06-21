@@ -1,7 +1,5 @@
 package gui;
 
-
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -20,7 +18,6 @@ import javax.swing.plaf.basic.BasicSliderUI;
 import micromanager.MConfiguration;
 
 /*
- * Edited by Raja.
  * LogarithmicJSlider.java is edited as JSlider API for vertical slider with Logarithmic features
  */
 public class LogarithmicJSlider extends JSlider {
@@ -90,7 +87,7 @@ public class LogarithmicJSlider extends JSlider {
         }
 
 
-
+        @Override
         public int xPositionForValue(int value) {
             int min = slider.getMinimum();
             int max = slider.getMaximum();
@@ -119,9 +116,12 @@ public class LogarithmicJSlider extends JSlider {
 
         }
         
+        @Override
         protected int yPositionForValue(int value){  
         	return yPositionForValue(value, trackRect.y, trackRect.height);
         }
+        
+        @Override
         public int yPositionForValue(int value, int trackY, int trackHeight) {//Implement by Raja to support vertical log sliders
             
             //return super.yPositionForValue(value);
@@ -149,7 +149,8 @@ public class LogarithmicJSlider extends JSlider {
             
         }
 
-        public int valueForYPosition(int yPos) {//Implement by raja to support vertical log sliders 
+        @Override
+        public int valueForYPosition(int yPos) {
             
             //return super.valueForYPosition(yPos);
             int value;
@@ -187,6 +188,7 @@ public class LogarithmicJSlider extends JSlider {
             
         }
 
+        @Override
         public int valueForXPosition(int xPos) {
             int value;
             final int minValue = slider.getMinimum();
@@ -218,6 +220,7 @@ public class LogarithmicJSlider extends JSlider {
             
         }
 
+        @Override
         protected void scrollDueToClickInTrack(int direction) {
         	///// modify here for what happened when click, example:
         	/* int value = slider.getValue(); 
@@ -232,7 +235,7 @@ public class LogarithmicJSlider extends JSlider {
        
         }
         
-        
+        @Override
         public void paintTicks(Graphics g) {
             Rectangle tickBounds = tickRect;
             int i;
