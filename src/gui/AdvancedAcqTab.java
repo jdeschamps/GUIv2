@@ -105,7 +105,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class,
             };
 
             public Class getColumnClass(int columnIndex) {
