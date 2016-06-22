@@ -275,7 +275,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
     			}
     			boolean b = false;
     			for(int k=0;k<val5.length();k++){
-    				if(!val5.substring(k, k+1).equals("0") && !val5.substring(k, k+1).equals("0")){
+    				if(!val5.substring(k, k+1).equals("0") && !val5.substring(k, k+1).equals("1")){
     					b = true;
     					break;
     				}
@@ -283,7 +283,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
     			if(b){
     				val5 = sequence;
     			}
-    			
+    			System.out.println(val1+" laser sequence is: "+val5);
     			listlasers.add(new LaserSettings(val1,val2,val3,val4,val5));
     		}
     	}
