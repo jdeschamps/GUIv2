@@ -161,6 +161,8 @@ public class ActivationTab extends javax.swing.JPanel {
 			}
         });
         
+        jTextField_framereset.setEnabled(false);
+        jToggleButton_framereset.setEnabled(false);
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Text Fields first part
         /////////////////////////////////////////////////////////////////////////////////////////////// sdcoeff
         jTextField_stdcoeff.setText(String.valueOf(config_.getDefaultSDcoeff()));
