@@ -1,8 +1,10 @@
 package advancedacq;
 
+import java.io.Serializable;
+
 import utils.Bool2DecConverter;
 
-public class LaserSettings {
+public class LaserSettings implements Serializable {
 
 	private String label;
 	private int mode;

@@ -1,5 +1,6 @@
 package advancedacq;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.micromanager.api.SequenceSettings;
@@ -7,9 +8,9 @@ import org.micromanager.api.SequenceSettings;
 import device.MSystem;
 
 
-public class Acquisition {
+public class Acquisition implements Serializable {
 
-	public enum acqtype {
+	public enum acqtype implements Serializable {
 		BFPSNAP("bfp"), ZSTACK("zstack"), TSTACK("time"), NONE("none");
 		
 		String name;

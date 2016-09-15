@@ -17,7 +17,9 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
+import advancedacq.AcqListWrapper;
 import advancedacq.Acquisition;
 import device.MSystem;
 import threader.AcqEngine;
@@ -30,7 +32,7 @@ public class AcqTab extends javax.swing.JPanel {
 	MainFrame parent_;
 	MSystem sys_;
 
-	ArrayList<Acquisition> acqlist;
+	AcqListWrapper acqlist;
 	boolean advancedacq = false;
 	
     /**
@@ -40,6 +42,9 @@ public class AcqTab extends javax.swing.JPanel {
     	parent_ = parent;
     	sys_ = sys;
     	acq = new AcqEngine(parent_, sys_);
+    	
+    	acqlist = new AcqListWrapper();
+    	
         initComponents();
     }
 
@@ -75,6 +80,8 @@ public class AcqTab extends javax.swing.JPanel {
         jCheckBox_usenumberpos = new javax.swing.JCheckBox();
         jLabel_numberofpos = new javax.swing.JLabel();
         jSpinner_numberofpose=  new javax.swing.JSpinner();
+        jButton_save = new javax.swing.JButton();
+        jButton_load = new javax.swing.JButton();
 
         jLabel_path.setText("Path");
 
@@ -240,13 +247,27 @@ public class AcqTab extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-
-
+        
+        jButton_save.setText("Save");
+        jButton_save.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				saveAcqSettings();
+			}
+        });
+        
+        jButton_load.setText("Load");
+        jButton_load.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				loadAcqSettings();
+			}
+        });
+        
         jScrollPane1.setViewportView(jTextPane_progress);
 
         jButton_configAdvanced.setText("Configure");
-        jButton_configAdvanced.addActionListener(new ActionListener() 
-        {
+        jButton_configAdvanced.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				lauchAdvancedAcq();
@@ -265,10 +286,14 @@ public class AcqTab extends javax.swing.JPanel {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jProgressBar_progress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel_displayLayout.createSequentialGroup()
-                        .addGroup(jPanel_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox_advanced)
-                            .addComponent(jButton_configAdvanced))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jCheckBox_advanced)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel_displayLayout.createSequentialGroup()
+                        .addComponent(jButton_configAdvanced)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton_save)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton_load)))
                 .addContainerGap())
         );
         jPanel_displayLayout.setVerticalGroup(
@@ -281,7 +306,10 @@ public class AcqTab extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jCheckBox_advanced)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton_configAdvanced)
+                .addGroup(jPanel_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton_configAdvanced)
+                    .addComponent(jButton_save)
+                    .addComponent(jButton_load))
                 .addContainerGap())
         );
 
@@ -305,7 +333,31 @@ public class AcqTab extends javax.swing.JPanel {
         
     }// </editor-fold>                        
 
-    private void jButton_setpathActionPerformed(java.awt.event.ActionEvent evt) {                                                
+    protected void loadAcqSettings() {
+    	JFileChooser fc = new JFileChooser();
+    	fc.setCurrentDirectory(new java.io.File(".")); // start at application current directory
+    	FileNameExtensionFilter filter = new FileNameExtensionFilter("Acquisition settings","acq");
+    	fc.setFileFilter(filter);
+    	int returnVal = fc.showSaveDialog(this);
+    	if(returnVal == JFileChooser.APPROVE_OPTION) {
+    	    File folder = fc.getSelectedFile();
+    	    acqlist.loadList(folder.getAbsolutePath());
+    	}
+	}
+
+	protected void saveAcqSettings() {
+    	JFileChooser fc = new JFileChooser();
+    	fc.setCurrentDirectory(new java.io.File(".")); // start at application current directory
+    	FileNameExtensionFilter filter = new FileNameExtensionFilter("Acquisition settings","acq");
+    	fc.setFileFilter(filter);
+    	int returnVal = fc.showSaveDialog(this);
+    	if(returnVal == JFileChooser.APPROVE_OPTION) {
+    	    File folder = fc.getSelectedFile();
+    	    acqlist.saveList(folder.getAbsolutePath());
+    	}
+	}
+
+	private void jButton_setpathActionPerformed(java.awt.event.ActionEvent evt) {                                                
     	JFileChooser fc = new JFileChooser();
     	fc.setCurrentDirectory(new java.io.File(".")); // start at application current directory
     	fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -334,7 +386,7 @@ public class AcqTab extends javax.swing.JPanel {
 		numPos = (Integer) jSpinner_numberofpose.getValue();
 		
 		if(advancedacq){
-			acq.runAcqList(acqlist,path,acqname,sleepTime,UVsleepTime,stopmaxUV,numPos,useNumpos);
+			acq.runAcqList(acqlist.getList(),path,acqname,sleepTime,UVsleepTime,stopmaxUV,numPos,useNumpos);
 		} else {
 			acq.runAcq(numFrames,path,acqname,sleepTime,UVsleepTime,stopmaxUV,numPos,useNumpos);
 		}
@@ -378,7 +430,7 @@ public class AcqTab extends javax.swing.JPanel {
     	
     	text.add(s);
     	
-    	this.acqlist = acqlist;
+    	this.acqlist.setList(acqlist);
     }
     
     public void lauchAdvancedAcq(){
@@ -404,6 +456,8 @@ public class AcqTab extends javax.swing.JPanel {
     private javax.swing.JButton jButton_setpath;
     private javax.swing.JButton jButton_start;
     private javax.swing.JButton jButton_stop;
+    private javax.swing.JButton jButton_load;
+    private javax.swing.JButton jButton_save;
     private javax.swing.JCheckBox jCheckBox_stopMaxUV;
     private javax.swing.JLabel jLabel_expname;
     private javax.swing.JLabel jLabel_numframes;
