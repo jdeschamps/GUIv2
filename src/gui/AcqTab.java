@@ -406,6 +406,24 @@ public class AcqTab extends javax.swing.JPanel {
            	s += acqlist.get(i).settingsToString();
        	}
     	
+       	File theDir = new File(getPath());
+
+       	// if the directory does not exist, create it
+       	if (!theDir.exists()) {
+	         boolean result = false;
+	
+	         try{
+	             theDir.mkdir();
+	             result = true;
+	         } 
+	         catch(SecurityException se){
+	             //handle it
+	         }        
+	         if(result) {    
+
+	         }
+       	}
+       	   	
     	PrintWriter writer;
     	try {
     		if(getPath().length()>1){
