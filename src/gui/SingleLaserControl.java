@@ -14,6 +14,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 
@@ -54,7 +55,7 @@ public class SingleLaserControl extends javax.swing.JPanel {
         jToggleButton_20perc = new javax.swing.JToggleButton();
         jToggleButton_1perc = new javax.swing.JToggleButton();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(null, label_, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, color_));
+        setBorder(BorderFactory.createTitledBorder(null, label_, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, color_));
 
         jToggleButton_laserOperation.setBorderPainted(false);
         jToggleButton_laserOperation.setBorder(null);

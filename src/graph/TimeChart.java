@@ -3,7 +3,6 @@ package graph;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Paint;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
