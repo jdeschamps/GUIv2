@@ -17,9 +17,9 @@ public class MSystem {
 	MConfiguration config_;
 	QPD qpd_;
 	Stage pi_;
-	Laser l405_, l488_, l638_;
-	SSLaser l561_;
-	Servo fw_, bfp_, astig_; 
+	Laser l405_, l488_, l638_,l561_;
+	Servo fw_, bfp_;// astig_; 
+	TTL flip_;
 	Log log_;
 	ArrayList<Device> deviceList_;
 	StrVector devices_;
@@ -68,13 +68,14 @@ public class MSystem {
 	private void initializeDevices() {
 		qpd_ = new QPD(MConfiguration.qpdlabel,core_,log_, isLoaded(MConfiguration.qpdlabel));
 		pi_ = new Stage(MConfiguration.pilabel,core_,log_, isLoaded(MConfiguration.pilabel), isLoaded(MConfiguration.smaractlabel));
-		l405_ = new Laser(MConfiguration.laserlabel[0], MConfiguration.mojolabel,core_,log_, isLoaded(MConfiguration.laserlabel[0]));
-		l488_ = new Laser(MConfiguration.laserlabel[1], MConfiguration.mojolabel,core_,log_, isLoaded(MConfiguration.laserlabel[1]));
-		l638_ = new Laser(MConfiguration.laserlabel[2], MConfiguration.mojolabel,core_,log_, isLoaded(MConfiguration.laserlabel[2]));
-		l561_ = new SSLaser(MConfiguration.sslaserlabel, MConfiguration.mojolabel, MConfiguration.ard2laserlabel,core_,log_, isLoaded(MConfiguration.sslaserlabel));
+		l405_ = new Laser(MConfiguration.lasercontroller, MConfiguration.mojolabel,MConfiguration.laserkeys[0], MConfiguration.laserproperties1[0], MConfiguration.laserproperties1[1], MConfiguration.laserproperties1[2],core_,log_, isLoaded(MConfiguration.lasercontroller),false);
+		l488_ = new Laser(MConfiguration.lasercontroller, MConfiguration.mojolabel,MConfiguration.laserkeys[1], MConfiguration.laserproperties2[0], MConfiguration.laserproperties2[1],MConfiguration.laserproperties2[2],core_,log_, isLoaded(MConfiguration.lasercontroller),false);
+		l638_ = new Laser(MConfiguration.lasercontroller, MConfiguration.mojolabel,MConfiguration.laserkeys[2], MConfiguration.laserproperties3[0], MConfiguration.laserproperties3[1],MConfiguration.laserproperties3[2],core_,log_, isLoaded(MConfiguration.lasercontroller),false);
+		l561_ = new Laser(MConfiguration.lasercontroller, MConfiguration.mojolabel,MConfiguration.laserkeys[3], MConfiguration.laserproperties4[0], MConfiguration.laserproperties4[1],MConfiguration.laserproperties4[2],core_,log_, isLoaded(MConfiguration.lasercontroller),true);
 		fw_ = new Servo(MConfiguration.servolabel[0], MConfiguration.proplabel[0], MConfiguration.numposservo[0],core_,log_, isLoaded(MConfiguration.servolabel[0]));
 		bfp_ = new Servo(MConfiguration.servolabel[1], MConfiguration.proplabel[1], MConfiguration.numposservo[1],core_,log_, isLoaded(MConfiguration.servolabel[1]));
-		astig_ = new Servo(MConfiguration.servolabel[2], MConfiguration.proplabel[2], MConfiguration.numposservo[2],core_,log_, isLoaded(MConfiguration.servolabel[2]));
+		//astig_ = new Servo(MConfiguration.servolabel[2], MConfiguration.proplabel[2], MConfiguration.numposservo[2],core_,log_, isLoaded(MConfiguration.servolabel[2]));
+		flip_ = new TTL(MConfiguration.servolabel[2], MConfiguration.proplabel[2], core_,log_, isLoaded(MConfiguration.servolabel[2]));
 		
 		deviceList_ = new ArrayList<Device>(numDevices_);
 		deviceList_.add(qpd_);
@@ -85,13 +86,25 @@ public class MSystem {
 		deviceList_.add(l561_);
 		deviceList_.add(fw_);
 		deviceList_.add(bfp_);
-		deviceList_.add(astig_);
+		deviceList_.add(flip_);
+		//deviceList_.add(astig_);
 
 		if(areDevicesAvailable()){
 			for(Device d:deviceList_){
 				d.initialize();
 			}
 		}
+
+		l405_.setSequence(65535);
+		l405_.setBehaviour(2);
+		l488_.setSequence(65535);
+		l488_.setBehaviour(4);
+		l638_.setSequence(65535);
+		l638_.setBehaviour(4);
+		l561_.setSequence(65535);
+		l561_.setBehaviour(4);
+		
+		bfp_.setState(0);
 	}
 
 	private boolean areDevicesAvailable() {
@@ -236,7 +249,7 @@ public class MSystem {
 		} else if(name.equals(MConfiguration.servokeys[1])){
 			d = bfp_;
 		} else if(name.equals(MConfiguration.servokeys[2])){
-			d = astig_;
+			//d = astig_;
 		} 
 		return d;
 	}
@@ -247,7 +260,7 @@ public class MSystem {
 		} else if(name.equals(MConfiguration.servokeys[1])){
 			bfp_.setState(val);
 		} else if(name.equals(MConfiguration.servokeys[2])){
-			astig_.setState(val);
+			//astig_.setState(val);
 		} 
 	}
 	
@@ -257,7 +270,7 @@ public class MSystem {
 		} else if(name.equals(MConfiguration.servokeys[1])){
 			bfp_.getState();
 		} else if(name.equals(MConfiguration.servokeys[2])){
-			astig_.getState();
+			//astig_.getState();
 		} 
 		return 0;
 	}
@@ -324,6 +337,7 @@ public class MSystem {
 	}
 	
 	public void setLaserBehaviour(String name, int val){
+		System.out.println(name);
 		if(name.equals(MConfiguration.laserkeys[0])){
 			l405_.setBehaviour(val);
 		} else if(name.equals(MConfiguration.laserkeys[1])){
@@ -377,7 +391,7 @@ public class MSystem {
 	}
 	
 	public void setLaserMaxPower(int val){
-		l561_.setMaxPower(val);
+		//l561_.setMaxPower(val);
 	}
 	
 	
@@ -394,10 +408,10 @@ public class MSystem {
 		l638_.setOperation(0);
 	}
 
-	public void setAstig(int i) {
+	/*public void setAstig(int i) {
 		System.out.println("Set Astig: "+i);
 		astig_.setState(i);
-	}
+	}*/
 
 	public void setFilter(int filterNumber) {
 		System.out.println("Set filter: "+filterNumber);
@@ -416,5 +430,9 @@ public class MSystem {
 	public void setBFP(int i) {
 		System.out.println("Set BFP: "+i);
 		bfp_.setState(i);
+	}
+
+	public void setTTLState(int i) {
+		flip_.setState(i);
 	}
 }

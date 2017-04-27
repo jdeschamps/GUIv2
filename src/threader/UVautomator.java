@@ -42,9 +42,7 @@ public class UVautomator extends Updater{
 
 		ip_ = new ShortProcessor(200,200);
 		
-		if(!d.getLabel().equals(MConfiguration.laserlabel[0])){
-			// exception!
-		}
+
 		
 		maxpulse_ = (int) (sys_.getExposureTime()*1000);
 	}

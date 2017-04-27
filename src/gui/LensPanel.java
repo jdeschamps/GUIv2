@@ -21,7 +21,7 @@ public class LensPanel extends javax.swing.JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	MSystem sys_;
-	String bpflabel_ = MConfiguration.servokeys[1];
+	String bpflabel_ = MConfiguration.servokeys[0];
 	String astiglabel_ = MConfiguration.servokeys[2];
 	
 	public LensPanel(MSystem sys) {
@@ -41,9 +41,9 @@ public class LensPanel extends javax.swing.JPanel {
         jToggleButton_bfp.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e){
 				if(e.getStateChange()==ItemEvent.SELECTED){
-					sys_.setServoState(bpflabel_, MConfiguration.bfpPosition);						//// maybe here have a different tab for this
+					sys_.setServoState(bpflabel_, MConfiguration.servo1[1]);						//// maybe here have a different tab for this
 				}else if(e.getStateChange()==ItemEvent.DESELECTED){
-					sys_.setServoState(bpflabel_, 0);
+					sys_.setServoState(bpflabel_, MConfiguration.servo1[0]);
 				}
             }
         });
@@ -58,17 +58,17 @@ public class LensPanel extends javax.swing.JPanel {
         jToggleButton_3DA.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e){
 				if(e.getStateChange()==ItemEvent.SELECTED){
-					sys_.setServoState(astiglabel_, 1);		
+					sys_.setTTLState(1);		
 				}else if(e.getStateChange()==ItemEvent.DESELECTED){
-					sys_.setServoState(astiglabel_, 0);		
+					sys_.setTTLState(0);		
 				}
             }
         });
-        if(sys_.getServoState(astiglabel_)==1){
-        	jToggleButton_3DA.setSelected(true);
-        } else {
-        	jToggleButton_3DA.setSelected(false);
-        }
+//		if (sys_.getServoState(astiglabel_) == 1) {
+//			jToggleButton_3DA.setSelected(true);
+//		} else {
+//			jToggleButton_3DA.setSelected(false);
+//		}
         
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

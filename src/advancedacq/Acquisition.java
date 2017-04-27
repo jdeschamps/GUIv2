@@ -180,7 +180,7 @@ public class Acquisition implements Serializable {
 	public void setUpSystem(MSystem sys){
 		System.out.println("----------set up system");
 		sys.turnoffLasers();
-		sys.setAstig(astigmatism==true ? 1:0);
+		//sys.setAstig(astigmatism==true ? 1:0);
 		sys.setBFP(0);
 		sys.setFilter(filterNumber);
 		sys.setExposureTime(exposuretime);
@@ -203,7 +203,7 @@ public class Acquisition implements Serializable {
 		}
 	}
 	public void endAcqSystem(MSystem sys){
-		sys.setAstig(0);
+		//sys.setAstig(0);
 		
 		System.out.println("----------end system");	
 		switch(acqType){

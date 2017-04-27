@@ -6,7 +6,7 @@ import mmcorej.CMMCore;
 
 public class SSLaser extends Device{
 
-	String controllerLabel1_,controllerLabel2_;
+	String controllerLabel1_,controllerLabel2_, name_;
 	DeviceProperty powerPerc_;
 	DeviceProperty operation_;
 	DeviceProperty behaviour_;
@@ -15,20 +15,21 @@ public class SSLaser extends Device{
 	DeviceProperty sequence_;
 	
 	
-	public SSLaser(String label, String controllerLabel1, String controllerLabel2, CMMCore core, Log log, boolean isLoaded){
+	public SSLaser(String label, String controllerLabel1,String name, String controllerLabel2, CMMCore core, Log log, boolean isLoaded){
 		super(label,core,log, isLoaded);
 		controllerLabel1_ = controllerLabel1;
 		controllerLabel2_ = controllerLabel2;
+		name_ = name;
 		createProperties();
 	}
 	
 	private void createProperties() {
-		operation_ = new DeviceProperty(label_, MConfiguration.coboltproplabel[0], 0, 1,core_,log_,true, !detected_);
-		powerPerc_ = new DeviceProperty(controllerLabel2_, MConfiguration.ard2proplabel, 0, 100,core_,log_,false, !detected_);
-		powerMax_ = new DeviceProperty(label_, MConfiguration.coboltproplabel[1], 0, 300,core_,log_,false, !detected_);
-		behaviour_ = new DeviceProperty(controllerLabel1_, MConfiguration.getLaserMojoProp(label_)[0], 0, 4,core_,log_,false, !detected_);
-		pulse_ = new DeviceProperty(controllerLabel1_, MConfiguration.getLaserMojoProp(label_)[1], 0, MConfiguration.mojomaxpulse,core_,log_,false, !detected_);
-		sequence_ = new DeviceProperty(controllerLabel1_, MConfiguration.getLaserMojoProp(label_)[2], 0, MConfiguration.mojomaxpulse,core_,log_,false, !detected_);
+		operation_ = new DeviceProperty(label_, "", 0, 1,core_,log_,true, !detected_);
+		powerPerc_ = new DeviceProperty(controllerLabel2_, "", 0, 100,core_,log_,false, !detected_);
+		powerMax_ = new DeviceProperty(label_, "", 0, 300,core_,log_,false, !detected_);
+		behaviour_ = new DeviceProperty(controllerLabel1_, MConfiguration.getLaserMojoProp(name_)[0], 0, 4,core_,log_,false, !detected_);
+		pulse_ = new DeviceProperty(controllerLabel1_, MConfiguration.getLaserMojoProp(name_)[1], 0, MConfiguration.mojomaxpulse,core_,log_,false, !detected_);
+		sequence_ = new DeviceProperty(controllerLabel1_, MConfiguration.getLaserMojoProp(name_)[2], 0, MConfiguration.mojomaxpulse,core_,log_,false, !detected_);
 
 		properties_.add(operation_);
 		properties_.add(powerPerc_);
@@ -48,9 +49,9 @@ public class SSLaser extends Device{
 
 	public void setOperation(int val){	
 		if(val==1){
-			setProperty(operation_.getPropertyName(),"On");										/// maybe modify directly the object
+			setProperty(operation_.getPropertyName(),"1");										/// maybe modify directly the object
 		} else if(val==0){
-			setProperty(operation_.getPropertyName(),"Off");	
+			setProperty(operation_.getPropertyName(),"1");	
 		}else {
 			log_.writeToLog(label_+" : Invalid operation requested ("+val+")");
 		}

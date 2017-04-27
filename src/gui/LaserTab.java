@@ -13,7 +13,7 @@ import micromanager.MConfiguration;
  */
 public class LaserTab extends javax.swing.JPanel {
 
-	/**
+	/** 
 	 * 
 	 */
 	private static final long serialVersionUID = -4362289722441010537L;

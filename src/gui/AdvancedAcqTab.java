@@ -57,7 +57,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
         jSpinner_waitingtime = new javax.swing.JSpinner();
         jLabel_exposuretime = new javax.swing.JLabel();
         jSpinner_exposure = new javax.swing.JSpinner();
-        jCheckBox_activation_3d = new javax.swing.JCheckBox();
+        //jCheckBox_activation_3d = new javax.swing.JCheckBox();
 
         jLabel_numframes.setText("Num frames:");
 
@@ -88,8 +88,8 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
 
         jCheckBox_activation.setText("Activation on");
         jCheckBox_activation.setSelected(true);
-        jCheckBox_activation_3d.setText("3DA");
-        jCheckBox_activation_3d.setSelected(false);
+       // jCheckBox_activation_3d.setText("3DA");
+       // jCheckBox_activation_3d.setSelected(false);
         
         //////////////////////////////////////////////////////////////////////////////////////////
         /// JTable
@@ -178,7 +178,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
                                 .addContainerGap(222, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCheckBox_activation_3d)
+                                    //.addComponent(jCheckBox_activation_3d)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(1, 1, 1)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,7 +223,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
                     .addComponent(jSpinner_waitingtime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox_activation_3d)
+                    //.addComponent(jCheckBox_activation_3d)
                     .addComponent(jCheckBox_activation))
                 .addGap(13, 13, 13))
         );
@@ -242,7 +242,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
     private javax.swing.JSpinner jSpinner_exposure;
     private javax.swing.JSpinner jSpinner_waitingtime;
     private javax.swing.JTable jTable_lasers;
-    private javax.swing.JCheckBox jCheckBox_activation_3d;
+    //private javax.swing.JCheckBox jCheckBox_activation_3d;
     // End of variables declaration            
     
     public Acquisition createAcq(){
@@ -254,7 +254,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
     	int numframes = (Integer) jSpinner_numframes.getValue();
     	ArrayList<LaserSettings> listlasers = new ArrayList<LaserSettings>();
     	boolean activation = jCheckBox_activation.isSelected();
-    	boolean astigmatism = jCheckBox_activation_3d.isSelected();
+    	//boolean astigmatism = jCheckBox_activation_3d.isSelected();
     	
     	String sequence = "1111111111111111";
     	
@@ -288,7 +288,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
     		}
     	}
 
-    	return new Acquisition(acqtype,listlasers,filt,exposure,numframes,waitingtime,astigmatism,activation,path_);
+    	return new Acquisition(acqtype,listlasers,filt,exposure,numframes,waitingtime,false,activation,path_);
     }
     
     public int posInStringList(String[] s, String val){

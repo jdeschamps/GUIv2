@@ -6,17 +6,26 @@ import mmcorej.CMMCore;
 
 public class Laser extends Device{
 
-	String controllerLabel_;								//// might want to rename it
+	String controllerLabel_, em_, en_, perc, name_;								//// might want to rename it
 	DeviceProperty powerPerc_;
-	DeviceProperty operation_;
+	DeviceProperty enable_;
+	DeviceProperty emission_;
 	DeviceProperty behaviour_;
 	DeviceProperty pulse_;
 	DeviceProperty sequence_;
 	double lowering_factor;
+	boolean enalways_;
+	int defaultmode = 4;
 	
-	public Laser(String label, String sublabel, CMMCore core, Log log, boolean isLoaded){
+	public Laser(String label, String controllerlabel, String name, String enable, String percen, String emission, CMMCore core, Log log, boolean isLoaded, boolean enalways){
 		super(label,core,log, isLoaded);
-		controllerLabel_ = sublabel;
+
+		em_ = emission;
+		en_ = enable;
+		perc = percen;
+		controllerLabel_ = controllerlabel;
+		name_=name;
+		enalways_ = enalways;
 		
 		if(label_.equals(MConfiguration.laserkeys[2])){
 			lowering_factor = MConfiguration.loweringfactor;
@@ -28,13 +37,20 @@ public class Laser extends Device{
 	}
 	
 	private void createProperties() {
-		operation_ = new DeviceProperty(label_, MConfiguration.luxxproplabel[0], 0, 1,core_,log_,true, !detected_);
-		powerPerc_ = new DeviceProperty(label_, MConfiguration.luxxproplabel[1], 0, 100,core_,log_,false, !detected_);
-		behaviour_ = new DeviceProperty(controllerLabel_, MConfiguration.getLaserMojoProp(label_)[0], 0, 4,core_,log_,false, !detected_);
-		pulse_ = new DeviceProperty(controllerLabel_, MConfiguration.getLaserMojoProp(label_)[1], 0, MConfiguration.mojomaxpulse,core_,log_,false, !detected_);
-		sequence_ = new DeviceProperty(controllerLabel_, MConfiguration.getLaserMojoProp(label_)[2], 0, MConfiguration.mojomaxpulse,core_,log_,false, !detected_);
 
-		add(operation_);
+		emission_ = new DeviceProperty(label_, em_, 0, 1,core_,log_,true, !detected_);
+		enable_ = new DeviceProperty(label_, en_, 0, 1,core_,log_,true, !detected_);
+		powerPerc_ = new DeviceProperty(label_, perc, 0, 100,core_,log_,false, !detected_);
+
+		
+		behaviour_ = new DeviceProperty(controllerLabel_, MConfiguration.getLaserMojoProp(name_)[0], 0, 4,core_,log_,false, !detected_);
+		pulse_ = new DeviceProperty(controllerLabel_, MConfiguration.getLaserMojoProp(name_)[1], 0, MConfiguration.mojomaxpulse,core_,log_,false, !detected_);
+		sequence_ = new DeviceProperty(controllerLabel_, MConfiguration.getLaserMojoProp(name_)[2], 0, MConfiguration.mojomaxpulse,core_,log_,false, !detected_);
+
+		System.out.println("--------- "+controllerLabel_+" "+label_+" "+MConfiguration.getLaserMojoProp(name_)[0]);
+
+		add(emission_);
+		add(enable_);
 		add(powerPerc_);
 		add(behaviour_);
 		add(pulse_);
@@ -46,15 +62,35 @@ public class Laser extends Device{
 	}
 
 	public void setOperation(int val){	
-		if(val==1){
-			//System.out.println("[GUI] set laser operation on");
-			setProperty(operation_.getPropertyName(),"On");										/// maybe modify directly the object
-		} else if(val==0){
-			//System.out.println("[GUI] set laser operation off");
-			setProperty(operation_.getPropertyName(),"Off");				
+		if (enalways_) {
+			if (val == 1) {
+				if(((int) getProperty(enable_.getPropertyName())) == 0){
+					setProperty(enable_.getPropertyName(), "1");
+					setProperty(behaviour_.getPropertyName(),defaultmode);
+				} else if(((int) getProperty(enable_.getPropertyName())) == 1){
+					setProperty(behaviour_.getPropertyName(),defaultmode);
+				}
+			} else if (val == 0) {
+				if(((int) getProperty(enable_.getPropertyName())) == 1){
+					defaultmode = (int) behaviour_.getCurrentValue();
+					setProperty(behaviour_.getPropertyName(),0);
+				}
+			} else {
+				log_.writeToLog(label_ + " : Invalid operation requested (" + val + ")");
+			}
 		} else {
-			log_.writeToLog(label_+" : Invalid operation requested ("+val+")");
+			if (val == 1) {
+				setProperty(enable_.getPropertyName(), "1"); 
+			} else if (val == 0) {
+				setProperty(enable_.getPropertyName(), "0");
+			} else {
+				log_.writeToLog(label_ + " : Invalid operation requested (" + val + ")");
+			}
 		}
+	}
+	
+	public void setEmissionOff(){
+		setProperty(emission_.getPropertyName(), "0");
 	}
 	
 	public void setPowerPercentage(int val){		
@@ -67,6 +103,7 @@ public class Laser extends Device{
 	
 	public void setBehaviour(int val){			
 		if(val>=behaviour_.getMinValue() && val<=behaviour_.getMaxValue()){
+			System.out.println(behaviour_.getPropertyName());
 			setProperty(behaviour_.getPropertyName(),val);
 		} else {
 			log_.writeToLog(label_+" : Invalid behaviour requested ("+val+")");
@@ -90,7 +127,7 @@ public class Laser extends Device{
 	}
 	
 	public int getOperation(){									
-		return (int) getProperty(operation_.getPropertyName());									
+		return (int) getProperty(enable_.getPropertyName());									
 	}
 	
 	public int getPowerPercentage(){									

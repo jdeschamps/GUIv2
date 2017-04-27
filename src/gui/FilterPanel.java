@@ -71,7 +71,7 @@ public class FilterPanel extends javax.swing.JPanel {
         });
         add(jToggleButton_filter3);
 
-        jToggleButton_filter4.setForeground(MConfiguration.black);
+        jToggleButton_filter4.setForeground(MConfiguration.neutral);
         jToggleButton_filter4.setText(MConfiguration.filters[3]);
         jToggleButton_filter4.setMargin(new java.awt.Insets(2, 2, 2, 2));
         jToggleButton_filter4.addActionListener(new java.awt.event.ActionListener() {
@@ -134,27 +134,27 @@ public class FilterPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton_filter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter1ActionPerformed
-    	sys_.setServoState(MConfiguration.servokeys[0], 0);
+    	sys_.setServoState(MConfiguration.servokeys[1], MConfiguration.servo2[0]);
     }//GEN-LAST:event_jToggleButton_filter1ActionPerformed
 
     private void jToggleButton_filter2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter2ActionPerformed
-    	sys_.setServoState(MConfiguration.servokeys[0], 1);
+    	sys_.setServoState(MConfiguration.servokeys[1], MConfiguration.servo2[1]);
     }//GEN-LAST:event_jToggleButton_filter2ActionPerformed
 
     private void jToggleButton_filter3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter3ActionPerformed
-    	sys_.setServoState(MConfiguration.servokeys[0], 2);
+    	sys_.setServoState(MConfiguration.servokeys[1], MConfiguration.servo2[2]);
     }//GEN-LAST:event_jToggleButton_filter3ActionPerformed
 
     private void jToggleButton_filter4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter4ActionPerformed
-    	sys_.setServoState(MConfiguration.servokeys[0], 3);
+    	//sys_.setServoState(MConfiguration.servokeys[0], 3);
     }//GEN-LAST:event_jToggleButton_filter4ActionPerformed
 
     private void jToggleButton_filter5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter5ActionPerformed
-    	sys_.setServoState(MConfiguration.servokeys[0], 4);
+    	//sys_.setServoState(MConfiguration.servokeys[0], 4);
     }//GEN-LAST:event_jToggleButton_filter5ActionPerformed
 
     private void jToggleButton_filter6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter6ActionPerformed
-    	sys_.setServoState(MConfiguration.servokeys[0], 4);
+    	//sys_.setServoState(MConfiguration.servokeys[0], 4);
     }//GEN-LAST:event_jToggleButton_filter6ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
