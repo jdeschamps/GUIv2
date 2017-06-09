@@ -1,6 +1,7 @@
 package threader;
 
 import graph.TimeChart;
+import gui.LogarithmicJSlider;
 import gui.MainFrame;
 
 import java.io.FileNotFoundException;
@@ -121,7 +122,7 @@ public class UVThreader implements Runnable {
 		
 		Double[] resultUV, resultacq;
 		TimeChart uvg;
-		gui.LogarithmicJSlider uvlgs;
+		LogarithmicJSlider uvlgs;
 		JTextField uvjtf, uvcutoff;
 		JSlider uvjsld;
 		int counter, NMScounter;

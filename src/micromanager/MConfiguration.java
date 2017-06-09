@@ -81,7 +81,7 @@ public class MConfiguration {
 	
 	//////////////////////////////////////////////
 	//// Graphs
-	public static final int maxNPI = 30;
+	public static final int maxNPI = 400;
 	public static final int[] maxNQPD = {30,30,1};
 	public static final int maxNUV = 800;
 	
