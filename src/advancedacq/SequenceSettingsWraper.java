@@ -25,8 +25,12 @@ public class SequenceSettingsWraper implements Serializable {
 			seq.relativeZSlice = true;
 			ArrayList<Double> slice = new ArrayList<Double>();
 			Double z;
-			for(int i=0;i<=4000/50;i++){
-				z=-2+i*0.05;
+			double range = 4; //range in um
+			double step = 0.01; //step in um
+			double startz = -2; // start z position relative to focus in um
+				
+			for(int i=0;i<=range/step;i++){				
+				z=startz+i*step;
 				slice.add(z);
 			}
 			seq.slices = slice;
