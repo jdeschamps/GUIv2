@@ -11,7 +11,7 @@ import device.MSystem;
 public class Acquisition implements Serializable {
 
 	public enum acqtype implements Serializable {
-		BFPSNAP("bfp"), ZSTACK("zstack"), TSTACK("time"), NONE("none");
+		BFPSNAP("bfp"), ZSTACK("zstack"), TSTACK("time"), SNAPSHOT("snapshot");
 		
 		String name;
 		int diversity = 4;
@@ -34,6 +34,9 @@ public class Acquisition implements Serializable {
 	private int filterNumber=0;
 	private int exposuretime=0;
 	private int waitingtime;
+	private double z0=0;
+	private double stepsize=0;
+	private int numbersteps=0;
 	private boolean activation=false;
 	private boolean astigmatism=false;
 	private ArrayList<LaserSettings> laserlist;
@@ -41,11 +44,11 @@ public class Acquisition implements Serializable {
 	public Acquisition(){
 		seqw = new SequenceSettingsWraper();
 		
-		setOperator(acqType.NONE);
+		setOperator(acqType.SNAPSHOT);
 	}
 	
 
-	public Acquisition(acqtype op, ArrayList<LaserSettings> laserlist, int filter, int exposuretime, int numFrames, int waitingtime, boolean astigmatism, boolean activation, String path){
+	public Acquisition(acqtype op, ArrayList<LaserSettings> laserlist, int filter, int exposuretime, int numFrames, int waitingtime, boolean astigmatism, boolean activation,double z0, double stepsize, int numbersteps, String path){
 		seqw = new SequenceSettingsWraper();
 		
 		this.numFrames = numFrames;
@@ -56,11 +59,14 @@ public class Acquisition implements Serializable {
 		this.laserlist = laserlist;
 		this.activation = activation;
 		this.astigmatism = astigmatism;
+		this.z0 = z0;
+		this.stepsize = stepsize;
+		this.numbersteps = numbersteps;
 		
 		setOperator(op);
 	}
 
-	public Acquisition(String acq, ArrayList<LaserSettings> laserlist, int filter, int exposuretime, int numFrames, int waitingtime, boolean astigmatism, boolean activation, String path){
+	public Acquisition(String acq, ArrayList<LaserSettings> laserlist, int filter, int exposuretime, int numFrames, int waitingtime, boolean astigmatism, boolean activation,double z0, double stepsize, int numbersteps, String path){
 		seqw = new SequenceSettingsWraper();
 		
 		this.numFrames = numFrames;
@@ -71,6 +77,9 @@ public class Acquisition implements Serializable {
 		this.laserlist = laserlist;
 		this.activation = activation;
 		this.astigmatism = astigmatism;
+		this.z0 = z0;
+		this.stepsize = stepsize;
+		this.numbersteps = numbersteps;
 		
 		if(acq.equals(acqtype.BFPSNAP.name)){
 			setOperator(acqtype.BFPSNAP);
@@ -78,8 +87,8 @@ public class Acquisition implements Serializable {
 			setOperator(acqtype.ZSTACK);
 		} else if(acq.equals(acqtype.TSTACK.name)){
 			setOperator(acqtype.TSTACK);
-		} else if(acq.equals(acqtype.NONE.name)){
-			setOperator(acqtype.NONE);
+		} else if(acq.equals(acqtype.SNAPSHOT.name)){
+			setOperator(acqtype.SNAPSHOT);
 		} 
 	
 	}
@@ -89,7 +98,7 @@ public class Acquisition implements Serializable {
 	}
 	
 	public String[] getAcqType(){
-		String[] s = {acqtype.TSTACK.name,acqtype.ZSTACK.name,acqtype.BFPSNAP.name,acqtype.NONE.name,}; 
+		String[] s = {acqtype.TSTACK.name,acqtype.ZSTACK.name,acqtype.BFPSNAP.name,acqtype.SNAPSHOT.name,}; 
 		return s;
 	}
 	
@@ -114,7 +123,7 @@ public class Acquisition implements Serializable {
 		case ZSTACK:
 			return acqtype.ZSTACK.name;
 		default:
-			return acqtype.NONE.name;
+			return acqtype.SNAPSHOT.name;
 		}
 	}
 	
@@ -141,6 +150,18 @@ public class Acquisition implements Serializable {
 		return astigmatism;
 	}
 	
+	public double getZ0(){
+		return z0;
+	}
+	
+	public double getStepSize(){
+		return stepsize;
+	}
+	
+	public int getNSteps(){
+		return numbersteps;
+	}
+
 
 	public SequenceSettings getAcquisitionSettings(){
 		if(seqw == null){

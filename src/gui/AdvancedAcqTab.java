@@ -58,7 +58,19 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
         jLabel_exposuretime = new javax.swing.JLabel();
         jSpinner_exposure = new javax.swing.JSpinner();
         jCheckBox_activation_3d = new javax.swing.JCheckBox();
+        jSpinner_z0 = new javax.swing.JSpinner();
+        jSpinner_zstep = new javax.swing.JSpinner();
+        jSpinner_nstep = new javax.swing.JSpinner();
+        jLabel_z0 = new javax.swing.JLabel();
+        jLabel_zstep = new javax.swing.JLabel();
+        jLabel_nstep = new javax.swing.JLabel();
 
+        jLabel_z0.setText("Z0:");
+
+        jLabel_zstep.setText("Z step:");
+
+        jLabel_nstep.setText("N step:");
+        
         jLabel_numframes.setText("Num frames:");
 
         jLabel_filter.setText("Filter:");
@@ -67,6 +79,12 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
 
         jLabel_acqtype.setText("Acquisition type:");
 
+
+        jSpinner_z0.setModel(new SpinnerNumberModel(-2, -50, 50, 0.05));
+
+        jSpinner_zstep.setModel(new SpinnerNumberModel(0.05, 0.01, 4, 0.01));
+
+        jSpinner_nstep.setModel(new SpinnerNumberModel(80, 0, 1000, 1));
 
         jSpinner_numframes.setModel(new SpinnerNumberModel(50000, 0, 1000000, 1));
         jComboBox_acqtype.setModel(new javax.swing.DefaultComboBoxModel(acq.getAcqType()));
@@ -151,7 +169,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
 
         jLabel_exposuretime.setText("Exposure time (ms):");
         
-        jSpinner_waitingtime.setModel(new SpinnerNumberModel(0, 0, 10000, 1));
+        jSpinner_waitingtime.setModel(new SpinnerNumberModel(3, 0, 10000, 1));
         
         jSpinner_exposure.setModel(new SpinnerNumberModel(((Double)sys_.getExposureTime()).intValue(), 0, 200, 1));
 
@@ -175,22 +193,34 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
                                     .addComponent(jSpinner_numframes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jComboBox_acqtype, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jComboBox_filter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(222, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCheckBox_activation_3d)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel_waittime)
-                                            .addComponent(jLabel_exposuretime))))
+                                    .addComponent(jCheckBox_activation)
+                                    .addComponent(jCheckBox_activation_3d))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jCheckBox_activation, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jSpinner_exposure, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel_z0)
+                                        .addGap(29, 29, 29)
+                                        .addComponent(jSpinner_z0))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel_nstep)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jSpinner_nstep, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel_zstep)
                                         .addGap(11, 11, 11)
-                                        .addComponent(jSpinner_waitingtime, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jSpinner_zstep, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)))
+                                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel_waittime)
+                                    .addComponent(jLabel_exposuretime))
+                                .addGap(11, 11, 11)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jSpinner_exposure, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSpinner_waitingtime, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -199,18 +229,26 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(11, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox_acqtype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel_acqtype))
+                    .addComponent(jLabel_acqtype)
+                    .addComponent(jCheckBox_activation_3d)
+                    .addComponent(jLabel_z0)
+                    .addComponent(jSpinner_z0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_numframes)
-                    .addComponent(jSpinner_numframes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSpinner_numframes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox_activation)
+                    .addComponent(jLabel_zstep)
+                    .addComponent(jSpinner_zstep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_filter)
-                    .addComponent(jComboBox_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox_filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_nstep)
+                    .addComponent(jSpinner_nstep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -221,10 +259,6 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_waittime)
                     .addComponent(jSpinner_waitingtime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox_activation_3d)
-                    .addComponent(jCheckBox_activation))
                 .addGap(13, 13, 13))
         );
     }// </editor-fold>                        
@@ -243,6 +277,12 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
     private javax.swing.JSpinner jSpinner_waitingtime;
     private javax.swing.JTable jTable_lasers;
     private javax.swing.JCheckBox jCheckBox_activation_3d;
+    private javax.swing.JSpinner jSpinner_z0;
+    private javax.swing.JSpinner jSpinner_zstep;
+    private javax.swing.JSpinner jSpinner_nstep;
+    private javax.swing.JLabel jLabel_nstep;
+    private javax.swing.JLabel jLabel_z0;
+    private javax.swing.JLabel jLabel_zstep;
     // End of variables declaration            
     
     public Acquisition createAcq(){
@@ -255,20 +295,24 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
     	ArrayList<LaserSettings> listlasers = new ArrayList<LaserSettings>();
     	boolean activation = jCheckBox_activation.isSelected();
     	boolean astigmatism = jCheckBox_activation_3d.isSelected();
-    	
+		int nsteps = (Integer) jSpinner_nstep.getValue();
+		double z0 = (Double) jSpinner_z0.getValue();
+		double zstep = (Double) jSpinner_zstep.getValue();
+		
     	String sequence = "1111111111111111";
     	
     	for(int i=0;i<jTable_lasers.getRowCount();i++){
     		String s = (String) jTable_lasers.getValueAt(i,0);
     		if(s == null){
     			break;
-    		} else if(!((String)jTable_lasers.getValueAt(i,0)).equals("None")){
+    		} else {
     			String val1 = (String)jTable_lasers.getValueAt(i,0);
     			int val2 = posInStringList(sys_.getLaserModeList(),(String)jTable_lasers.getValueAt(i,1));
     			int val3 = (Integer) jTable_lasers.getValueAt(i,3);
     			int val4 = (Integer) jTable_lasers.getValueAt(i,2);
 
     			String val5 = (String)jTable_lasers.getValueAt(i,4);
+    			
     			//sanity check
     			if(val5.length() != 16){
     				val5 = sequence;
@@ -288,7 +332,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
     		}
     	}
 
-    	return new Acquisition(acqtype,listlasers,filt,exposure,numframes,waitingtime,astigmatism,activation,path_);
+    	return new Acquisition(acqtype,listlasers,filt,exposure,numframes,waitingtime,astigmatism,activation,z0,zstep,nsteps,path_);
     }
     
     public int posInStringList(String[] s, String val){
