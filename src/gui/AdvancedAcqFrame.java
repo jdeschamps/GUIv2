@@ -1,7 +1,10 @@
 package gui;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.util.ArrayList;
 
+import javax.swing.Icon;
 import javax.swing.JFrame;
 
 import advancedacq.Acquisition;
@@ -39,35 +42,37 @@ public class AdvancedAcqFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-
-    	acqtablist.add(new gui.AdvancedAcqTab(sys_,parent.getPath()));
     			        
     	jTabbedPane_tabpane = new javax.swing.JTabbedPane();
 
+    	acqtablist.add(new gui.AdvancedAcqTab(sys_,parent.getPath(),this));
         
         jButton_add = new javax.swing.JButton();
         jButton_removelast = new javax.swing.JButton();
         jButton_save = new javax.swing.JButton();
+        jButton_moveleft = new javax.swing.JButton();
+        jButton_moveright = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane_tabpane.addTab("Default", acqtablist.get(0));
+        jTabbedPane_tabpane.addTab(acqtablist.get(0).getTabName(), acqtablist.get(0));
 
         jButton_add.setText("Add");
         jButton_add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	String s = "Acq"+acqtablist.size();
-            	acqtablist.add(new gui.AdvancedAcqTab(sys_,parent.getPath()));
-                jTabbedPane_tabpane.addTab(s, acqtablist.get(acqtablist.size()-1));
+            	acqtablist.add(createNewTab());
+                jTabbedPane_tabpane.addTab(acqtablist.get(acqtablist.size()-1).getTabName(),acqtablist.get(acqtablist.size()-1));
             }
         });
         
-        jButton_removelast.setText("Remove last");
+        jButton_removelast.setText("Remove selected");
         jButton_removelast.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	if(acqtablist.size()>1){
-            		jTabbedPane_tabpane.remove(acqtablist.size()-1);
-            		acqtablist.remove(acqtablist.size()-1);
+            		int i = jTabbedPane_tabpane.getSelectedIndex();
+
+            		jTabbedPane_tabpane.remove(i);
+            		acqtablist.remove(i);
             	} 
             }
         });
@@ -83,6 +88,45 @@ public class AdvancedAcqFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton_moveleft.setText("<");
+        jButton_moveleft.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	if(acqtablist.size()>1){
+            		int i = jTabbedPane_tabpane.getSelectedIndex();
+            		if(i>0){
+	            		AdvancedAcqTab tab = acqtablist.get(i);
+	            		String title = jTabbedPane_tabpane.getTitleAt(i);
+	            		jTabbedPane_tabpane.remove(i);
+	            		acqtablist.remove(i);
+	            		
+	            		acqtablist.add(i-1, tab);
+	            		jTabbedPane_tabpane.add(tab, i-1);
+	            		jTabbedPane_tabpane.setSelectedIndex(i-1);
+            		}
+            	} 
+            }
+        });
+        
+
+        jButton_moveright.setText(">");
+        jButton_moveright.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	if(acqtablist.size()>1){
+            		int i = jTabbedPane_tabpane.getSelectedIndex();
+            		if(i<acqtablist.size()-1){
+	            		AdvancedAcqTab tab = acqtablist.get(i);
+	            		String title = jTabbedPane_tabpane.getTitleAt(i);
+	            		jTabbedPane_tabpane.remove(i);
+	            		acqtablist.remove(i);
+	            		
+	            		acqtablist.add(i+1, tab);
+	            		jTabbedPane_tabpane.add(tab, i+1);
+	            		jTabbedPane_tabpane.setSelectedIndex(i+1);
+            		}
+            	} 
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,7 +136,11 @@ public class AdvancedAcqFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton_save)
                     .addComponent(jButton_add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton_removelast, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton_removelast, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton_moveleft)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton_moveright)))
                 .addGap(18, 18, 18)
                 .addComponent(jTabbedPane_tabpane, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE))
         );
@@ -105,6 +153,10 @@ public class AdvancedAcqFrame extends javax.swing.JFrame {
                         .addComponent(jButton_add, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton_removelast, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton_moveleft)
+                            .addComponent(jButton_moveright))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton_save, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTabbedPane_tabpane))
@@ -125,10 +177,22 @@ public class AdvancedAcqFrame extends javax.swing.JFrame {
     	this.dispose();
     }
 
+    public AdvancedAcqTab createNewTab(){
+    	AdvancedAcqTab tab = new gui.AdvancedAcqTab(sys_,parent.getPath(),this);
+    	return tab;
+    }
+    
+    public void setNameTab(String name){
+    	int i = jTabbedPane_tabpane.getSelectedIndex();
+    	jTabbedPane_tabpane.setTitleAt(i, name);
+    }
+    
     // Variables declaration - do not modify                     
     private javax.swing.JButton jButton_add;
     private javax.swing.JButton jButton_removelast;
     private javax.swing.JButton jButton_save;
     private javax.swing.JTabbedPane jTabbedPane_tabpane;
+    private javax.swing.JButton jButton_moveleft;
+    private javax.swing.JButton jButton_moveright;
     // End of variables declaration                   
 }

@@ -98,7 +98,7 @@ public class AcqTab extends javax.swing.JPanel {
 
         jTextField_numframes.setText("50000");
 
-        jLabel_waittime.setText("Waiting time (s):");
+        jLabel_waittime.setText("Initial delay (s):");
 
         jTextField_waittime.setText("0");
 
@@ -142,7 +142,7 @@ public class AcqTab extends javax.swing.JPanel {
 			}
         });
         
-        jLabel_UVwaittime.setText("UV waiting time (s):");
+        jLabel_UVwaittime.setText("Stop on UV (s):");
 
         jTextField_UVwaittime.setText("0");
         jTextField_UVwaittime.setEnabled(false);

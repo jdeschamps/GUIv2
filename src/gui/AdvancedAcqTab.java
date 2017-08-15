@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.TableCellRenderer;
@@ -26,12 +27,14 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
 
 	MSystem sys_;
 	String path_;
+	AdvancedAcqFrame master_;
 	Acquisition acq;
 	
-    public AdvancedAcqTab(MSystem sys, String path) {
+    public AdvancedAcqTab(MSystem sys, String path, AdvancedAcqFrame master) {
     	sys_ = sys;
     	path_ = path;
     	acq = new Acquisition();
+    	master_ = master;
         initComponents();
     }
 
@@ -65,9 +68,9 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
         jLabel_zstep = new javax.swing.JLabel();
         jLabel_nstep = new javax.swing.JLabel();
 
-        jLabel_z0.setText("Z0:");
+        jLabel_z0.setText("Z0 (um):");
 
-        jLabel_zstep.setText("Z step:");
+        jLabel_zstep.setText("Z step (um):");
 
         jLabel_nstep.setText("N step:");
         
@@ -81,29 +84,48 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
 
 
         jSpinner_z0.setModel(new SpinnerNumberModel(-2, -50, 50, 0.05));
-
+        jSpinner_z0.setEnabled(false);
         jSpinner_zstep.setModel(new SpinnerNumberModel(0.05, 0.01, 4, 0.01));
-
+        jSpinner_zstep.setEnabled(false);
         jSpinner_nstep.setModel(new SpinnerNumberModel(80, 0, 1000, 1));
-
+        jSpinner_nstep.setEnabled(false);
+        
         jSpinner_numframes.setModel(new SpinnerNumberModel(50000, 0, 1000000, 1));
+        
         jComboBox_acqtype.setModel(new javax.swing.DefaultComboBoxModel(acq.getAcqType()));
         jComboBox_acqtype.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
+	            setTabName();
+	            master_.setNameTab(getTabName());
 	    		if(jComboBox_acqtype.getSelectedIndex()==0){
 	    			jSpinner_numframes.setEnabled(true);
 	    			jSpinner_numframes.setValue(50000);
 	    			jCheckBox_activation.setEnabled(true);
 	    			jCheckBox_activation.setSelected(true);
+	    	        jSpinner_nstep.setEnabled(false);
+	    	        jSpinner_zstep.setEnabled(false);
+	    	        jSpinner_z0.setEnabled(false);
+	    		} else if(((String) jComboBox_acqtype.getSelectedItem()).equals("zstack")) {
+	    			jSpinner_numframes.setValue(1);
+	    			jSpinner_numframes.setEnabled(false);
+	    			jCheckBox_activation.setEnabled(false);
+	    			jCheckBox_activation.setSelected(false);
+	    	        jSpinner_nstep.setEnabled(true);
+	    	        jSpinner_zstep.setEnabled(true);
+	    	        jSpinner_z0.setEnabled(true);
 	    		} else {
 	    			jSpinner_numframes.setValue(1);
 	    			jSpinner_numframes.setEnabled(false);
 	    			jCheckBox_activation.setEnabled(false);
 	    			jCheckBox_activation.setSelected(false);
+	    	        jSpinner_nstep.setEnabled(false);
+	    	        jSpinner_zstep.setEnabled(false);
+	    	        jSpinner_z0.setEnabled(false);
 	    		}
 	    	}
 	    });
-
+        setTabName();
+        
         jCheckBox_activation.setText("Activation on");
         jCheckBox_activation.setSelected(true);
         jCheckBox_activation_3d.setText("3DA");
@@ -173,6 +195,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
         
         jSpinner_exposure.setModel(new SpinnerNumberModel(((Double)sys_.getExposureTime()).intValue(), 0, 200, 1));
 
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -197,21 +220,17 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jCheckBox_activation)
                                     .addComponent(jCheckBox_activation_3d))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel_z0)
-                                        .addGap(29, 29, 29)
-                                        .addComponent(jSpinner_z0))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel_nstep)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jSpinner_nstep, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel_zstep)
-                                        .addGap(11, 11, 11)
-                                        .addComponent(jSpinner_zstep, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)))
-                                .addContainerGap())
+                                    .addComponent(jLabel_z0)
+                                    .addComponent(jLabel_zstep)
+                                    .addComponent(jLabel_nstep))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jSpinner_nstep)
+                                    .addComponent(jSpinner_zstep)
+                                    .addComponent(jSpinner_z0, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,7 +242,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
                                     .addComponent(jSpinner_waitingtime, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1)
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -342,6 +361,24 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
     		}
     	}
     	return -1;
+    }
+    
+    public void setTabName(){
+    	String name = (String) jComboBox_acqtype.getSelectedItem();
+    	if(name != null){
+    		this.setName(name);
+    	} else {
+    		this.setName("time");
+    	}
+    }
+    public String getTabName(){
+    	String name = this.getName();
+    	if(name != null){
+    		return name;
+    	} else {
+    		setTabName();
+    		return this.getName();
+    	}
     }
     
 	class ComboBoxRenderer extends JComboBox implements TableCellRenderer {
