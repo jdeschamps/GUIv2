@@ -440,6 +440,7 @@ public class AcqTab extends javax.swing.JPanel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+	    	acqlist.saveList(getPath()+"/AdvancedAcq");
 	    	
 			acq.runAcqList(acqlist.getList(),path,acqname,sleepTime,UVsleepTime,stopmaxUV,numPos,useNumpos);
 		} else {
