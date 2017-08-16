@@ -47,6 +47,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
+    	System.out.println("--- init tab new");
     	jLabel_numframes = new javax.swing.JLabel();
     	jSpinner_numframes = new javax.swing.JSpinner();
         jLabel_filter = new javax.swing.JLabel();
@@ -124,6 +125,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
 	    		}
 	    	}
 	    });
+      //  jComboBox_acqtype.setSelectedIndex(0);
         setTabName();
         
         jCheckBox_activation.setText("Activation on");
@@ -354,6 +356,71 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
     	return new Acquisition(acqtype,listlasers,filt,exposure,numframes,waitingtime,astigmatism,activation,z0,zstep,nsteps,path_);
     }
     
+    public void fillTab(Acquisition acq){
+    	jComboBox_acqtype.setSelectedItem(acq.getAcqTypeName());
+        setTabName();
+		if(jComboBox_acqtype.getSelectedIndex()==0){
+			jSpinner_numframes.setEnabled(true);
+			jSpinner_numframes.setValue(50000);
+			jCheckBox_activation.setEnabled(true);
+			jCheckBox_activation.setSelected(true);
+	        jSpinner_nstep.setEnabled(false);
+	        jSpinner_zstep.setEnabled(false);
+	        jSpinner_z0.setEnabled(false);
+		} else if(((String) jComboBox_acqtype.getSelectedItem()).equals("zstack")) {
+			jSpinner_numframes.setValue(1);
+			jSpinner_numframes.setEnabled(false);
+			jCheckBox_activation.setEnabled(false);
+			jCheckBox_activation.setSelected(false);
+	        jSpinner_nstep.setEnabled(true);
+	        jSpinner_zstep.setEnabled(true);
+	        jSpinner_z0.setEnabled(true);
+		} else {
+			jSpinner_numframes.setValue(1);
+			jSpinner_numframes.setEnabled(false);
+			jCheckBox_activation.setEnabled(false);
+			jCheckBox_activation.setSelected(false);
+	        jSpinner_nstep.setEnabled(false);
+	        jSpinner_zstep.setEnabled(false);
+	        jSpinner_z0.setEnabled(false);
+		}
+    	
+    	jComboBox_filter.setSelectedIndex(acq.getFilterNumber());
+    	jSpinner_exposure.setValue(acq.getExposureTime());
+    	jSpinner_waitingtime.setValue(acq.getWaitingTime());
+    	jSpinner_numframes.setValue(acq.getNumberFrames());
+    	jCheckBox_activation.setSelected(acq.getActivation());
+    	jCheckBox_activation_3d.setSelected(acq.getAstigmatism());
+    	jSpinner_nstep.setValue(acq.getNSteps());
+    	jSpinner_z0.setValue(acq.getZ0());
+    	jSpinner_zstep.setValue(acq.getStepSize());
+    	ArrayList<LaserSettings> listlasers = acq.getLaserList();
+    	String[] modes = sys_.getLaserModeList();
+    	for(int i=0;i<listlasers.size();i++){
+    		LaserSettings las = listlasers.get(i);
+    		jTable_lasers.setValueAt(las.getLabel(), i, 0);
+    		System.out.println(las.getMode());
+    		jTable_lasers.setValueAt(modes[las.getMode()], i, 1);
+    		jTable_lasers.setValueAt(las.getPowerPerc(), i, 2);
+    		jTable_lasers.setValueAt(las.getPulseLength(), i, 3);
+
+    		String s = Integer.toBinaryString(las.getSequence());
+    		if(s.length()<16){
+    			int bound =16-s.length();
+    			for(int k=0;k<bound;k++){
+    				s = "0"+s;
+    				System.out.println(s);
+    			}
+    		}
+        	System.out.println("Seq: "+s);
+
+    		
+    		jTable_lasers.setValueAt(s, i, 4);
+    	}
+    
+	
+    }
+
     public int posInStringList(String[] s, String val){
     	for(int i=0;i<s.length;i++){
     		if(s[i].equals(val)){
@@ -373,6 +440,7 @@ public class AdvancedAcqTab extends javax.swing.JPanel {
     }
     public String getTabName(){
     	String name = this.getName();
+    	System.out.println("Name: "+name);
     	if(name != null){
     		return name;
     	} else {

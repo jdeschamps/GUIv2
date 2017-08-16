@@ -35,6 +35,10 @@ public class AcqListWrapper implements Serializable  {
 		return path;
 	}
 	
+	public int getNumberExp(){
+		return acqlist.size();
+	}
+	
 	public void loadList(String path){
 		if(path.substring(path.length()-3).equals("acq")){
 			try {

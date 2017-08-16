@@ -472,7 +472,13 @@ public class AcqTab extends javax.swing.JPanel {
     		 Object infoMessage;
 			JOptionPane.showMessageDialog(null, "Please set a path first", "Error", JOptionPane.INFORMATION_MESSAGE);
     	} else {
-	    	AdvancedAcqFrame acqframe = new AdvancedAcqFrame(this, sys_);
+    		AdvancedAcqFrame acqframe;
+    		if(acqlist.getNumberExp()>0){
+    			System.out.println("Load in configuration");
+    			acqframe = new AdvancedAcqFrame(this, sys_, acqlist);
+    		} else {
+    			acqframe = new AdvancedAcqFrame(this, sys_);
+    		}
 			acqframe.setVisible(true);
     	}
     }
