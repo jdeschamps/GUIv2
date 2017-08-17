@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package gui;
 
 import graph.TimeChart;
@@ -16,8 +13,8 @@ import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
+
+import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 import micromanager.MConfiguration;
 import threader.UVThreader;
@@ -95,7 +92,7 @@ public class ActivationTab extends javax.swing.JPanel {
 
 
         setPreferredSize(new java.awt.Dimension(390, 212));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new AbsoluteLayout());
         
         
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Toggle button Activate

@@ -71,7 +71,7 @@ public class FilterPanel extends javax.swing.JPanel {
         });
         add(jToggleButton_filter3);
 
-        jToggleButton_filter4.setForeground(MConfiguration.neutral);
+        jToggleButton_filter4.setForeground(MConfiguration.black);
         jToggleButton_filter4.setText(MConfiguration.filters[3]);
         jToggleButton_filter4.setMargin(new java.awt.Insets(2, 2, 2, 2));
         jToggleButton_filter4.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +146,7 @@ public class FilterPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jToggleButton_filter3ActionPerformed
 
     private void jToggleButton_filter4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter4ActionPerformed
-    	//sys_.setServoState(MConfiguration.servokeys[0], 3);
+    	sys_.setServoState(MConfiguration.servokeys[1], MConfiguration.servo2[3]);
     }//GEN-LAST:event_jToggleButton_filter4ActionPerformed
 
     private void jToggleButton_filter5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_filter5ActionPerformed

@@ -64,6 +64,7 @@ public class SingleLaserControl extends javax.swing.JPanel {
         jToggleButton_laserOperation.setIcon(new ImageIcon("off.png"));
         jToggleButton_laserOperation.setSelectedIcon(new ImageIcon("on.png"));
         jToggleButton_laserOperation.setDisabledIcon(new ImageIcon("off.png"));
+        jToggleButton_laserOperation.setSelected(false);
         
         jToggleButton_laserOperation.addItemListener(new ItemListener(){
 			@Override

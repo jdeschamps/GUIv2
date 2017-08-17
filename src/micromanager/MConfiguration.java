@@ -22,9 +22,9 @@ public class MConfiguration {
 	// Lasers
 	public static final String lasercontroller = "iChrome-MLE-TCP";  
 	public static final String[] laserproperties3 = {"Laser 1: 1. Enable","Laser 1: 3. Level %","Laser 1: 2. Emission"}; 
-	public static final String[] laserproperties4 = {"Laser 2: 1. Enable","Laser 1: 3. Level %","Laser 2: 2. Emission"}; 
-	public static final String[] laserproperties2 = {"Laser 3: 1. Enable","Laser 1: 3. Level %","Laser 3: 2. Emission"}; 
-	public static final String[] laserproperties1 = {"Laser 4: 1. Enable","Laser 1: 3. Level %","Laser 4: 2. Emission"}; 
+	public static final String[] laserproperties4 = {"Laser 2: 1. Enable","Laser 2: 3. Level %","Laser 2: 2. Emission"}; 
+	public static final String[] laserproperties2 = {"Laser 3: 1. Enable","Laser 3: 3. Level %","Laser 3: 2. Emission"}; 
+	public static final String[] laserproperties1 = {"Laser 4: 1. Enable","Laser 4: 3. Level %","Laser 4: 2. Emission"}; 
 	
 	//public static final String[] ardproplabel = {"Behavior","Pulse length (us)"}; 
 	//public static final String[] ardlaserlabel = {"A405","A488","A638","A561"};  
@@ -55,7 +55,7 @@ public class MConfiguration {
 	public static final int[] numposservo = {65535,65535,2};															//// here careful with the FW (num positions)
 	public static final String[] servokeys = {"BFP","FW","Flip"};
 	public static final int maxservos = 65535;															/// here matters, former 3
-	public static final int[] servo2 = {52000,42000,33000};
+	public static final int[] servo2 = {52000,42000,33000,23000};
 	public static final int[] servo1 = {60000,16000};
 
 	//////////////////////////////////////////////
@@ -70,7 +70,7 @@ public class MConfiguration {
 	public static final Color black = new Color(0,0,0);
 	
 	// Filters panel
-	public static final String[] filters = {"525/50","600/60","700/100","Empty","Empty","Empty"};
+	public static final String[] filters = {"525/50","600/60","676/37","Empty","N/A","N/A"};
 	
 	// Laser parameters tab
 	public static final String[] laserbehaviourlabel = {"Off","On","Rising","Falling","Camera"};
@@ -137,13 +137,13 @@ public class MConfiguration {
 	}
 	
 	public static String[] getLaserMojoProp(String s){
-		if(s.equals(laserkeys[0])){ // 405
+		if(s.equals(laserkeys[0])){ // 405 prop 1
 			return mojolaser2prop; 			
-		}else if(s.equals(laserkeys[1])){ // 488
+		}else if(s.equals(laserkeys[1])){ // 488 prop 0
 			return mojolaser1prop; 
-		}else if(s.equals(laserkeys[3])){ // 638
+		}else if(s.equals(laserkeys[3])){ // 638 prop 2
 			return mojolaser3prop; 
-		}else if(s.equals(laserkeys[2])){ // 561
+		}else if(s.equals(laserkeys[2])){ // 561 prop 3
 			return mojolaser4prop; 
 		}else{
 			return null;

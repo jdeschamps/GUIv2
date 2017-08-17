@@ -97,12 +97,16 @@ public class MSystem {
 
 		l405_.setSequence(65535);
 		l405_.setBehaviour(2);
+		l405_.setOperation(0);
 		l488_.setSequence(65535);
 		l488_.setBehaviour(4);
+		l488_.setOperation(0);
 		l638_.setSequence(65535);
 		l638_.setBehaviour(4);
+		l638_.setOperation(0);
 		l561_.setSequence(65535);
 		l561_.setBehaviour(4);
+		l561_.setOperation(0);
 		
 		bfp_.setState(0);
 	}
