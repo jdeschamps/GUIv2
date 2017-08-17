@@ -20,7 +20,7 @@ public class MConfiguration {
 	//// Devices 
 	
 	// Lasers
-	public static final String lasercontroller = "iChrome-MLE-TCP";  
+	public static final String lasercontroller = "iChrome-MLE";  
 	public static final String[] laserproperties3 = {"Laser 1: 1. Enable","Laser 1: 3. Level %","Laser 1: 2. Emission"}; 
 	public static final String[] laserproperties4 = {"Laser 2: 1. Enable","Laser 2: 3. Level %","Laser 2: 2. Emission"}; 
 	public static final String[] laserproperties2 = {"Laser 3: 1. Enable","Laser 3: 3. Level %","Laser 3: 2. Emission"}; 
