@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class AcqListWrapper implements Serializable  {
 
 	private ArrayList<Acquisition> acqlist;
+	private String path = "";
 	
 	public AcqListWrapper(){
 		acqlist = new ArrayList<Acquisition>();
@@ -28,6 +29,14 @@ public class AcqListWrapper implements Serializable  {
 	
 	public ArrayList<Acquisition> getList(){
 		return acqlist;
+	}
+	
+	public String getPath(){
+		return path;
+	}
+	
+	public int getNumberExp(){
+		return acqlist.size();
 	}
 	
 	public void loadList(String path){

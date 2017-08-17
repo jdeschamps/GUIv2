@@ -98,7 +98,7 @@ public class AcqTab extends javax.swing.JPanel {
 
         jTextField_numframes.setText("50000");
 
-        jLabel_waittime.setText("Waiting time (s):");
+        jLabel_waittime.setText("Initial delay (s):");
 
         jTextField_waittime.setText("0");
 
@@ -142,7 +142,7 @@ public class AcqTab extends javax.swing.JPanel {
 			}
         });
         
-        jLabel_UVwaittime.setText("UV waiting time (s):");
+        jLabel_UVwaittime.setText("Stop on UV (s):");
 
         jTextField_UVwaittime.setText("0");
         jTextField_UVwaittime.setEnabled(false);
@@ -338,10 +338,19 @@ public class AcqTab extends javax.swing.JPanel {
     	fc.setCurrentDirectory(new java.io.File(".")); // start at application current directory
     	FileNameExtensionFilter filter = new FileNameExtensionFilter("Acquisition settings","acq");
     	fc.setFileFilter(filter);
-    	int returnVal = fc.showSaveDialog(this);
+    	int returnVal = fc.showOpenDialog(this);
     	if(returnVal == JFileChooser.APPROVE_OPTION) {
     	    File folder = fc.getSelectedFile();
     	    acqlist.loadList(folder.getAbsolutePath());
+    	    text.clear();
+    	    
+    	    String s = "";
+        	
+           	for(int i=0;i<acqlist.getList().size();i++){
+               	s += acqlist.getList().get(i).settingsToString();
+           	}
+           	
+           	text.add(s);
     	}
 	}
 
@@ -361,7 +370,7 @@ public class AcqTab extends javax.swing.JPanel {
     	JFileChooser fc = new JFileChooser();
     	fc.setCurrentDirectory(new java.io.File(".")); // start at application current directory
     	fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-    	int returnVal = fc.showSaveDialog(this);
+    	int returnVal = fc.showOpenDialog(this);
     	if(returnVal == JFileChooser.APPROVE_OPTION) {
     	    File folder = fc.getSelectedFile();
     	    jTextField_path.setText(folder.getAbsolutePath());
@@ -386,6 +395,53 @@ public class AcqTab extends javax.swing.JPanel {
 		numPos = (Integer) jSpinner_numberofpose.getValue();
 		
 		if(advancedacq){
+	       	File theDir = new File(getPath());
+
+	       	// if the directory does not exist, create it
+	       	if (!theDir.exists()) {
+		         boolean result = false;
+		
+		         try{
+		             theDir.mkdir();
+		             result = true;
+		         } 
+		         catch(SecurityException se){
+		             //handle it
+		         }        
+		         if(result) {    
+
+		         }
+	       	}
+	       	
+	    	String s = "";
+	    	
+	       	for(int i=0;i<acqlist.getList().size();i++){
+	           	s += acqlist.getList().get(i).settingsToString();
+	       	}
+	       	
+	    	PrintWriter writer;
+	    	try {
+	    		if(getPath().length()>1){
+	    			writer = new PrintWriter(new FileWriter(getPath()+"/AdvancedAcq"+".txt", true));
+	    	       	writer.print(s);
+	    	       	writer.close();
+	    		} else {
+	    			writer = new PrintWriter(new FileWriter("AdvancedAcq"+".txt", true));
+	    	       	writer.print(s);
+	    	       	writer.close();
+	    		}
+	    	} catch (FileNotFoundException e) {
+	    		// TODO Auto-generated catch block
+	    	      e.printStackTrace();
+	    	} catch (UnsupportedEncodingException e) {
+	    		// TODO Auto-generated catch block
+	    	  e.printStackTrace();
+	    	} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	acqlist.saveList(getPath()+"/AdvancedAcq");
+	    	
 			acq.runAcqList(acqlist.getList(),path,acqname,sleepTime,UVsleepTime,stopmaxUV,numPos,useNumpos);
 		} else {
 			acq.runAcq(numFrames,path,acqname,sleepTime,UVsleepTime,stopmaxUV,numPos,useNumpos);
@@ -405,29 +461,7 @@ public class AcqTab extends javax.swing.JPanel {
        	for(int i=0;i<acqlist.size();i++){
            	s += acqlist.get(i).settingsToString();
        	}
-    	
-    	PrintWriter writer;
-    	try {
-    		if(getPath().length()>1){
-    			writer = new PrintWriter(new FileWriter(getPath()+"/AdvancedAcq"+".txt", true));
-    	       	writer.print(s);
-    	       	writer.close();
-    		} else {
-    			writer = new PrintWriter(new FileWriter("AdvancedAcq"+".txt", true));
-    	       	writer.print(s);
-    	       	writer.close();
-    		}
-    	} catch (FileNotFoundException e) {
-    		// TODO Auto-generated catch block
-    	      e.printStackTrace();
-    	} catch (UnsupportedEncodingException e) {
-    		// TODO Auto-generated catch block
-    	  e.printStackTrace();
-    	} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
+
     	text.add(s);
     	
     	this.acqlist.setList(acqlist);
@@ -438,7 +472,13 @@ public class AcqTab extends javax.swing.JPanel {
     		 Object infoMessage;
 			JOptionPane.showMessageDialog(null, "Please set a path first", "Error", JOptionPane.INFORMATION_MESSAGE);
     	} else {
-	    	AdvancedAcqFrame acqframe = new AdvancedAcqFrame(this, sys_);
+    		AdvancedAcqFrame acqframe;
+    		if(acqlist.getNumberExp()>0){
+    			System.out.println("Load in configuration");
+    			acqframe = new AdvancedAcqFrame(this, sys_, acqlist);
+    		} else {
+    			acqframe = new AdvancedAcqFrame(this, sys_);
+    		}
 			acqframe.setVisible(true);
     	}
     }

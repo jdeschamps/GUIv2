@@ -181,7 +181,13 @@ public class AcqEngine{
 		        			parent_.UVChecked(acqlist.get(k).getActivation());
 		        			
 		        			// acq name
-		        			individualname = i+"_"+acqname_+"_"+acqlist.get(k).getAcqTypeName();
+		        			if(i<10){
+		        				individualname = "00"+i+"_"+acqname_+"_"+acqlist.get(k).getAcqTypeName();
+		        			} else if(i<100){
+		        				individualname = "0"+i+"_"+acqname_+"_"+acqlist.get(k).getAcqTypeName();
+		        			} else if(i>=100){
+		        				individualname = i+"_"+acqname_+"_"+acqlist.get(k).getAcqTypeName();
+		        			}
 		        			
 		        			// if none then leave, otherwise configure system
 		        			if(acqlist.get(k).getAcqTypeName().equals("None")){
