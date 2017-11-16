@@ -24,7 +24,7 @@ public class SSLaser extends Device{
 	
 	private void createProperties() {
 		operation_ = new DeviceProperty(label_, MConfiguration.coboltproplabel[0], 0, 1,core_,log_,true, !detected_);
-		powerPerc_ = new DeviceProperty(controllerLabel2_, MConfiguration.ard2proplabel, 0, 100,core_,log_,false, !detected_);
+		powerPerc_ = new DeviceProperty(controllerLabel2_, MConfiguration.ard2proplabel, 0, 255,core_,log_,false, !detected_);
 		powerMax_ = new DeviceProperty(label_, MConfiguration.coboltproplabel[1], 0, 300,core_,log_,false, !detected_);
 		behaviour_ = new DeviceProperty(controllerLabel1_, MConfiguration.getLaserMojoProp(label_)[0], 0, 4,core_,log_,false, !detected_);
 		pulse_ = new DeviceProperty(controllerLabel1_, MConfiguration.getLaserMojoProp(label_)[1], 0, MConfiguration.mojomaxpulse,core_,log_,false, !detected_);
@@ -35,7 +35,10 @@ public class SSLaser extends Device{
 		properties_.add(powerMax_);
 		properties_.add(behaviour_);
 		properties_.add(pulse_);
-		add(sequence_);
+		properties_.add(sequence_);
+		
+
+		setProperty(sequence_.getPropertyName(),MConfiguration.mojomaxpulse);
 	}
 
 	public String getcontrollerLabel1(){
@@ -57,8 +60,11 @@ public class SSLaser extends Device{
 	}
 	
 	public void setPowerPercentage(int val){		
-		if(val>=powerPerc_.getMinValue() && val<=powerPerc_.getMaxValue()){
-			setProperty(powerPerc_.getPropertyName(),val);
+		if(val>=0 && val<=100){
+			double temp = val*255./100.;
+			int finalval = (int) Math.round(temp);
+			System.out.println("final val: "+finalval);
+			setProperty(powerPerc_.getPropertyName(),finalval);
 		} else {
 			log_.writeToLog(label_+" : Invalid power percentage requested ("+val+")");
 		}

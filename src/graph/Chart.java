@@ -46,9 +46,9 @@ public class Chart {
         
         XYPlot plot = (XYPlot) chart.getPlot();
         ValueAxis yAxis = plot.getRangeAxis();
-        yAxis.setRange(0, 700);
+        yAxis.setRange(0, 1000);
         ValueAxis xAxis = plot.getDomainAxis();
-        xAxis.setRange(0, 700);
+        xAxis.setRange(0, 1000);
         
       	plot.setBackgroundPaint(new Color(230,230,230));
     	plot.setDomainGridlinePaint(new Color(100,100,100));

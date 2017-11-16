@@ -26,16 +26,17 @@ public class MConfiguration {
 	//public static final String[] ardproplabel = {"Behavior","Pulse length (us)"}; 
 	//public static final String[] ardlaserlabel = {"A405","A488","A638","A561"};  
 	//public static final int ardlasermaxpulse = 65535;
-	public static final String[] mojolaser1prop = {"Mode1","Duration1","Sequence1"};
-	public static final String[] mojolaser2prop = {"Mode2","Duration2","Sequence2"};
-	public static final String[] mojolaser3prop = {"Mode3","Duration3","Sequence3"};
-	public static final String[] mojolaser4prop = {"Mode4","Duration4","Sequence4"};
-	public static final String mojolabel = "Mojo-LaserSwitch";
+	public static final String[] mojolaser1prop = {"Mode0","Duration0","Sequence0"};
+	public static final String[] mojolaser2prop = {"Mode1","Duration1","Sequence1"};
+	public static final String[] mojolaser3prop = {"Mode2","Duration2","Sequence2"};
+	public static final String[] mojolaser4prop = {"Mode3","Duration3","Sequence3"};
+	public static final String mojolabel = "Mojo-LaserTrig";
 	public static final int mojomaxpulse = 65535;
 	
 	public static final String sslaserlabel = "Cobolt561";
-	public static final String ard2laserlabel = "Arduino-Output"; 
-	public static final String ard2proplabel = "561 power[%]"; 
+	public static final String ard2laserlabel = "Mojo-PMW"; 
+	public static final String ard2proplabel = "Position0"; 
+	public static final int ard2propmax = 255; 
 	public static final String[] coboltproplabel = {"Laser","PowerSetpoint"}; 
 	
 	public static final String[] laserkeys = {"405","488","638","561"}; 
@@ -43,8 +44,8 @@ public class MConfiguration {
 	public static final double loweringfactor = 0.9;
 	
 	// QPD
-	public static final String qpdlabel = "Arduino-Input";
-	public static final String[] qpdproplabel = {"AnalogInput10","AnalogInput9","AnalogInput8"}; 
+	public static final String qpdlabel = "Mojo-Input";
+	public static final String[] qpdproplabel = {"AnalogInput2","AnalogInput4","AnalogInput0"}; 
 	
 	// PI
 	public static final String pilabel = "PIZStage";
@@ -52,12 +53,14 @@ public class MConfiguration {
 	public static final String smaractlabel = "SmaractZ";
 	
 	//Servos
-	public static final String[] servolabel = {"MaestroServo","Arduino-Servo","Arduino-Servo"};
-	public static final String[] proplabel = {"Position","BFP State","3DA state"};
-	public static final int[] numposservo = {5,4,2};															//// here careful with the FW (num positions)
-	public static final String[] servokeys = {"FW","BFP","3DA"};
+	public static final String[] servolabel = {"Mojo-Servos","Mojo-Servos","Mojo-Servos"};
+	public static final String[] proplabel = {"Position0","Position1","Position2"};
+	public static final int[] numposservo = {5,2,2};															//// here careful with the FW (num positions)
+	public static final String[] servokeys = {"FW","3DA","BFP"};
 	public static final int bfpPosition = 1;															/// here matters, former 3
-	public static final int[] maestropos = {1950,1740,1500,1250,1040};
+	public static final int[] FWpos = {44000,34000,21000,56000,56000};
+	public static final int[] BFPpos = {65000,16500}; // 0 = off, 1 == on
+	public static final int[] Astigpos = {1950,1740};
 
 	//////////////////////////////////////////////
 	//// GUI
@@ -71,7 +74,7 @@ public class MConfiguration {
 	public static final Color black = new Color(0,0,0);
 	
 	// Filters panel
-	public static final String[] filters = {"525/50","600/60","700/100","Sp","Empty","Empty"};
+	public static final String[] filters = {"525/50","600/60","700/100","Empty","Empty","Empty"};
 	
 	// Laser parameters tab
 	public static final String[] laserbehaviourlabel = {"Off","On","Rising","Falling","Camera"};
@@ -138,13 +141,13 @@ public class MConfiguration {
 	}
 	
 	public static String[] getLaserMojoProp(String s){
-		if(s.equals(laserlabel[0])){
-			return mojolaser2prop; 			// on the mojo 488 and 405 are inverted
-		}else if(s.equals(laserlabel[1])){
-			return mojolaser1prop; 
+		if(s.equals(laserlabel[0])){ // 405
+			return mojolaser1prop; 			
+		}else if(s.equals(laserlabel[1])){ // 488
+			return mojolaser2prop; 
 		}else if(s.equals(sslaserlabel)){
 			return mojolaser3prop; 
-		}else if(s.equals(laserlabel[2])){
+		}else if(s.equals(laserlabel[2])){ // 638
 			return mojolaser4prop; 
 		}else{
 			return null;

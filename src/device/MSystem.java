@@ -72,9 +72,9 @@ public class MSystem {
 		l488_ = new Laser(MConfiguration.laserlabel[1], MConfiguration.mojolabel,core_,log_, isLoaded(MConfiguration.laserlabel[1]));
 		l638_ = new Laser(MConfiguration.laserlabel[2], MConfiguration.mojolabel,core_,log_, isLoaded(MConfiguration.laserlabel[2]));
 		l561_ = new SSLaser(MConfiguration.sslaserlabel, MConfiguration.mojolabel, MConfiguration.ard2laserlabel,core_,log_, isLoaded(MConfiguration.sslaserlabel));
-		fw_ = new Servo(MConfiguration.servolabel[0], MConfiguration.proplabel[0], MConfiguration.numposservo[0],core_,log_, isLoaded(MConfiguration.servolabel[0]));
-		bfp_ = new Servo(MConfiguration.servolabel[1], MConfiguration.proplabel[1], MConfiguration.numposservo[1],core_,log_, isLoaded(MConfiguration.servolabel[1]));
-		astig_ = new Servo(MConfiguration.servolabel[2], MConfiguration.proplabel[2], MConfiguration.numposservo[2],core_,log_, isLoaded(MConfiguration.servolabel[2]));
+		fw_ = new Servo(MConfiguration.servolabel[0], MConfiguration.proplabel[0], MConfiguration.numposservo[0],core_,log_, isLoaded(MConfiguration.servolabel[0]),MConfiguration.FWpos);
+		astig_ = new Servo(MConfiguration.servolabel[1], MConfiguration.proplabel[1], MConfiguration.numposservo[1],core_,log_, isLoaded(MConfiguration.servolabel[1]),MConfiguration.Astigpos);
+		bfp_ = new Servo(MConfiguration.servolabel[2], MConfiguration.proplabel[2], MConfiguration.numposservo[2],core_,log_, isLoaded(MConfiguration.servolabel[2]),MConfiguration.BFPpos);
 		
 		deviceList_ = new ArrayList<Device>(numDevices_);
 		deviceList_.add(qpd_);
@@ -234,9 +234,9 @@ public class MSystem {
 		if(name.equals(MConfiguration.servokeys[0])){
 			d = fw_;
 		} else if(name.equals(MConfiguration.servokeys[1])){
-			d = bfp_;
-		} else if(name.equals(MConfiguration.servokeys[2])){
 			d = astig_;
+		} else if(name.equals(MConfiguration.servokeys[2])){
+			d = bfp_;
 		} 
 		return d;
 	}
@@ -244,9 +244,9 @@ public class MSystem {
 	public void setServoState(String name, int val){
 		if(name.equals(MConfiguration.servokeys[0])){
 			fw_.setState(val);
-		} else if(name.equals(MConfiguration.servokeys[1])){
-			bfp_.setState(val);
 		} else if(name.equals(MConfiguration.servokeys[2])){
+			bfp_.setState(val);
+		} else if(name.equals(MConfiguration.servokeys[1])){
 			astig_.setState(val);
 		} 
 	}
@@ -254,9 +254,9 @@ public class MSystem {
 	public int getServoState(String name){
 		if(name.equals(MConfiguration.servokeys[0])){
 			fw_.getState();
-		} else if(name.equals(MConfiguration.servokeys[1])){
-			bfp_.getState();
 		} else if(name.equals(MConfiguration.servokeys[2])){
+			bfp_.getState();
+		} else if(name.equals(MConfiguration.servokeys[1])){
 			astig_.getState();
 		} 
 		return 0;

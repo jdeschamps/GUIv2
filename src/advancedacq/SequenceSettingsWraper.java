@@ -26,7 +26,7 @@ public class SequenceSettingsWraper implements Serializable {
 			ArrayList<Double> slice = new ArrayList<Double>();
 			Double z;
 				
-			for(int i=0;i<=acq.getNumberFrames();i++){				
+			for(int i=0;i<=acq.getNSteps();i++){				
 				z=acq.getZ0()+i*acq.getStepSize();
 				slice.add(z);
 			}

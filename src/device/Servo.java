@@ -9,20 +9,19 @@ public class Servo extends Device{
 	int nPos_;
 	String prop_;							////// to be uniformized!!!! (same state name in the device adapters)
 	DeviceProperty position_;
+	int[] vals_;
 	
-	public Servo(String label, String prop, int nPos, CMMCore core, Log log, boolean isLoaded) {
+	public Servo(String label, String prop, int nPos, CMMCore core, Log log, boolean isLoaded, int[] vals) {
 		super(label,core,log, isLoaded);
 		prop_ = prop;
 		nPos_ = nPos;
+		vals_ = vals;
 		createProperties();
 	}
 	
 	private void createProperties() {
-		if(!label_.equals(MConfiguration.servolabel[0])){
-			position_ = new DeviceProperty(label_, prop_, 0, nPos_,core_,log_,false, !detected_);
-		} else {
-			position_ = new DeviceProperty(label_, prop_, 0, 2000,core_,log_,false, !detected_);
-		}
+		position_ = new DeviceProperty(label_, prop_, 0, MConfiguration.mojomaxpulse ,core_,log_,false, !detected_);
+		
 		add(position_);
 	}
 
@@ -35,33 +34,8 @@ public class Servo extends Device{
 	}
 
 	public void setState(int val){
-		if(!label_.equals(MConfiguration.servolabel[0])){
-			if(val>=0 && val<nPos_){
-				setProperty(position_.getPropertyName(), val);	
-				return;
-			} else {
-				log_.writeToLog(label_+" : Invalid position requested ("+val+")");
-			}
-		} else {			// maestro
-			switch(val){
-			case 0:
-				val = MConfiguration.maestropos[0];
-				break;
-			case 1:
-				val = MConfiguration.maestropos[1];
-				break;
-			case 2:
-				val = MConfiguration.maestropos[2];
-				break;
-			case 3:
-				val = MConfiguration.maestropos[3];
-				break;
-			default:
-				val = MConfiguration.maestropos[4];
-				break;
-			}
-			setProperty(position_.getPropertyName(), val);									
-			return;
+		if(val>=0 && val<nPos_){
+			setProperty(position_.getPropertyName(), vals_[val]);	
 		}
 	}
 	

@@ -39,6 +39,8 @@ public class Laser extends Device{
 		add(behaviour_);
 		add(pulse_);
 		add(sequence_);
+		
+		setProperty(sequence_.getPropertyName(),MConfiguration.mojomaxpulse);
 	}
 
 	public String getArduinoLabel(){

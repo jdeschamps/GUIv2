@@ -71,7 +71,7 @@ public class FilterPanel extends javax.swing.JPanel {
         });
         add(jToggleButton_filter3);
 
-        jToggleButton_filter4.setForeground(MConfiguration.black);
+        jToggleButton_filter4.setForeground(MConfiguration.neutral);
         jToggleButton_filter4.setText(MConfiguration.filters[3]);
         jToggleButton_filter4.setMargin(new java.awt.Insets(2, 2, 2, 2));
         jToggleButton_filter4.addActionListener(new java.awt.event.ActionListener() {
